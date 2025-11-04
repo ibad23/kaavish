@@ -8,7 +8,7 @@
 **/*.log
 **/*.lot
 **/*.out
-**/*.pdf
+**/report.pdf
 **/*.run.xml
 **/*.toc
 **/auto
