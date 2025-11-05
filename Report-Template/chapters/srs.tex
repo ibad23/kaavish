@@ -19,7 +19,167 @@ This section describes each function/feature provided by our system. These funct
 
 \section{Non-functional Requirements}
 
-This sections mentions the specific non-functional requirements of our system. These generally address performance, scalability, safety, availability, deployment etc.
+This section mentions the specific non-functional requirements of our design system, AI use-cases, and Knoccs feature modules.
+
+\subsection{Design System}
+
+\subsubsection{Accuracy and Correctness}
+\begin{itemize}
+    \item \textbf{Code Correctness:} The generated Angular code must be syntactically correct and compile without errors.
+    \item \textbf{Standards Compliance:} All generated code must adhere to the established Knoccs Angular coding standards, including the use of standalone components.
+    \item \textbf{Functional Equivalence:} The design pipeline must correctly interpret and generate code for interactivity defined in Figma prototypes (e.g., hover states) and component states (e.g., disabled, error).
+    \item \textbf{Consistency (Determinism):} The same Figma component (and its variants) must produce the exact same code structure every time it is processed.
+    \item \textbf{Token Accuracy (Target: 95\%):} The generated code must correctly apply the specified color, typography, and spacing tokens from the W3C Style Dictionary pipeline 95\% of the time.
+    \item \textbf{Component Mapping Accuracy (Target: 90\%):} The AI must correctly select the corresponding Angular component based on Figma annotations 90\% of the time.
+    \item \textbf{Visual Similarity (Target: 80\%):} The generated component's layout, styling, and responsiveness must achieve an 80\% visual match to the Figma design, as measured by automated screenshot comparison.
+\end{itemize}
+
+\subsubsection{Developer Experience (DX) \& Usability}
+\begin{itemize}
+    \item \textbf{Development Efficiency (Target: 70\% Reduction):} The pipeline must achieve a 70\% reduction in development time for new component creation and a significant reduction in design-dev handoff time.
+    \item \textbf{Manual Work (Target: 80\%+ Reduction):} Generated code for standard components should be "production-ready" (i.e., pass all tests) with minimal refactoring.
+    \item \textbf{Code Readability:} The generated code must be human-readable, well-commented, and follow a logical structure.
+    \item \textbf{Automated Documentation:} The pipeline must auto-generate or update a Storybook entry for each new or modified component, pulling descriptions and properties from the Figma component's documentation.
+    \item \textbf{Designer Workflow:} The process of "marking" a component for generation must be streamlined using custom Figma annotation widgets to prevent manual errors.
+    \item \textbf{Proactive Validation:} The system must include an annotation validation plugin to prevent errors before the pipeline is even run.
+    \item \textbf{Developer Onboarding:} The process of consuming the generated code must be clearly documented and require minimal setup.
+\end{itemize}
+
+\subsubsection{Performance}
+\begin{itemize}
+    \item \textbf{Pipeline Performance (Single Component):} The end-to-end translation of a single component (from Figma publish to committed Angular code) should complete in under 90 seconds.
+    \item \textbf{Pipeline Performance (Batch Update):} A full "batch" update of the entire design system (e.g., 50 components) should complete in under 30 minutes.
+    \item \textbf{Generated Code Performance (Theming):} The runtime theme switching (light/dark mode) must apply theme changes near-instantaneously (e.g., < 100ms) with no flash of unstyled content.
+    \item \textbf{Monitoring:} The system must include a performance monitoring dashboard to track generation times and identify bottlenecks.
+\end{itemize}
+
+\subsubsection{Scalability and Maintainability}
+\begin{itemize}
+    \item \textbf{Component Scalability:} The pipeline must be able to support a design system growing to 500+ unique components and variants.
+    \item \textbf{Architectural Extensibility:} Adding a new component to the Figma design system and its corresponding generation template must be a documented process that does not require re-architecting the pipeline.
+    \item \textbf{AI Modularity:} The system's "AI Agents Layer" (e.g., LangGraph) must be modular, allowing for individual prompts or agents to be updated without breaking the entire generation chain.
+    \item \textbf{Testability:} All generated components must be compatible with a Test-Driven Development (TDD) approach.
+    \item \textbf{Governance:} The system must include an approval workflow for all Code Connect mappings to ensure quality.
+    \item \textbf{Change Management:} A breaking change detection script must run automatically in the CI pipeline to flag any changes to component props or mappings that could break existing implementations.
+\end{itemize}
+
+\subsubsection{Security}
+\begin{itemize}
+    \item \textbf{Access Control (Tokens):} All access to the Figma API and Azure DevOps must use securely stored, read-only (where applicable) authentication tokens.
+    \item \textbf{Access Control (Services):} Access to the AI model APIs (Azure OpenAI) must be restricted to authorized team members and services.
+    \item \textbf{Code Security:} All generated code must pass a Static Analysis Security Testing (SAST) scan for common vulnerabilities like Cross-Site Scripting (XSS) before being merged.
+\end{itemize}
+
+\subsubsection{Compliance}
+\begin{itemize}
+    \item \textbf{Accessibility Standards:} All generated components must meet WCAG 2.1 AA compliance.
+    \item \textbf{ARIA Implementation:} The AI must correctly generate appropriate ARIA (Accessible Rich Internet Applications) roles, states, and properties for complex components (e.g., modals, dropdowns, tabs).
+    \item \textbf{Keyboard Navigation:} Keyboard navigation, such as tabbing and arrow keys, must be fully implemented for all interactive components.
+    \item \textbf{Linting:} All generated code must pass automated linting checks based on the established Knoccs Angular style guide.
+\end{itemize}
+
+\subsubsection{Reliability and Availability}
+\begin{itemize}
+    \item \textbf{Pipeline Uptime:} The core CI/CD pipeline (Azure DevOps) responsible for token syncing and code generation must have a 99.9\% uptime during working hours.
+    \item \textbf{Graceful Failure (AI):} If the AI model fails to translate a component, it must fail gracefully (i.e., not crash the entire pipeline) and provide clear, actionable error logs.
+    \item \textbf{Graceful Failure (Sync):} The GitHub Actions workflow for token syncing must have automatic retry logic and a clear notification process in case of repeated failure.
+    \item \textbf{AI Performance Monitoring:} The AI Metrics Dashboard must have triggers to alert the team if accuracy drops below the defined targets (e.g., <80\% visual similarity), signaling a need for retraining or prompt adjustment.
+\end{itemize}
+
+\subsubsection{Data Integrity and Backup}
+\begin{itemize}
+    \item \textbf{Single Source of Truth:} The W3C Design Tokens (in JSON format) are the single source of truth. The bidirectional synchronization between Figma and the code repository via GitHub Actions must ensure this integrity.
+    \item \textbf{Atomic Transactions:} The design token translation (Style Dictionary) must be atomic. A failure during translation must not result in a partially updated or corrupted set of CSS variables.
+    \item \textbf{Data Consistency:} Data integrity is also ensured through consistency by making sure that the translation is deterministic (i.e., the same input always produces the same output).
+    \item \textbf{Version Control \& Backup (Code):} All generated code, pipeline configurations, and token definitions must be stored in the project's Git repository, providing full version history and backup.
+    \item \textbf{Version Control \& Backup (Design):} The Figma design file itself must utilize Figma's built-in version history, with major milestones explicitly saved and named.
+\end{itemize}
+
+\subsection{AI Use Cases}
+
+\subsubsection{Knowledge Base (RAG)}
+\begin{itemize}
+    \item \textbf{Performance:} A search query must return a fully generated answer in under 5 seconds.
+    \item \textbf{Accuracy:} The relevance of retrieved documents must be $>$ 90\%. The generated answer must be factually consistent with the source documents.
+    \item \textbf{Usability:} The search interface must be as simple to use as a standard search bar.
+    \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
+\end{itemize}
+
+\subsubsection{KNOCCS Co-Pilot}
+\begin{itemize}
+    \item \textbf{Performance:} Conversational responses must be streamed to the user, with the first token appearing in $<$ 1 second.
+    \item \textbf{Accuracy:} Generated workflow configurations must be 100\% syntactically correct and logically valid. Explanations must be factually accurate.
+    \item \textbf{Security:} The Co-Pilot must not perform any action without explicit user confirmation. It must adhere to the user's existing permissions.
+    \item \textbf{Usability:} The Co-Pilot's language must be clear, helpful, and non-intrusive.
+\end{itemize}
+
+\subsubsection{Adaptive AI/Recommendation Agent}
+\begin{itemize}
+    \item \textbf{Performance:} Pattern analysis must run as a background batch process and must not impact real-time application performance.
+    \item \textbf{Usability:} Suggestions must be highly relevant. The system must not overwhelm the user with low-quality or "spam" suggestions (e.g., max 1-2 suggestions per day).
+    \item \textbf{Privacy/Compliance:} All behavior tracking must be clearly disclosed in the privacy policy and be compliant with data privacy regulations (e.g., GDPR). Users must be able to opt out.
+    \item \textbf{Explainability:} A suggestion should be able to explain \textit{why} it is being made (e.g., "I noticed you performed this action 10 times today").
+\end{itemize}
+
+\subsection{Knoccs Feature Modules}
+
+\subsubsection{Workflow Management}
+\begin{itemize}
+    \item \textbf{Performance:} A workflow must be triggered within 1 second of the event occurring. The visual builder must load in under 3 seconds.
+    \item \textbf{Usability:} The drag-and-drop interface must be intuitive, requiring minimal training for a non-technical user.
+    \item \textbf{Reliability:} The execution engine must guarantee "at-least-once" execution for all actions. A failure in one action should trigger a defined error-handling path (e.g., retry, log error).
+    \item \textbf{Scalability:} The system must be able to process 1,000+ workflow executions per minute.
+    \item \textbf{Compliance:} All components used must be WCAG 2.1 AA compliant.
+\end{itemize}
+
+\subsubsection{Tag Management}
+\begin{itemize}
+    \item \textbf{Performance:} Applying or removing a tag must be reflected in the UI in under 500ms. Searching by tag must return results in under 2 seconds.
+    \item \textbf{Usability:} The tag selection interface must be an accessible, type-ahead autocomplete component.
+    \item \textbf{Data Integrity:} Deleting a tag must not delete the objects it was applied to. The system should confirm if the tag should be removed from all objects.
+    \item \textbf{Security:} Tag creation/deletion must be restricted to administrator roles.
+\end{itemize}
+
+\subsubsection{Notification Management}
+\begin{itemize}
+    \item \textbf{Reliability:} The notification system must ensure "at-least-once" delivery via the queue. A failure in an external gateway (e.g., SMS provider) must be logged and retried.
+    \item \textbf{Performance:} Web notifications must appear to the user in under 1 second. Asynchronous notifications (Email, SMS) must be sent from the queue within 60 seconds.
+    \item \textbf{Scalability:} The system must be able to queue and process 10,000+ notifications per hour.
+    \item \textbf{Security:} All templates must be sanitized to prevent XSS vulnerabilities from dynamic variables.
+\end{itemize}
+
+\subsubsection{Macro Management}
+\begin{itemize}
+    \item \textbf{Performance:} A macro's sequence of actions must be fully executed within 2 seconds of the user's click.
+    \item \textbf{Usability:} Creating a macro must be a simple, form-based process that does not require coding.
+    \item \textbf{Atomic Transactions:} If a macro involves multiple database actions, all actions should succeed or fail together as a single transaction to prevent partial updates.
+    \item \textbf{Security:} Users must only be able to execute macros they have permission for, and the macro's actions must respect the user's underlying permissions.
+\end{itemize}
+
+\subsubsection{Queuing System (Message Broker)}
+\begin{itemize}
+    \item \textbf{Reliability:} The system must guarantee "at-least-once" delivery. Messages must be persisted to disk to survive a broker restart.
+    \item \textbf{Performance:} The broker must support a throughput of at least 1,000 messages/second.
+    \item \textbf{Scalability:} The consumer services must be horizontally scalable (e.g., running in multiple containers) to handle increased load.
+    \item \textbf{Maintainability:} Adding a new queue and message type must be a documented process.
+\end{itemize}
+
+\subsubsection{Report Builder}
+\begin{itemize}
+    \item \textbf{Performance:} Simple reports must load in under 5 seconds. Complex reports (e.g., $>$ 10,000 rows) must be processed asynchronously, and the user notified when the report is ready.
+    \item \textbf{Security:} Users must only be able to build reports based on data they have permission to access.
+    \item \textbf{Data Integrity:} Report data must be a consistent snapshot of the database at the time of execution.
+    \item \textbf{Usability:} The report builder interface must be intuitive for non-technical users.
+\end{itemize}
+
+\subsubsection{Webhook Microservice (Rust)}
+\begin{itemize}
+    \item \textbf{Performance:} The service must have a p99 response time of $>$ 50ms for accepting and queueing a payload.
+    \item \textbf{Scalability:} Services must be lightweight and able to handle 10,000+ requests per second (RPS).
+    \item \textbf{Reliability:} The service must have 99.99\% uptime. It must not lose any incoming data.
+    \item \textbf{Security:} The service must validate incoming payloads (e.g., via a shared secret or HMAC signature) to prevent malicious requests.
+\end{itemize}
+
 
 % \section{External Interfaces}
 
