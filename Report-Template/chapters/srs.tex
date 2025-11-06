@@ -2,20 +2,193 @@ This chapter provides detailed specifications of the system under development.
 
 \section{Functional Requirements}
 
-This section describes each function/feature provided by our system. These functions are logically grouped into modules based on their purpose/users/mode of operations etc (as per our system). A functional hierarchy may look like:
-\begin{outline}
-  \1 Module 1:
-  \2 Function 1:
-  \2 Function 2:
-  \3 Sub Function 1
-  \3 Sub Function 2
-  \1 Module 2:
-  \2 Function 1:
-  \2 Function 2:
-  \1 .........
-\end{outline}
+% This section describes each function/feature provided by our system. These functions are logically grouped into modules based on their purpose/users/mode of operations etc (as per our system). A functional hierarchy may look like:
+% \begin{outline}
+%   \1 Module 1:
+%   \2 Function 1:
+%   \2 Function 2:
+%   \3 Sub Function 1
+%   \3 Sub Function 2
+%   \1 Module 2:
+%   \2 Function 1:
+%   \2 Function 2:
+%   \1 .........
+% \end{outline}
 
 % --- The above is to be modified as per your project, e.g. a flat list if your system has limited functional requirements.
+
+This section mentions the specific functional requirements of our design system, AI use-case, and features.
+\subsection{Design System}
+
+\subsubsection{Figma Integration and Token Management}
+
+\begin{itemize}
+    \item \textbf{Figma Integration:}
+    The system must connect to Figma via API or MCP to fetch design files, layers, and tokens automatically. This integration ensures real-time design synchronization and eliminates manual file handling.
+    \item \textbf{Design Token Extraction:}
+    The system should extract and standardize color, typography, spacing, and other design tokens into a standardized \texttt{tokens.json} or \texttt{SCSS} file for consistent design implementation.
+    \item \textbf{Design System Enforcement:}
+    All generated UI components must strictly follow the organization’s approved design system. Any deviations should be automatically flagged for review.
+\end{itemize}
+
+\subsubsection{Component Detection and Frontend Code Generation}
+
+\begin{itemize}
+    \item \textbf{Component Recognition \& Mapping:}
+    The system must identify reusable components from Figma and map them to existing Angular components or generate new ones where necessary.
+    \item \textbf{HTML/CSS Conversion:}
+    The system should convert the Figma layer hierarchy into semantic HTML and SCSS code while maintaining layout accuracy within a 2-pixel deviation.
+    \item \textbf{Angular Code Generation:}
+    Automatically generate Angular component files (\texttt{.ts}, \texttt{.html}, \texttt{.scss}) and register them within the appropriate Angular modules for seamless integration.
+\end{itemize}
+
+\subsubsection{AI-Assisted Logic and Backend Generation}
+
+\begin{itemize}
+    \item \textbf{AI Logic Generation:}
+    Utilize AI models to infer user-interface logic, event handlers, data bindings, and simple validation flows to generate corresponding TypeScript logic automatically.
+    \item \textbf{Backend Code Generation:}
+    Generate backend components including C\# models, repositories, controllers, and services based on inferred data structures or input from the design.
+    \item \textbf{Database Schema Generation:}
+    Automatically create SQL scripts or Entity Framework Core migrations from the inferred data models to maintain backend consistency with frontend components.
+\end{itemize}
+
+\subsubsection{Project Management and Developer Review}
+
+\begin{itemize}
+    \item \textbf{Project Scaffolding:}
+    The system should automatically create complete Angular, C\#, and Database projects following standard folder structures and naming conventions.
+    \item \textbf{Manual Override \& Review:}
+    Provide an interface for developers to review, edit, and approve the generated code before it is finalized, saved, or committed to the repository.
+    \item \textbf{Version Control Integration:}
+    Integrate with Git version control to track generated files, maintain commit history, and push approved code directly to repositories.
+\end{itemize}
+
+\subsubsection{Quality Assurance and Continuous Improvement}
+
+\begin{itemize}
+    \item \textbf{Error Handling \& Logging:}
+    The system must log all errors during parsing and generation with full context and provide automatic retry options for transient issues.
+    \item \textbf{Feedback Loop for AI Improvement:}
+    Collect developer feedback on generated outputs and use it to improve future AI model predictions for higher accuracy and consistency.
+    \item \textbf{Design System Compliance Validation:}
+    Before final export, validate all components against the design system to ensure consistent typography, color tokens, and spacing are applied across the project.
+\end{itemize}
+
+\subsection{AI Use Cases}
+\subsubsection{Knowledge Base (RAG)}
+\begin{itemize}
+    \item \textbf{Description:} Centralized, searchable repository of Knoccs documents and product data
+    \item The system must allow uploading, KNOCCS documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
+    \item The system must support various file formats.
+    \item The system must store all content in a structured repository with version control and metadata.
+    \item The system must automatically extract text from documents and segment it into manageable content chunks for embedding.
+    \item The system must clean and normalize text before processing.
+    \item The system must generate vector embeddings for each content chunk using a selected embedding model.
+    \item The embedding process must capture semantic meaning to enable similarity-based retrieval.
+    \item The system must allow users to submit natural-language queries.
+    \item The system must feed retrieved document content into an AI model.
+    \item The system must generate an answer that references the retrieved content.
+    \item The generated responses must include citations or links to the original documents.
+    \item The system must authenticate users before granting access to the knowledge base.
+    \item The system must enforce role-based access control (RBAC) for sensitive documents.
+\end{itemize}
+
+
+\subsubsection{KNOCCS Co-Pilot}
+    \begin{itemize}
+        \item \textbf{{Description:}} AI assistant capable of suggesting configurations, generating workflows, and explaining features.
+        \item The system must provide an interactive chat or assistant interface accessible throughout the KNOCCS platform.
+        \item The system must accept natural-language instructions to generate or modify workflows (e.g., “Create a workflow for onboarding a new client”).
+        \item Connect to the Knowledge Base (RAG) and workflow APIs to provide contextual guidance.
+        \item The system must collect feedback on AI responses and use this feedback to fine-tune or retrain
+    \end{itemize}
+    
+\subsubsection{Adaptive AI/Recommendation Agent}
+\begin{itemize}
+    \item \textbf{Description: }Predictive automation and feature suggestions based on user behavior.
+    \item The system must capture and log user interactions (e.g., features accessed, actions taken, frequency of use).
+    \item The system must store behavioral data in a structured format suitable for AI model training and inference.
+    \item The system must allow administrators to enable or disable behavioral tracking per user or module.
+    \item The system must provide personalized feature or workflow suggestions based on recent user behavior.
+    \item The system must allow users to accept, ignore, or dismiss recommendations.
+    \item The system must log user responses to continuously improve future recommendations.
+    \item The system must learn repetitive user actions.
+    \item The system must allow users to review and approve any automated actions before execution.
+    \item The system must use feedback data to adjust recommendation and improve future predictions.
+\end{itemize}
+
+\subsection{Knoccs Feature Modules}
+\subsubsection{Workflow Management}
+\begin{itemize}
+    \item \textbf{Description: }Drag-and-drop workflow builder, trigger/action mapping, and execution engine.
+    \item The system must provide a drag-and-drop visual interface for creating and editing workflows.
+    \item The system must allow users to be able to draw connections between nodes to define the flow of logic.
+    \item The system must support defining triggers (e.g., “on form submission,” “on click)
+    \item The system must support mapping actions to triggers  (e.g., "Send Email," "Add Tag).
+    \item Users shall be able to save, name, and activate/deactivate workflows.
+    \item The system should execute the workflow in real-time when a trigger condition is met.
+    \item The system must maintain detailed audit logs for compliance and debugging.
+\end{itemize}
+
+\subsubsection{Tag Management}
+\begin{itemize}
+    \item \textbf{Description:} Create, edit, and assign tags across modules with color tokens.
+    \item The system must allow users to create, rename, and delete tags.
+    \item The system must allow assigning and unassigning tags to entities across different modules.
+    \item When creating or editing a tag, the system must support color tokens for each tag, defined according to the design system.
+    \item The system must ensure tags are searchable and filterable within each module.
+    \item The system must restrict tag creation or editing based on user roles and permissions.
+\end{itemize}
+
+
+\subsubsection{Notification Management}
+\begin{itemize}
+    \item \textbf{Description:} Enables automated, consistent communication across email, SMS, and web channels using reusable templates and queued delivery.
+    \item The system must include a template builder for creating and managing reusable notification templates (email, SMS, web).
+    \item The system must integrate with message queues or job schedulers to handle asynchronous notification delivery.
+    \item The web UI shall display real-time notifications to  users.
+    \item The system shall allow other modules (e.g., Workflow Management) to trigger notifications.
+    \item The system must allow role-based access to template creation, editing, and deletion.
+\end{itemize}
+
+\subsubsection{Macro Management}
+\begin{itemize}
+    \item \textbf{Description:} Provide a reusable macro composer that enables users to automate repetitive actions and sequences across the platform.
+    \item The system must include a visual or form-based interface for composing macros using predefined actions and conditions.
+    \item The system must allow users to save, edit, and reuse macros across different modules.
+    \item The system must support executing macros manually or automatically based on defined triggers or events.
+    \item The system must validate macros before execution to prevent invalid or conflicting actions.
+    \item The system must restrict macro creation and editing based on user roles and permissions.
+\end{itemize}
+
+\subsubsection{Queuing System (Message Broker)}
+\begin{itemize}
+    \item \textbf{Description:} Integration with RabbitMQ or Kafka for reliable message processing with automatic retry handling and observability.
+    \item The system shall be integrated with a message broker (e.g., RabbitMQ)for asynchronous communication between services.
+    \item The system must be able to publish and consume messages to/from defined queues.
+    \item The system must detect message processing failures and automatically retry delivery based on configurable policies (e.g., retry count, delay).
+    \item The system must log all failed message attempts with timestamps and error details.
+    \item The system must provide a monitoring dashboard for viewing real-time message flow and errors.
+\end{itemize}
+
+\subsubsection{Report Builder}
+\begin{itemize}
+    \item \textbf{Description:} Enables dynamic report generation with export options (CSV/PDF) and automated scheduling.
+    \item The system must allow users to create and configure dynamic reports based on selected data sources, filters, and parameters.
+    \item The system must allow users to preview reports before exporting or scheduling them.
+    \item The system must allow users to schedule automatic report generation at defined intervals (e.g., daily, weekly, monthly).
+    \item Users shall be able to export the report data in different formats (e.g. as a CSV or PDF file).
+\end{itemize}
+
+\subsubsection{Webhook Microservice (Rust)}
+\begin{itemize}
+    \item \textbf{Description:} High-performance webhook handler with automatic retry and analytics capabilities.
+    \item The system must provide  secure HTTP endpoints to receive incoming webhook requests from external systems.
+    \item The system must validate webhook payloads and authentication headers before processing.
+    \item If the queue is unavailable, the service shall implement a local retry mechanism.
+    \item The service shall log all incoming requests, their source, and their processing status (e.g., "Accepted," "Failed").
+\end{itemize}
 
 \section{Non-functional Requirements}
 
