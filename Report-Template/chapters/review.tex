@@ -1,5 +1,137 @@
-This chapter presents the current state of the art in the domain and talks about other similar work that has been done in this area. It also establishes the novelty of our work by highlighting the differences between the existing work and our work.
+This review of the literature examines recent advances in design-to-code generation and Retrieval-Augmented Generation (RAG) systems, with a focus on their applications in industry. In particular, it surveys techniques for converting Figma designs into front-end code and for building domain-aware, knowledge-grounded CRM assistants, providing the foundation for Knoccs.
 
-We will keep updating this chapter (especially if our project is research-intensive) as our research proceeds and we come across more work related to our problem.
+\section{Design to Code Generation}
+Front-end development is a critical yet time-intensive phase of web application creation. In this phase, visual designs such as wireframes or mockups are translated into functional user interfaces (UIs). Despite having UI frameworks and libraries, manually coding each component remains laborious and inconsistent. Nikiforova et al. \cite{Nikiforova} highlight the potential of automating this process by generating front-end component code directly from UI mockups. Such automation aims to bridge the gap between designers and developers, reduce errors, improve fidelity to the original design, and accelerate development. Tools like Figma are commonly used to create layouts and UI elements. However, their native export capabilities are limited, so teams turn to plugins or automated pipelines to convert designs into reusable code efficiently.
+\\\\
+To address these challenges, design-to-code generation techniques have emerged, aiming to automatically translate design artifacts into working code. This process can rely on either visual inputs, such as screenshots of the interface, or structured design metadata from tools like Figma. While early methods focused primarily on generating static HTML/CSS from images, recent approaches leverage design-source data and hybrid LLM-based techniques to produce higher-fidelity, reusable, and interactive UI components, moving closer to production-ready implementations.
 
-Of course, we take inspiration from \cite{einstein} but wish the work was typeset in \LaTeX \cite{knuthwebsite}, e.g. by taking help from \cite{latexcompanion}.
+\subsection{Image-Based and Multimodal LLM Code Generation}
+Early work in screenshot-to-code translation relied heavily on visual inference. For example, LaTcoder \cite{latcoder2025} introduces a multimodal CoT (“Chain-of-Thought”) prompting strategy for  Multimodal Large Language Models (MLLMs), segmenting design images into blocks and generating HTML/CSS code for each component. Their method works by splitting the design into smaller parts, asking a multimodal model to generate code for each part, and then putting everything back together using rules or another model. Even though LaTcoder shows good accuracy in matching the layout, it still depends heavily on how good the model is, and it mostly produces simple, non-interactive code.
+\\\\
+Similarly, Prototype2Code \cite{xiao2024prototype2code} uses screenshot-based systems that incorporate checks to clean up messy designs, a graph neural network to identify different UI elements, and an LLM to help write the CSS. This makes it handle broken or poorly structured designs much better and produce very accurate visuals. But it still only creates basic static HTML/CSS and doesn't support interactive features, different component states, or code for frameworks like React or Angular.
+\\\\
+These define the state-of-the-art in vision-based design-to-code, while still offering one-directional pipelines for conversion, from design to code, and they lack support for reuse, round-tripping, or production-level integration, which is a key difference from our two-way Figma to Code pipeline.
+
+\subsection{Design-Source-Based Code Generation (Figma JSON Code)}
+More recent systems leverage design file metadata directly rather than images. A comprehensive evaluation by Manninen et al. \cite{manninen2024harnessing} shows that tools like Anima, Locofy, Builder.io, Clapy, and TeleportHQ convert Figma layers into HTML, CSS, and framework-specific code. These tools benefit from structured Figma attributes (constraints, variables, layer hierarchy) and produce higher-fidelity mappings. However, these too have limitations such as inconsistent support for interactive components, frequent failures in responsiveness, brittle mapping of design tokens or component libraries, and unpredictable output quality when AI-based plug-ins are used. 
+\\\\
+Academic work such as Albin's thesis \cite{frick2022design2code} goes beyond export-only workflows. Instead of treating Figma as a static export tool, the work uses Figma's REST API to dynamically translate design components into reusable web components, enabling teams to generate consistent UI building blocks on demand. The contribution is twofold: (1) a fully open-source prototype that automates component generation directly from design source files, and (2) empirical validation through usability testing and A/B experiments to evaluate user experience and efficiency. Collectively, these show that design-metadata–based approaches outperform image-based systems.
+
+\subsection{LLM-Based and Hybrid Program Synthesis Approaches}
+LLM-driven design-to-code systems allow developers to generate and transform UI components using natural-language prompts, but they remain unreliable without strict structural grounding. Studies such as LaTcoder \cite{latcoder2025} and Prototype2Code \cite{xiao2024prototype2code} show that even advanced multimodal models struggle with consistent hierarchy interpretation, accurate layout mapping, and handling multi-element relationships, often producing misaligned or incomplete code.
+\\\\
+Industry tools that embed LLMs in Figma workflows report similar issues, including hallucinated styles and inconsistent naming conventions \cite{manninen2024harnessing}. Because of these limitations, recent work favours hybrid approaches that combine LLM reasoning with structured metadata and deterministic rules. Our system follows this pattern by grounding LLM generation with Figma MCP Server and validation logic to maintain round-trip fidelity in a two-way Figma to Code pipeline.
+
+\section{RAG and Knowledge-Graph Approaches}
+While design-to-code literature primarily focuses on UI automation, the Knoccs project also requires a knowledge base that supports domain-aware reasoning within the Customer Relationship Management (CRM) environment. For this purpose, Retrieval-Augmented Generation (RAG) has emerged as a leading approach, allowing language models to answer knowledge-intensive queries by grounding their outputs in real, external documents. Industrial deployments of RAG in troubleshooting and support contexts demonstrate clear benefits: retrieving manuals, past incident reports, and logs significantly improves answer correctness and reduces hallucinations compared with plain LLM prompting.
+\\\\
+Brehme et al. \cite{Brehme} highlight that, despite the growing adoption of LLMs in industrial settings, standalone models still struggle with outdated context, hallucinations, and limited access to specialized knowledge. Industrial workflows often rely on proprietary and continually updated information that cannot be encoded directly into pretrained models. RAG, first introduced by Lewis et al \cite{Lewis}, addresses these limitations by enabling LLMs to retrieve external documents during inference, resulting in outputs that are more accurate, traceable, and domain-grounded.
+\\\\
+Arsalan et al. \cite{arslan2024surveyRAG} illustrate a practical application of RAG in industrial maintenance, where information is scattered across manuals, logs, incident reports, and live sensor streams. Their system provides dynamic, knowledge-intensive question answering, allowing technicians to query complex faults and receive evidence-based, contextually grounded guidance. This approach mirrors challenges in CRM tools, where heterogeneous knowledge sources must be unified for real-time operational intelligence.
+\\\\
+A major advantage of RAG noted by participants is its ability to easily update and expand the knowledge base with company-specific information, offering more flexibility than fine-tuning static models. The underlying LLM can be replaced with newer, more advanced models without retraining from scratch, while grounding responses in retrieved documents reduces hallucinations and enhances reliability. The most frequently cited motivation for deploying RAG was to save time and improve efficiency in daily workflows, thereby reducing the burden on human resources. By centralizing fragmented information across departments or individuals, RAG allows employees to access relevant knowledge quickly, focus on higher-value tasks, and minimize reliance on specific personnel \cite{Brehme}.
+\\\\
+Extending this concept, Hilel et al. \cite{hilel2025graphRAG} propose a Graph-RAG framework for Digital Adoption Platforms that structures enterprise software interfaces as state-action knowledge graphs. By representing system states and actions explicitly, their method constrains LLM outputs, significantly reducing hallucinations and enabling accurate, context-aware guidance for navigating complex enterprise applications.
+\\\\
+Overall, these studies demonstrate how RAG can integrate disparate information sources into structured knowledge representations, improving reliability, traceability, and domain grounding in both industrial and enterprise contexts, while also enhancing operational efficiency by centralizing knowledge and reducing the effort required for manual information retrieval \cite{Brehme}.
+
+\subsection{Industrial Applications}
+Brehme et al. \cite{Brehme} note that while much of the literature focuses on the development of RAG systems themselves \cite{Gao}, their practical applications in industry remain less explored. Based on 13 semi-structured interviews with industry experts, they found that the most common use of implemented RAG systems is for question answering, with additional applications in summarization, information retrieval, and extraction tasks. Importantly, these systems are primarily evaluated by humans rather than automated metrics, addressing real-world problem-solving needs.  
+\\\\
+Similarly, Xu et al. \cite{Xu} demonstrate that integrating RAG with a knowledge graph significantly improves automated question answering in customer service, enhancing retrieval accuracy, answering performance, and overall service effectiveness.  
+\\\\
+Together, these studies highlight that the primary industrial application of RAG is question answering, which aligns directly with the goal of the Knoccs project to develop a RAG-based knowledge base for answering domain-specific queries.
+
+\subsection{Requirements for Industrial RAG Systems}
+
+Implementing Retrieval-Augmented Generation (RAG) systems in industrial contexts requires careful consideration of technical, organizational, and infrastructural factors. Previous studies have identified several key requirements that influence system effectiveness, usability, and adoption \cite{Brehme}.
+\\\\
+Table \ref{tab:RAG_requirements} summarizes twelve critical requirements identified across thirteen industrial use cases. These requirements encompass aspects ranging from security and answer quality to usability, integration, and cost considerations.
+\\\\
+Among these, security, privacy, and answer quality were rated as the most critical, reflecting the importance of reliable and safe outputs. Other factors, such as continuous learning and usability, were considered relevant but generally easier to implement given current technologies. Surprisingly, ethical considerations and bias received comparatively low attention, indicating that early-stage deployments tend to prioritize feasibility and operational performance over social or ethical concerns.
+\\\\
+Understanding these requirements is essential for designing and evaluating RAG systems in industrial environments, and informs both the prioritization of system features and the planning of implementation strategies.
+
+\begin{table}[h!]
+\centering
+\caption{Key Requirements for Industrial RAG Systems \cite{Brehme}}
+\label{tab:RAG_requirements}
+\begin{tabular}{|p{3.5cm}|p{6.5cm}|p{3cm}|}
+\hline
+\textbf{Requirement} & \textbf{Definition} & \textbf{Importance} \\ \hline
+Security \& Data Protection & Ensuring the system and its data are safe from unauthorized access or manipulation. & Very High \\ \hline
+RAG Quality/ Answer Quality & Accuracy and reliability of retrieved information and generated responses. & Very High \\ \hline
+Usability & Ease, and intuitiveness for users to interact with the system. & High \\ \hline
+
+Continuous Learning & System’s capability to update its knowledge base with new information. & High (critical when data freshness is important) \\ \hline
+Costs & Expenses related to the development and operation of the RAG system. & Medium–High (expected to gain importance in later stages) \\ \hline
+Explainability / Transparency & Ability to provide clear and understandable explanations for generated answers. & Medium \\ \hline
+Continuous Operation & Ability to maintain, monitor, and update the RAG system during deployment. & Medium \\ \hline
+Integration in Setup & Seamless incorporation into existing technical infrastructure. & Medium \\ \hline
+Scalability & Capacity to handle more users, inputs, or larger knowledge bases. & Medium \\ \hline
+Performance & Speed, and the responsiveness of the system. & Low \\ \hline
+Licensing \& Copyright & Ensuring generated outputs do not infringe on protected content. & Low \\ \hline
+Ethical Considerations \& Bias & Producing neutral, unbiased outputs and avoiding discrimination or unethical results. & Low \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{Intelligent CRM Systems: Graph-RAG Pipelines \& LLM Agent Capabilities}
+The most advanced work directly addressing client-level intelligence systems is presented by Patel \cite{patel2025graphRAG}, who developed a Graph-RAG architecture specifically for e-commerce customer support. This system represents the current state-of-the-art in customer service question answering by combining knowledge graphs with document retrieval to achieve both factual grounding and contextual richness.
+\\\\
+Patel proposes a hybrid pipeline operating in two phases. The offline phase constructs a domain knowledge graph from product catalogs, historical support tickets, customer reviews, and technical documentation, with entities representing products, features, issues, and customer accounts, and relations such as has-feature, resolves, compatible-with, and purchased-by. Graph embeddings are learned using node2vec to enable similarity-based retrieval. The online phase executes a multi-step pipeline for each query: (1) entity extraction via Named Entity Recognition (NER) to identify key entities mentioned in the query, (2) hybrid retrieval combining KG subgraph extraction (via PCST or k-hop neighborhood expansion) with document retrieval (hybrid BM25 + dense embeddings), (3) linearization of the retrieved subgraph into textual format, and (4) LLM synthesis where both linearized KG facts and document snippets are passed to GPT-3.5-turbo with explicit instructions to ground answers in the provided context and cite sources.
+\\\\
+Evaluation on 10,000 customer support queries demonstrates substantial improvements: the system achieves 0.91 factual accuracy compared to 0.74 for document-only RAG (a 23 percentage point improvement). A user study with 50 experienced customer service agents yielded 89\% user satisfaction compared to 67\% for standard RAG approaches, with agents rating the system highly on factual accuracy (6.2/7), completeness (6.0/7), and relevance (6.1/7). The system maintains real-time performance with a 1.34-second average response time suitable for interactive customer support. Key design principles include using KG facts as hard constraints to prevent fabrication of details, leveraging documents to provide natural language tone and phrasing, maintaining subgraph compactness while preserving multi-hop reasoning, and combining BM25 with dense embeddings for improved retrieval recall.
+\\\\
+Beyond system-centric architectures like Patel’s, recent evaluations of LLM agents in customer service environments reveal persistent challenges in enterprise CRM workflows. Huang et al. introduce CRMArena, a benchmark specifically designed to assess how well LLM-based agents can handle realistic Customer Relationship Management (CRM) workflows \cite{Huang}. CRM platforms play a central role in enterprise operations by managing customer interactions and supporting roles such as service managers, agents, and analysts. Despite the rapid advances in LLMs, it remains unclear how effectively these models perform when embedded into real operational CRM pipelines. CRMArena addresses this gap by providing a suite of nine expert-validated tasks that capture the complexity of real-world CRM processes, including knowledge lookup, case resolution, task routing, and multi-step reasoning across interconnected customer data.
+\\\\\
+The authors evaluate a range of state-of-the-art proprietary and open-source LLMs, GPT-4o, Claude 3.5 Sonnet, LLaMA-3.1 variants, and strong reasoning models such as O1 and DeepSeek-R1, across three agentic paradigms: Act, ReAct, and Function Calling. Performance patterns across the nine CRM tasks are summarized in Figure \ref{fig:crmarena-performance}, which reports F1 scores for open-ended QA and exact match accuracy for structured classification tasks. Results reveal that CRM workloads remain challenging even for the strongest systems: under ReAct, the top-performing model reaches only 57.7\% overall accuracy, and performance reaches 64.3\% even with human-designed functions. The study further shows that sophisticated function-calling pipelines benefit stronger LLMs like GPT-4o and Claude 3.5 but can degrade the performance of weaker models that struggle to use tools reliably. Conversely, the DeepSeek-R1 reasoning model underperforms due to inconsistent instruction-following and difficulty revising earlier steps according to feedback.
+\\\\
+Interestingly, open-source models such as LLaMA-3.1 demonstrate competitive performance, occasionally surpassing proprietary models in error recovery settings, suggesting a narrowing gap between closed and open architectures. Cost analysis in Figure \ref{fig:crmarena-cost} indicates that GPT-4o offers the strongest price-performance ratio, achieving high accuracy while requiring fewer interaction steps per query.
+\\\\
+Performance (\%) of major LLMs across Act, ReAct, and Function Calling frameworks in CRMArena are shown in Figure \ref{fig:crmarena-performance}. Performance is measured using F1 scores for the knowledge question answering (KQA) task, while all remaining tasks are evaluated using exact match. Abbreviations correspond to the evaluated tasks; New Case Routing (NCR), Handle Time Understanding (HTU), Transfer Count Understanding (TCU), Knowledge Question Answering (KQA), Top Issue Identification (TII), Monthly Trend Analysis (MTA), Best Region Identification (BRI). The “ALL” column denotes the average score across all tasks \cite{Huang}.
+\\\\
+Overall, CRMArena demonstrates that while LLM agents show promise for CRM automation, significant limitations remain. Even advanced models struggle with the structured, interdependent workflows characteristic of enterprise CRM environments, highlighting a persistent gap between current LLM capabilities and the requirements of production-grade customer service systems.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/review/CRM_Performance.png}
+    \caption{Overall performance (\%) of major LLMs in CRMArena}
+    \label{fig:crmarena-performance}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/review/CRM_Cost_Performance.png}
+    \caption{Cost, Tokens, and Turns across top-performing agents \cite{Huang}.}
+    \label{fig:crmarena-cost}
+\end{figure}
+
+\subsection{RAG Evaluation}
+Evaluating quality is a crucial component of developing a RAG system. Brehme et al. \cite{Brehme} note that multiple evaluation frameworks exist to measure different quality requirements, with Automated Evaluation of Retrieval Augmented Generation (RAGAS) being a widely used approach. RAGAS focuses on assessing retriever quality, particularly the relevance of retrieved documents. Such evaluations can be conducted using LLM-based relevance scoring \cite{James}, labeled benchmark datasets \cite{Tang}, or human judgments \cite{Afzal}.
+\\\\
+Beyond retrieval, the generator component is assessed for attributes such as faithfulness and correctness of the produced answer. Various methods can be applied here, including LLM judges \cite{James}, embedding-based similarity measures \cite{Kukreja}, token-level comparison techniques \cite{Li}, and human expert evaluation \cite{Pipitone}. In addition to output quality, system-level performance indicators such as retrieval speed and overall processing time are also used to evaluate the efficiency of RAG pipelines \cite{Kukreja}. Together, these metrics help determine how effectively each component of the RAG system functions.
+From an industrial and practical perspective, Brehme et al. report that evaluations were initially conducted manually. Domain experts reviewed retrieved documents and generated responses, assessing their relevance and correctness based on subjective human judgment. However, some organizations have begun shifting toward automation. 
+\\\\
+Beyond content quality metrics, practitioners also monitored interaction-related indicators. Several interview participants tracked the number of daily system requests to observe user engagement and adoption over time. They also evaluated the frequency and type of issues users encountered, using this information to identify common failure modes. Finally, operational metrics such as latency, responsiveness, and overall system stability were monitored to ensure the RAG implementation delivered a reliable user experience.
+\\\\
+Rivera et al. \cite{Rivera} evaluated their RAG-based chatbot using a structured test set and a comprehensive evaluation framework. To assess performance, they adopted DeepEval \cite{deepeval}, an open-source tool with native RAG support, which provides a wide range of metrics for language model evaluation, including precision, coherence, hallucination, and relevance.
+\\\\
+The evaluation set consisted of 23 queries derived from frequently asked questions identified with organizational stakeholders. These queries were divided into two categories: one to measure the performance of the RAG retrieval pipeline and another to assess the overall quality of generated responses. Each test case included five key components: the user query, an expert-validated expected answer, the model-generated response, the retrieved document context, and the conversational context. The underlying knowledge base comprised worker evaluation reports, organizational hierarchy data, and platform documentation. This setup allowed the authors to systematically compare expected and actual outputs while analyzing the retrieval context behind each response.
+\\\\
+For a detailed assessment, DeepEval's eight metrics were employed, scored from 0 to 1, with higher scores indicating better performance. The metrics were grouped into general response quality and RAG-specific performance. General metrics, including answer relevancy, bias, and toxicity, evaluated the usefulness, fairness, and safety of responses. RAG-focused metrics, such as faithfulness, contextual precision, contextual recall, contextual relevancy, and hallucination, measured how accurately and reliably the chatbot used retrieved information while minimizing omissions or factual errors.
+
+\subsection{Knoccs RAG Implementation}
+The Patel architecture is quite similar to the Knoccs requirements. Knoccs's knowledge base follows a centralized, searchable repository architecture where Knoccs documentation and product data are embedded using transformer-based models and stored in a vector database. Query processing follows the RAG pipeline: (1) user queries are embedded using the same model, (2) semantic similarity search retrieves the top-k most relevant documents from the vector database, (3) retrieved documents are concatenated as context, and (4) an LLM synthesizes an answer grounded in the provided context.\\
+
+It adopts several validated design principles from Patel's architecture. The system incorporates hybrid retrieval combining keyword matching (BM25) with dense embeddings to handle both exact-match queries (ticket IDs, client names, contract numbers) and semantic queries about processes or status, mirroring Patel's dual retrieval strategy. Following Patel's emphasis on factual grounding, Knoccs instructs the LLM to ground answers strictly in retrieved context and cite sources (ticket IDs, document names, timestamps) for auditability, preventing hallucination of client details or contract terms. Where Patel uses node2vec for embeddings, Knoccs adapts sentence transformers fine-tuned on CRM-specific text to improve retrieval quality for domain terminology and client communication patterns. Both systems prioritize real-time performance for interactive use, requiring efficient indexing and retrieval mechanisms suitable for production deployment.\\
+
+\section{Existing Work And Our Project}
+While the aforementioned approaches to design-to-code conversion and RAG-based systems have been extensively documented in research and industry, Spursol has not yet implemented such solutions for its Knoccs platform. Currently, Spursol's Knoccs website follows a conventional development workflow: designers create mockups in Figma, frontend developers manually translate these designs into code, and backend developers implement the necessary server-side functionality. This traditional approach, while functional, is time-intensive and prone to inconsistencies between design and implementation.
+\\\\
+Spursol aims to modernize its development process by establishing an automated design-to-code pipeline. The proposed system will enable designers to create design components in Figma and maintain a reusable component library that automatically generates Angular code. This bidirectional synchronization will ensure that modifications made in code are reflected back in the design system's component library, maintaining consistency across both domains.
+\\\\
+Additionally, Spursol currently lacks an intelligent client support system. They seek to implement a RAG-based chatbot that can leverage their knowledge base to efficiently address client inquiries, reducing response times and improving service quality.
+\\\\
+In summary, while the technologies and methodologies we are implementing have been proven effective in prior work, this project represents their first application within Spursol's Knoccs ecosystem. Our final year project focuses on adapting and integrating these established techniques to meet Spursol's specific requirements and workflow.

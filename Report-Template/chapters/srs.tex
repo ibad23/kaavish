@@ -1,23 +1,7 @@
-This chapter provides detailed specifications of the system under development.
-
 \section{Functional Requirements}
 
-% This section describes each function/feature provided by our system. These functions are logically grouped into modules based on their purpose/users/mode of operations etc (as per our system). A functional hierarchy may look like:
-% \begin{outline}
-%   \1 Module 1:
-%   \2 Function 1:
-%   \2 Function 2:
-%   \3 Sub Function 1
-%   \3 Sub Function 2
-%   \1 Module 2:
-%   \2 Function 1:
-%   \2 Function 2:
-%   \1 .........
-% \end{outline}
-
-% --- The above is to be modified as per your project, e.g. a flat list if your system has limited functional requirements.
-
 This section mentions the specific functional requirements of our design system, AI use-case, and features.
+
 \subsection{Design System}
 
 \subsubsection{Figma Integration and Token Management}
@@ -75,8 +59,8 @@ This section mentions the specific functional requirements of our design system,
     Before final export, validate all components against the design system to ensure consistent typography, color tokens, and spacing are applied across the project.
 \end{itemize}
 
-\subsection{AI Use Cases}
-\subsubsection{Knowledge Base (RAG)}
+\subsection{Knowledge Base (RAG)}
+
 \begin{itemize}
     \item \textbf{Description:} Centralized, searchable repository of Knoccs documents and product data
     \item The system must allow uploading, KNOCCS documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
@@ -94,42 +78,7 @@ This section mentions the specific functional requirements of our design system,
     \item The system must enforce role-based access control (RBAC) for sensitive documents.
 \end{itemize}
 
-
-\subsubsection{KNOCCS Co-Pilot}
-    \begin{itemize}
-        \item \textbf{{Description:}} AI assistant capable of suggesting configurations, generating workflows, and explaining features.
-        \item The system must provide an interactive chat or assistant interface accessible throughout the KNOCCS platform.
-        \item The system must accept natural-language instructions to generate or modify workflows (e.g., “Create a workflow for onboarding a new client”).
-        \item Connect to the Knowledge Base (RAG) and workflow APIs to provide contextual guidance.
-        \item The system must collect feedback on AI responses and use this feedback to fine-tune or retrain
-    \end{itemize}
-    
-\subsubsection{Adaptive AI/Recommendation Agent}
-\begin{itemize}
-    \item \textbf{Description: }Predictive automation and feature suggestions based on user behavior.
-    \item The system must capture and log user interactions (e.g., features accessed, actions taken, frequency of use).
-    \item The system must store behavioral data in a structured format suitable for AI model training and inference.
-    \item The system must allow administrators to enable or disable behavioral tracking per user or module.
-    \item The system must provide personalized feature or workflow suggestions based on recent user behavior.
-    \item The system must allow users to accept, ignore, or dismiss recommendations.
-    \item The system must log user responses to continuously improve future recommendations.
-    \item The system must learn repetitive user actions.
-    \item The system must allow users to review and approve any automated actions before execution.
-    \item The system must use feedback data to adjust recommendation and improve future predictions.
-\end{itemize}
-
 \subsection{Knoccs Feature Modules}
-\subsubsection{Workflow Management}
-\begin{itemize}
-    \item \textbf{Description: }Drag-and-drop workflow builder, trigger/action mapping, and execution engine.
-    \item The system must provide a drag-and-drop visual interface for creating and editing workflows.
-    \item The system must allow users to be able to draw connections between nodes to define the flow of logic.
-    \item The system must support defining triggers (e.g., “on form submission,” “on click)
-    \item The system must support mapping actions to triggers  (e.g., "Send Email," "Add Tag).
-    \item Users shall be able to save, name, and activate/deactivate workflows.
-    \item The system should execute the workflow in real-time when a trigger condition is met.
-    \item The system must maintain detailed audit logs for compliance and debugging.
-\end{itemize}
 
 \subsubsection{Tag Management}
 \begin{itemize}
@@ -139,17 +88,6 @@ This section mentions the specific functional requirements of our design system,
     \item When creating or editing a tag, the system must support color tokens for each tag, defined according to the design system.
     \item The system must ensure tags are searchable and filterable within each module.
     \item The system must restrict tag creation or editing based on user roles and permissions.
-\end{itemize}
-
-
-\subsubsection{Notification Management}
-\begin{itemize}
-    \item \textbf{Description:} Enables automated, consistent communication across email, SMS, and web channels using reusable templates and queued delivery.
-    \item The system must include a template builder for creating and managing reusable notification templates (email, SMS, web).
-    \item The system must integrate with message queues or job schedulers to handle asynchronous notification delivery.
-    \item The web UI shall display real-time notifications to  users.
-    \item The system shall allow other modules (e.g., Workflow Management) to trigger notifications.
-    \item The system must allow role-based access to template creation, editing, and deletion.
 \end{itemize}
 
 \subsubsection{Macro Management}
@@ -162,41 +100,6 @@ This section mentions the specific functional requirements of our design system,
     \item The system must restrict macro creation and editing based on user roles and permissions.
 \end{itemize}
 
-\subsubsection{Queuing System (Message Broker)}
-\begin{itemize}
-    \item \textbf{Description:} Integration with RabbitMQ or Kafka for reliable message processing with automatic retry handling and observability.
-    \item The system shall be integrated with a message broker (e.g., RabbitMQ)for asynchronous communication between services.
-    \item The system must be able to publish and consume messages to/from defined queues.
-    \item The system must detect message processing failures and automatically retry delivery based on configurable policies (e.g., retry count, delay).
-    \item The system must log all failed message attempts with timestamps and error details.
-    \item The system must provide a monitoring dashboard for viewing real-time message flow and errors.
-\end{itemize}
-
-\subsubsection{Report Builder}
-\begin{itemize}
-    \item \textbf{Description:} Enables dynamic report generation with export options (CSV/PDF) and automated scheduling.
-    \item The system must allow users to create and configure dynamic reports based on selected data sources, filters, and parameters.
-    \item The system must allow users to preview reports before exporting or scheduling them.
-    \item The system must allow users to schedule automatic report generation at defined intervals (e.g., daily, weekly, monthly).
-    \item Users shall be able to export the report data in different formats (e.g. as a CSV or PDF file).
-\end{itemize}
-
-\subsubsection{Webhook Microservice (Rust)}
-\begin{itemize}
-    \item \textbf{Description:} High-performance webhook handler with automatic retry and analytics capabilities.
-    \item The system must provide  secure HTTP endpoints to receive incoming webhook requests from external systems.
-    \item The system must validate webhook payloads and authentication headers before processing.
-    \item If the queue is unavailable, the service shall implement a local retry mechanism.
-    \item The service shall log all incoming requests, their source, and their processing status (e.g., "Accepted," "Failed").
-\end{itemize}
-
-% Initial Use Case Diagram
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/use_case.jpeg}
-    \caption{High-level use case diagram of the Knoccs system.}
-    \label{fig:use_case}
-\end{figure}
 
 \section{Non-functional Requirements}
 
@@ -276,9 +179,8 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Version Control \& Backup (Design):} The Figma design file itself must utilize Figma's built-in version history, with major milestones explicitly saved and named.
 \end{itemize}
 
-\subsection{AI Use Cases}
+\subsection{Knowledge Base (RAG)}
 
-\subsubsection{Knowledge Base (RAG)}
 \begin{itemize}
     \item \textbf{Performance:} A search query must return a fully generated answer in under 5 seconds.
     \item \textbf{Accuracy:} The relevance of retrieved documents must be $>$ 90\%. The generated answer must be factually consistent with the source documents.
@@ -286,32 +188,7 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
 \end{itemize}
 
-\subsubsection{KNOCCS Co-Pilot}
-\begin{itemize}
-    \item \textbf{Performance:} Conversational responses must be streamed to the user, with the first token appearing in $<$ 1 second.
-    \item \textbf{Accuracy:} Generated workflow configurations must be 100\% syntactically correct and logically valid. Explanations must be factually accurate.
-    \item \textbf{Security:} The Co-Pilot must not perform any action without explicit user confirmation. It must adhere to the user's existing permissions.
-    \item \textbf{Usability:} The Co-Pilot's language must be clear, helpful, and non-intrusive.
-\end{itemize}
-
-\subsubsection{Adaptive AI/Recommendation Agent}
-\begin{itemize}
-    \item \textbf{Performance:} Pattern analysis must run as a background batch process and must not impact real-time application performance.
-    \item \textbf{Usability:} Suggestions must be highly relevant. The system must not overwhelm the user with low-quality or "spam" suggestions (e.g., max 1-2 suggestions per day).
-    \item \textbf{Privacy/Compliance:} All behavior tracking must be clearly disclosed in the privacy policy and be compliant with data privacy regulations (e.g., GDPR). Users must be able to opt out.
-    \item \textbf{Explainability:} A suggestion should be able to explain \textit{why} it is being made (e.g., "I noticed you performed this action 10 times today").
-\end{itemize}
-
 \subsection{Knoccs Feature Modules}
-
-\subsubsection{Workflow Management}
-\begin{itemize}
-    \item \textbf{Performance:} A workflow must be triggered within 1 second of the event occurring. The visual builder must load in under 3 seconds.
-    \item \textbf{Usability:} The drag-and-drop interface must be intuitive, requiring minimal training for a non-technical user.
-    \item \textbf{Reliability:} The execution engine must guarantee "at-least-once" execution for all actions. A failure in one action should trigger a defined error-handling path (e.g., retry, log error).
-    \item \textbf{Scalability:} The system must be able to process 1,000+ workflow executions per minute.
-    \item \textbf{Compliance:} All components used must be WCAG 2.1 AA compliant.
-\end{itemize}
 
 \subsubsection{Tag Management}
 \begin{itemize}
@@ -319,14 +196,6 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Usability:} The tag selection interface must be an accessible, type-ahead autocomplete component.
     \item \textbf{Data Integrity:} Deleting a tag must not delete the objects it was applied to. The system should confirm if the tag should be removed from all objects.
     \item \textbf{Security:} Tag creation/deletion must be restricted to administrator roles.
-\end{itemize}
-
-\subsubsection{Notification Management}
-\begin{itemize}
-    \item \textbf{Reliability:} The notification system must ensure "at-least-once" delivery via the queue. A failure in an external gateway (e.g., SMS provider) must be logged and retried.
-    \item \textbf{Performance:} Web notifications must appear to the user in under 1 second. Asynchronous notifications (Email, SMS) must be sent from the queue within 60 seconds.
-    \item \textbf{Scalability:} The system must be able to queue and process 10,000+ notifications per hour.
-    \item \textbf{Security:} All templates must be sanitized to prevent XSS vulnerabilities from dynamic variables.
 \end{itemize}
 
 \subsubsection{Macro Management}
@@ -337,49 +206,129 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Security:} Users must only be able to execute macros they have permission for, and the macro's actions must respect the user's underlying permissions.
 \end{itemize}
 
-\subsubsection{Queuing System (Message Broker)}
+\section{External Interfaces}
+
+\subsection{User Interfaces}
+This section includes our mockup screens and briefly explains them.
+
+\textbf{AI usecase: RAG chatbot}
+\\\\
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/chatbot.png}
+    \caption{RAG chatbot}
+    \label{fig:rag}
+\end{figure}
+
+\textbf{Tag Management}
+\\\\
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/tag.png}
+    \caption{Tag management}
+    \label{fig:tag_srs}
+\end{figure}
+
+\textbf{Macro Management}
+\\\\
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.5\textwidth]{figures/srs/macro1.png} &
+        \includegraphics[width=0.5\textwidth]{figures/srs/macro2.png} \\
+        (a) Interface - Part 1 \& (b) Interface - Part 2
+    \end{tabular}
+    \caption{Feature: Drag-and-drop and Configuration Views}
+    \label{fig:macro}
+\end{figure}
+
+\section{Use Cases}
+This section presents detailed use cases of our system.
+Need to defines/describes all our Actors after their respective first use in the use-case diagrams.
+
+\subsection{Design System}
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/Design Use-Case Diagram.jpg}
+    \caption{Design Use-Case Diagram}
+    \label{fig:design_usecase}
+\end{figure}
+
+\subsection{Knowledge Base (RAG)}
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/RAG Use-Case Diagram.jpg}
+    \caption{RAG Use-Case Diagram}
+    \label{fig:rag_usecase}
+\end{figure}
+
+\subsection{Knoccs Feature Modules}
+
+\subsubsection{Tag Management}
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/Tag Use-Case Diagram.jpg}
+    \caption{Tag management Use-Case Diagram}
+    \label{fig:tag_usecase}
+\end{figure}
+
+\subsubsection{Macro Management}
+Need to write description here.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/Macro Use-Case Diagram.jpg}
+    \caption{Macro management Use-Case Diagram}
+    \label{fig:macro_usecase}
+\end{figure}
+
+\section{System Diagram}
+This diagram represents an integrated workflow combining design, component-based development, and Retrieval Augmented Generation (RAG) all connected through the Knoccs platform. Each module plays a distinct role in automating UI generation and enhancing platform functionality with AI.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{figures/srs/Block Diagram.jpg}
+    \caption{System Block Diagram}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Components}
 \begin{itemize}
-    \item \textbf{Reliability:} The system must guarantee "at-least-once" delivery. Messages must be persisted to disk to survive a broker restart.
-    \item \textbf{Performance:} The broker must support a throughput of at least 1,000 messages/second.
-    \item \textbf{Scalability:} The consumer services must be horizontally scalable (e.g., running in multiple containers) to handle increased load.
-    \item \textbf{Maintainability:} Adding a new queue and message type must be a documented process.
+    \item \textbf{Figma Design System} contains centralized UI/UX components and design tokens for Knoccs. It provides consistent styles, spacing, and components which forms the visual source of truth.
+    \item \textbf{Knoccs Codebase} houses the main engineering implementation of the product.
+    \item \textbf{Angular Component Library} contains reusable UI elements built for Knoccs. It offers shared, styled components that remain in sync with the design system, ensuring design consistency and reducing duplication across the codebase.
+    \item \textbf{Storybook Documentation} provides a visual reference for all components in the system. It auto-syncs with the Component Library and displays component states.
+    \item \textbf{RAG + LLM Layer} adds an intelligence engine on top of Knoccs data. It retrieves relevant documents and data through embeddings and vector search, enabling advanced AI assistance.
+    \item \textbf{Knoccs Data Sources} contain the system’s entire database including metadata, documents, and other essential information.
+    \item \textbf{Claude AI Agents} serve as the automated front-end code generation component. They retrieve all context directly from the Figma MCP Server, understand component structures and constraints, and generate front-end code that matches Knoccs development patterns.
 \end{itemize}
 
-\subsubsection{Report Builder}
+\subsection{Interactions}
 \begin{itemize}
-    \item \textbf{Performance:} Simple reports must load in under 5 seconds. Complex reports (e.g., $>$ 10,000 rows) must be processed asynchronously, and the user notified when the report is ready.
-    \item \textbf{Security:} Users must only be able to build reports based on data they have permission to access.
-    \item \textbf{Data Integrity:} Report data must be a consistent snapshot of the database at the time of execution.
-    \item \textbf{Usability:} The report builder interface must be intuitive for non-technical users.
+    \item \textbf{Figma MCP Server} exposes all design artifacts from Figma in a structured machine-readable form. It converts raw design data into a consistent protocol format, enabling tools to fetch live component, layout, and token updates directly from Figma.
+    \item \textbf{Figma Code Connect} maps Figma components to framework-ready code definitions and generates code metadata, props, and constraints to provide richer code context for LLMs.
 \end{itemize}
 
-\subsubsection{Webhook Microservice (Rust)}
-\begin{itemize}
-    \item \textbf{Performance:} The service must have a p99 response time of $>$ 50ms for accepting and queueing a payload.
-    \item \textbf{Scalability:} Services must be lightweight and able to handle 10,000+ requests per second (RPS).
-    \item \textbf{Reliability:} The service must have 99.99\% uptime. It must not lose any incoming data.
-    \item \textbf{Security:} The service must validate incoming payloads (e.g., via a shared secret or HMAC signature) to prevent malicious requests.
-\end{itemize}
-
-
-% \section{External Interfaces}
-
+% \section{Other Requirements}
 % We expect every project to have at least of the following subsections. This section must be aligned with your project deliverables. Please consult with your project supervisor regarding which of the following section(s) you should include in your report
 
-% \subsection{User Interfaces}
-% This section includes our mockup screens and briefly explains them.
+% \section{Datasets}
+% This section describes the specific dataset(s) used to build our system. An appropriate snapshot of the dataset(s) is also included. Futher details, when needed, are presented in the appendix.
 
 % \subsection{Application Program Interface (API)}
 % This section describes the library or API interface to our system.
 
 % \subsection{Hardware/Communication Interfaces}
 % This section describes our project's specific hardware/network interfaces.
-
-% \section{Use Cases}
-% This section presents detailed use cases of our system.
-
-% \section{Datasets}
-% This section describes the specific dataset(s) used to build our system. An appropriate snapshot of the dataset(s) is also included. Futher details, when needed, are presented in the appendix.
-
-% \section{System Diagram}
-% This diagram gives a high-level view of the different components of our system and the interactions between them. Each component and the particular tools/technologies/libraries used to build it are described.

@@ -1,17 +1,320 @@
 
-This chapter provides important artifacts related to design of our project.
+\section{Architecture Diagram}
 
-\section{Software Design}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/sds/Architecture Diagram.jpg}
+    \caption{Consolidated Architecture Diagram}
+    \label{fig:architecture_diagram}
+\end{figure}
 
-This section presents the UML class diagram and gives a brief description of each class in our system. Attributes and methods of each class and relationship among classes are clearly presented.
+\section{Design-to-Code Pipeline}
 
-% Your report will contain ONE of the following 2 sections.
+\subsection{Software Design}
 
-\section{Data Design}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/sds/Design Activity Diagram.jpg}
+    \caption{Activity Diagram}
+    \label{fig:design_activity_diagram}
+\end{figure}
 
-This section presents the structure of our database that caters to persistent data storage in our project. The structure is shown as a normalized data model for relational databases. It clearly shows entities, attributes, relationships with their cardinalities, and primary and foreign keys. We have used DB designer (or any other similar data modeling tool) to build our data model.
+\subsection{Data Design}
+A data design component is not necessary for this phase of the project, as it does not fall within the current scope.
+
+\subsection{Technical Details}
+
+\subsubsection{Figma Design System}
+
+\textbf{Purpose}: Source of truth for UI/UX: components, variants, tokens, documentation, and annotations made by designers.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Contain atomic components (buttons, cards), composed screens, layout rules, and design tokens (colors, spacing, typography).
+    \item Provide developer annotations and mapping hints (e.g., data-code: Button, prop names, usage notes).
+    \item Serve as input for automated sync (MCP Server).
+\end{itemize}
+
+\subsubsection{Figma MCP Server (Model Context Protocol Server)}
+
+\textbf{Purpose}: Expose Figma design metadata and code-generation helper tools in a machine-friendly interface that LLMs can call.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Provide an API with endpoints that expose component metadata, tokens, and related information.
+    \item Serve as the “tool” layer LLMs call to inspect the UI structure, request design snippets, or request code templates.
+\end{itemize}
+
+\subsubsection{LLM Code Generation Agents (Claude / GPT)}
+
+\textbf{Purpose}: Read design metadata via MCP tools and generate code artifacts, Angular components, CSS tokens, and Storybook stories.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Interpret design metadata and mapping rules.
+    \item Produce code matching the repository conventions.
+    \item Run code-formatting, tests, and generate Storybook documentation for the particular component.
+\end{itemize}
+
+\textbf{Inputs}: MCP tool outputs, mapping config, LLM prompts. 
+\textbf{Outputs}: TS/HTML/SCSS files, Storybook stories, component metadata.
+
+\subsubsection{Code Connect (Mapping layer between Figma and Knoccs codebase)}
+
+\textbf{Purpose}: Ensure generated code is integrated into the Knoccs codebase correctly and that each generated artifact has a link back to its Figma source.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Map component IDs $\leftrightarrow$ file paths $\leftrightarrow$ Storybook stories.
+    \item Validate style token usage and CSS variable mapping.
+\end{itemize}
+
+\subsubsection{Component Library \& Storybook: @knoccs/ui}
+
+\textbf{Purpose}: Central reusable component library (Angular) implementing design tokens and patterns; Storybook provides living documentation and QA.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Host components used across the platform.
+    \item Serve Storybook for visual validation and documentation.
+\end{itemize}
+
+\subsubsection{Knoccs App}
+
+\textbf{Purpose}: The production application for end users that import @knoccs/ui components.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Compose pages \& screens, handle user workflows, call backend APIs.
+    \item Provide the Macro Composer UI, Tag Management UI, and Knowledge Base search UI.
+\end{itemize}
+
+\section{Knowledge Base}
+
+\subsection{Software Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/RAG Architecture Diagram.jpg}
+    \caption{Knowledge Base Architecture Diagram}
+    \label{fig:rag_architecture_diagram}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/RAG Activity Diagram.jpg}
+    \caption{Knowledge Base Activity Diagram}
+    \label{kb_activity}
+\end{figure}
+
+\subsection{Data Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/sds/RAG Data Pipeline.jpg}
+    \caption{Knowledge Base Data Pipeline}
+    \label{kb_pipeline}
+\end{figure}
+
+\subsection{Technical Details}
+
+\subsubsection{Knowledge Base (RAG)}
+
+\textbf{Purpose}: Provide contextual, evidence-backed answers by combining document retrieval (vector search) with LLM generation.
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Ingest documents (PDF/HTML/MD), chunk them, and preprocess text.
+    \item Generate embeddings and store them (pgvector).
+    \item Serve similarity search queries and assemble prompt context.
+    \item Call LLM with retrieved context and return answer with citations.
+\end{itemize}
+
+\subsubsection{Storage \& VectorDB (Postgres, Azure Storage, Pgvector)}
+
+\textbf{Purpose}: Single storage substrate for relational data and embeddings (vector search).
+\\\\
+\textbf{Responsibilities}
+\begin{itemize}
+    \item Persist relational data (users, tags, macros).
+    \item Persist embeddings in vector columns with indexes.
+    \item Main tables: users, tags, resources, macros, documents, embeddings (vector)
+\end{itemize}
+
+\newpage
+
+\subsubsection{Data Ingestion Phase}
+Reference: Knowledge Base Data Pipeline (Figure \ref{kb_pipeline})
+\\\\
+This stage represents the asynchronous ETL (Extract, Transform, Load) process required to build the semantic knowledge base. It is responsible for converting raw, unstructured, and structured data into a format that retrieval systems can query.
+
+\begin{itemize}
+
+    \item \textbf{Data Extraction \& Consolidation:} The pipeline begins at the Database Layer, extracting raw data from sources such as PostgreSQL and Azure Storage. This data passes through a Data Consolidation Layer, where it is aggregated into logical groupings (Workspaces, Entities, and Collaboration objects) to ensure the data retains its relational context.
+
+    \item \textbf{Contextual Processing:} The consolidated data enters the Context Layer, where it undergoes three critical transformation steps:
+    
+    \begin{itemize}
+    
+    \item \textbf{Categorization:} Classifying data into their respective clients.
+    
+    \item \textbf{Text Splitting:} Chunking large documents into manageable tokens to fit context windows.
+    
+    \item \textbf{Embedding Generation:} Passing chunks through an Embedding Model to convert text into high-dimensional vector representations.
+
+    \end{itemize}
+    
+    \item \textbf{Indexing:} Finally, these vectors are stored in the Vector Database (Pgvector), creating a searchable semantic index that serves as the foundation for the inference stage.
+
+\end{itemize}
+
+\subsubsection{Data Inference Phase}
+Reference: Knowledge Base Activity Diagram (Figure \ref{kb_activity})
+\\\\
+This stage details the synchronous, real-time workflow triggered when a user interacts with the system. It utilizes the pre-processed Vector DB to augment the LLM's response.
+
+\begin{itemize}
+
+    \item \textbf{Query Vectorization:} The process initiates in the User swimlane with a "Request Input." The system passes this query to the Embedding Model (the same model used in the ingestion phase) to create a vector representation of the user's intent.
+
+    \item \textbf{Semantic Retrieval:} The system queries the Vector DB using the user's input vector. It performs a similarity search (e.g., Cosine Similarity) to retrieve the "Best Search Results"—the most relevant data chunks ingested during the first stage.
+    
+    \item \textbf{Context Assembly (Prompt Engineering):} The system constructs a composite prompt in the "Preparing the Model Input" step. This package includes:
+    
+    \begin{itemize}
+        
+        \item The original User Input.
+        
+        \item The retrieved Search Results (Context).
+        
+        \item System Instructions (Guardrails/Persona).
+    
+    \end{itemize}
+    
+    \item \textbf{Generation:} This enriched context is passed to the LLM. The model processes the input in the LLM swimlane and generates a grounded response, which is returned to the user as the final output.
+    
+\end{itemize}
+
+\newpage
+
+\section{Functionalities}
+
+\subsection{Software Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/Tag Activity Diagram.jpg}
+    \caption{Tag Management Activity Diagram}
+    \label{fig:tag_activity_diagram}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/Macro Activity Diagram.jpg}
+    \caption{Macro Management Activity Diagram}
+    \label{fig:macro_activity_diagram}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/sds/Func UML Diagram.png}
+    \caption{Consolidated UML Diagram}
+    \label{uml}
+\end{figure}
+
+\subsection{Data Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/sds/Func ERD.jpg}
+    \caption{Consolidated ERD}
+    \label{fig:functional_erd}
+\end{figure}
+
+\subsection{Technical Details}
+
+\subsubsection{System Context}
+The technical specifications detailed below represent functional extensions to the existing \textbf{Knoccs} platform. These modules (Tag Management and Macro Management) are designed as additive micro-features that integrate with the core system without disrupting established workflows. The legacy Knoccs architecture remains the foundation, with these new components leveraging existing authentication and database connectivity.
+
+\subsubsection{Tag Management System}
+
+\textbf{Purpose}: Create, manage, and apply tags to entities and provide tag analytics.
+\\\\
+\textbf{Responsibilities}
+
+\begin{itemize}
+    \item CRUD for tags, color/token mapping, and preview chips.
+    \item Assign/unassign tags to emails/conversations.
+    \item Provide usage statistics and filters used by UIs and RAG search.
+\end{itemize}
+
+\subsubsection{Macro Management System}
+
+\textbf{Purpose}: Create, manage, and execute reusable macros to automate common actions, responses, and workflows across the platform.
+\\\\
+\textbf{Responsibilities}
+
+\begin{itemize}
+    \item CRUD operations for macros, including title, body content, dynamic variables, and execution rules.
+    \item Apply macros to emails, conversations, and system workflows for quick responses or automated actions.
+    \item Provide macro search, categorization, and filter capabilities to improve discoverability.
+\end{itemize}
+
+\subsubsection{Architectural Design: The Repository Pattern}
+To maintain code maintainability and separation of concerns, the implementation follows the \textbf{Repository Pattern}. This architecture decouples the business logic from data access, ensuring the application remains agnostic to changes in the underlying database.
+
+As illustrated in the UML Diagram (Figure \ref{uml}), the system is divided into three distinct layers:
+
+\begin{itemize}
+    \item \textbf{Data Models (Structure):} Located in the \texttt{Models} package, these are objects that represent the database schema. They define the properties and relationships of the entities, such as \texttt{Tag}, \texttt{EntityTag}, \texttt{Macro}, and \texttt{InboxMacro}. These models serve as the data transfer objects between layers.
+    
+    \item \textbf{Repository Layer (Data Access):} Defined in the \texttt{Repositories} package (e.g., \texttt{ITagRepo}, \texttt{IMacroRepo}), this layer is responsible for all direct database interactions. It encapsulates the SQL queries and commands required to CRUD (Create, Read, Update, Delete) data. By abstracting the data layer, we ensure that raw SQL or ORM logic is isolated from the business rules.
+    
+    \item \textbf{Business Layer (Logic):} The \texttt{Business\_Layer} (e.g., \texttt{TagService}, \texttt{MacroService}) contains the core application logic. This layer consumes the Repositories to retrieve data, processes it according to business rules (such as validating permissions or formatting data), and passes the results to the API controllers. For example, \texttt{TagService} depends on \texttt{ITagRepo} to fetch data, but performs the logic of filtering or validation before returning it.
+\end{itemize}
+
+\subsubsection{API Specifications}
+The following RESTful API endpoints have been defined to expose the functionality of the new modules to the client side.
+\\\\
+\textbf{Tag Management}
+
+\begin{itemize}
+    \item \texttt{GET /api/tags/modules/\{clientId\}/\{moduleId\}} \\ Retrieves a list of all tags available for a specific module and client.
+    \item \texttt{GET /api/tags/\{id\}} \\ Fetches the details of a single tag by its unique ID.
+    \item \texttt{POST /api/tags} \\ Creates a new tag definition within a module.
+    \item \texttt{PUT /api/tags/\{id\}} \\ Updates the properties (e.g., name, color) of an existing tag.
+    \item \texttt{DELETE /api/tags/\{id\}} \\ Permanently removes a tag definition from the system.
+    \item \texttt{POST /api/tags/entity} \\ Assigns an existing tag to a specific entity record (utilizing the \texttt{EntityTag} association).
+    \item \texttt{DELETE /api/tags/entity} \\ Dissociates (removes) a tag from a specific entity.
+\end{itemize}
+
+\textbf{Macro Management}
+\\\\
+\textit{Note: The Macro management system utilizes "Snippet" nomenclature in the API routes to maintain consistency with the frontend implementation.}
+
+\begin{itemize}
+    \item \texttt{GET /api/snippets?clientId=\{\}} \\ Lists all available macros/snippets for a given client context.
+    \item \texttt{GET /api/snippets/\{id\}} \\ Retrieves the full body and details of a specific macro.
+    \item \texttt{POST /api/snippets} \\ Creates a new macro template.
+    \item \texttt{PUT /api/snippets/\{id\}} \\ Updates an existing macro's content or title.
+    \item \texttt{DELETE /api/snippets/\{id\}} \\ Deletes a macro from the library.
+    \item \texttt{POST /api/snippets/\{id\}/inboxes} \\ Assigns a specific macro to one or more inboxes, controlling availability scope.
+    \item \texttt{DELETE /api/snippets/\{id\}/inboxes/\{inboxId\}} \\ Removes the assignment of a macro from a specific inbox.
+\end{itemize}
+
+% This chapter provides important artifacts related to design of our project.
+
+% \section{Software Design}
+
+% This section presents the UML class diagram and gives a brief description of each class in our system. Attributes and methods of each class and relationship among classes are clearly presented.
+
+% % Your report will contain ONE of the following 2 sections.
+
+% \section{Data Design}
+
+% This section presents the structure of our database that caters to persistent data storage in our project. The structure is shown as a normalized data model for relational databases. It clearly shows entities, attributes, relationships with their cardinalities, and primary and foreign keys. We have used DB designer (or any other similar data modeling tool) to build our data model.
 
  
-\section{Technical Details}
+% \section{Technical Details}
 
-Our project does not have persistent data so we have no ERD. Instead we exaplin here the technical details of the algortihsm we use. These include the inputs and the outputs, how and where these algorothms fit in our tool chain, the techniques used in these algorithms, etc.
+% Our project does not have persistent data so we have no ERD. Instead we exaplin here the technical details of the algortihsm we use. These include the inputs and the outputs, how and where these algorothms fit in our tool chain, the techniques used in these algorithms, etc.
