@@ -17,6 +17,8 @@
 \usepackage{upquote}  % prevent mishandling of single quotes in listings
 \usepackage{subcaption} % for subfigures
 \usepackage{float}
+\usepackage{amsmath}   % math environments and \text command
+\usepackage[T1]{fontenc}  % proper font encoding for special characters in listings
 
 % TODO: Customize the appearance of hyperref links using \hypersetup
 % See https://en.wikibooks.org/wiki/LaTeX/Hyperlinks#Customization
@@ -43,13 +45,49 @@
 \include{approval}  % approval page.
 
 \chapter*{Dedication}
-For ammi, abbu, and pappu.
+
+\textit{For our parents,} \\
+who supported us in every way possible, just so we could stand here today. Every late night we spent, you spent worrying. Everything we have done in our lives was built on the foundation you laid. This is as much yours as it is ours.\\[1em]
+\\
+\textit{For our friends,} \\
+who made this entire journey bearable, for the laughter between and after deadlines, the moral support during breakdowns, and for simply being there during the good times and the bad.\\[1em]
+\\
+\textit{For all our teachers and mentors,} \\
+who pushed us beyond what we thought was possible, who challenged us to think critically and creatively, and who provided us with the tools and knowledge to build something meaningful. We are grateful for the guidance and support you have given us throughout our academic journey.\\[1em]
+\\
+\textit{And for this incredible team,} \\
+for the countless hours of hard work, the dedication to excellence, and the persistence in the face of many challenges. This project would not have been possible without each other's support, encouragement, and collaboration. 
+We started this journey unsure of where it would lead, and we are proud of say we finished it.
 
 \chapter*{Acknowledgements}
-We want to thank the CS faculty and \ldots
+
+We would like to express our sincere gratitude to all those who contributed to the completion of this project.
+\\\\
+First and foremost, we thank our internal supervisor, \textbf{Dr.\ Qasim Pasta}, for his unwavering guidance throughout the whole project. His emphasis on rigorous methodology, clear documentation, and the algorithmic depth of our work pushed us to produce something we are truly proud of. 
+% His feedback shaped the direction of this report and our approach at every stage.
+\\\\
+We are deeply grateful to our external supervisor, \textbf{Uzair Ahmed}, for giving us the opportunity to work on a real-world product at SpurSol. His mentorship, patience, and trust in our abilities allowed us to work within a professional environment and tackle challenges that extended far beyond the classroom.
+\\\\
+We extend our heartfelt thanks to the entire \textbf{Knoccs team at SpurSol} for their continuous support:
+\begin{itemize}
+    \item \textbf{Ammar}, for his thorough code reviews, detailed PR feedback, and the foundational instruction files that guided our whole pipeline.
+    \item \textbf{Sheema}, for her invaluable design feedback on our generated components and Storybook stories, ensuring they met the design system standards.
+    % \item \textbf{Asad}, for his support and coordination throughout the project.
+    \item And everyone else at SpurSol who made us feel like part of the team.
+\end{itemize}
+We would also like to thank the \textbf{faculty of the Computer Science department at Habib University} for the education and mentorship that prepared us for a project of this scope.
+\\\\
+Finally, we thank our \textbf{friends at Habib University}, for keeping up with our constant project talk, for the encouragement during stressful weeks, and for making our university experience one worth remembering.
 
 \chapter*{Abstract}
-Abstract goes here
+
+This project addresses the disconnect between UI design and code implementation, and the lack of intelligent knowledge retrieval in CRM platforms, within the context of SpurSol's Knoccs platform.
+\\\\
+For Design-to-Code, we developed an iterative prompt engineering methodology for Claude Code connected to Figma via Model Context Protocol (MCP) server. The instruction set evolved through nine iterations into a seven-phase, multi-agent pipeline with eight specialized agents and human-in-the-loop governance. Using this pipeline, 20 Angular components were generated from Figma designs, achieving an average CLIP visual similarity of 82.6\%, validated through behavioral unit testing and Storybook visual verification. A sync pipeline was built to keep components synchronized with evolving designs at 80--90\% automation, and its applicability was demonstrated through Tag and Macro Management feature implementation.
+\\\\
+For the Knowledge Base, a RAG system was implemented combining BM25 keyword search, dense vector search with pgvector, and cross-encoder re-ranking, with company-level data isolation and multi-turn conversation support. The system was evaluated using DeepEval across 52 ground truth queries measuring Answer Relevancy, Faithfulness, and Contextual Precision, and was fully integrated into the Knoccs platform.
+\\\\
+Both pipelines were developed in collaboration with SpurSol and validated against a real production codebase.
 
 % The following are automatically populated by LaTeX \chapter, \section and related, \figure, and \table.
 \tableofcontents
@@ -72,7 +110,7 @@ Abstract goes here
 \label{chap:sds}
 \input{chapters/sds}
 
-\chapter{Methodology, Experiments and Results OR Testing and Analysis}
+\chapter{Methodology, Experiments and Results}
 \label{chap:results}
 \input{chapters/results}
 

@@ -89,6 +89,111 @@ A data design component is not necessary for this phase of the project, as it do
     \item Provide the Macro Composer UI, Tag Management UI, and Knowledge Base search UI.
 \end{itemize}
 
+\section{Functionalities}
+
+\subsection{Software Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/Tag Activity Diagram.jpg}
+    \caption{Tag Management Activity Diagram}
+    \label{fig:tag_activity_diagram}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/sds/Macro Activity Diagram.jpg}
+    \caption{Macro Management Activity Diagram}
+    \label{fig:macro_activity_diagram}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/sds/Func UML Diagram.png}
+    \caption{Consolidated UML Diagram}
+    \label{uml}
+\end{figure}
+
+\subsection{Data Design}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/sds/Func ERD.jpg}
+    \caption{Consolidated ERD}
+    \label{fig:functional_erd}
+\end{figure}
+
+\subsection{Technical Details}
+
+\subsubsection{System Context}
+The technical specifications detailed below represent functional extensions to the existing \textbf{Knoccs} platform. These modules (Tag Management and Macro Management) are designed as additive micro-features that integrate with the core system without disrupting established workflows. The legacy Knoccs architecture remains the foundation, with these new components leveraging existing authentication and database connectivity.
+
+\subsubsection{Tag Management System}
+
+\textbf{Purpose}: Create, manage, and apply tags to entities and provide tag analytics.
+\\\\
+\textbf{Responsibilities}
+
+\begin{itemize}
+    \item CRUD for tags, color/token mapping, and preview chips.
+    \item Assign/unassign tags to emails/conversations.
+    \item Provide usage statistics and filters used by UIs and RAG search.
+\end{itemize}
+
+\subsubsection{Macro Management System}
+
+\textbf{Purpose}: Create, manage, and execute reusable macros to automate common actions, responses, and workflows across the platform.
+\\\\
+\textbf{Responsibilities}
+
+\begin{itemize}
+    \item CRUD operations for macros, including title, body content, dynamic variables, and execution rules.
+    \item Apply macros to emails, conversations, and system workflows for quick responses or automated actions.
+    \item Provide macro search, categorization, and filter capabilities to improve discoverability.
+\end{itemize}
+
+\subsubsection{Architectural Design: The Repository Pattern}
+To maintain code maintainability and separation of concerns, the implementation follows the \textbf{Repository Pattern}. This architecture decouples the business logic from data access, ensuring the application remains agnostic to changes in the underlying database.
+
+As illustrated in the UML Diagram (Figure \ref{uml}), the system is divided into three distinct layers:
+
+\begin{itemize}
+    \item \textbf{Data Models (Structure):} Located in the \texttt{Models} package, these are objects that represent the database schema. They define the properties and relationships of the entities, such as \texttt{Tag}, \texttt{EntityTag}, \texttt{Macro}, and \texttt{InboxMacro}. These models serve as the data transfer objects between layers.
+    
+    \item \textbf{Repository Layer (Data Access):} Defined in the \texttt{Repositories} package (e.g., \texttt{ITagRepo}, \texttt{IMacroRepo}), this layer is responsible for all direct database interactions. It encapsulates the SQL queries and commands required to CRUD (Create, Read, Update, Delete) data. By abstracting the data layer, we ensure that raw SQL or ORM logic is isolated from the business rules.
+    
+    \item \textbf{Business Layer (Logic):} The \texttt{Business\_Layer} (e.g., \texttt{TagService}, \texttt{MacroService}) contains the core application logic. This layer consumes the Repositories to retrieve data, processes it according to business rules (such as validating permissions or formatting data), and passes the results to the API controllers. For example, \texttt{TagService} depends on \texttt{ITagRepo} to fetch data, but performs the logic of filtering or validation before returning it.
+\end{itemize}
+
+\subsubsection{API Specifications}
+The following RESTful API endpoints have been defined to expose the functionality of the new modules to the client side.
+\\\\
+\textbf{Tag Management}
+
+\begin{itemize}
+    \item \texttt{GET /api/tags/modules/\{clientId\}/\{moduleId\}} \\ Retrieves a list of all tags available for a specific module and client.
+    \item \texttt{GET /api/tags/\{id\}} \\ Fetches the details of a single tag by its unique ID.
+    \item \texttt{POST /api/tags} \\ Creates a new tag definition within a module.
+    \item \texttt{PUT /api/tags/\{id\}} \\ Updates the properties (e.g., name, color) of an existing tag.
+    \item \texttt{DELETE /api/tags/\{id\}} \\ Permanently removes a tag definition from the system.
+    \item \texttt{POST /api/tags/entity} \\ Assigns an existing tag to a specific entity record (utilizing the \texttt{EntityTag} association).
+    \item \texttt{DELETE /api/tags/entity} \\ Dissociates (removes) a tag from a specific entity.
+\end{itemize}
+
+\textbf{Macro Management}
+\\\\
+\textit{Note: The Macro management system utilizes "Snippet" nomenclature in the API routes to maintain consistency with the frontend implementation.}
+
+\begin{itemize}
+    \item \texttt{GET /api/snippets?clientId=\{\}} \\ Lists all available macros/snippets for a given client context.
+    \item \texttt{GET /api/snippets/\{id\}} \\ Retrieves the full body and details of a specific macro.
+    \item \texttt{POST /api/snippets} \\ Creates a new macro template.
+    \item \texttt{PUT /api/snippets/\{id\}} \\ Updates an existing macro's content or title.
+    \item \texttt{DELETE /api/snippets/\{id\}} \\ Deletes a macro from the library.
+    \item \texttt{POST /api/snippets/\{id\}/inboxes} \\ Assigns a specific macro to one or more inboxes, controlling availability scope.
+    \item \texttt{DELETE /api/snippets/\{id\}/inboxes/\{inboxId\}} \\ Removes the assignment of a macro from a specific inbox.
+\end{itemize}
+
 \section{Knowledge Base}
 
 \subsection{Software Design}
@@ -193,113 +298,6 @@ This stage details the synchronous, real-time workflow triggered when a user int
     
     \item \textbf{Generation:} This enriched context is passed to the LLM. The model processes the input in the LLM swimlane and generates a grounded response, which is returned to the user as the final output.
     
-\end{itemize}
-
-\newpage
-
-\section{Functionalities}
-
-\subsection{Software Design}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\linewidth]{figures/sds/Tag Activity Diagram.jpg}
-    \caption{Tag Management Activity Diagram}
-    \label{fig:tag_activity_diagram}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\linewidth]{figures/sds/Macro Activity Diagram.jpg}
-    \caption{Macro Management Activity Diagram}
-    \label{fig:macro_activity_diagram}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{figures/sds/Func UML Diagram.png}
-    \caption{Consolidated UML Diagram}
-    \label{uml}
-\end{figure}
-
-\subsection{Data Design}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{figures/sds/Func ERD.jpg}
-    \caption{Consolidated ERD}
-    \label{fig:functional_erd}
-\end{figure}
-
-\subsection{Technical Details}
-
-\subsubsection{System Context}
-The technical specifications detailed below represent functional extensions to the existing \textbf{Knoccs} platform. These modules (Tag Management and Macro Management) are designed as additive micro-features that integrate with the core system without disrupting established workflows. The legacy Knoccs architecture remains the foundation, with these new components leveraging existing authentication and database connectivity.
-
-\subsubsection{Tag Management System}
-
-\textbf{Purpose}: Create, manage, and apply tags to entities and provide tag analytics.
-\\\\
-\textbf{Responsibilities}
-
-\begin{itemize}
-    \item CRUD for tags, color/token mapping, and preview chips.
-    \item Assign/unassign tags to emails/conversations.
-    \item Provide usage statistics and filters used by UIs and RAG search.
-\end{itemize}
-
-\subsubsection{Macro Management System}
-
-\textbf{Purpose}: Create, manage, and execute reusable macros to automate common actions, responses, and workflows across the platform.
-\\\\
-\textbf{Responsibilities}
-
-\begin{itemize}
-    \item CRUD operations for macros, including title, body content, dynamic variables, and execution rules.
-    \item Apply macros to emails, conversations, and system workflows for quick responses or automated actions.
-    \item Provide macro search, categorization, and filter capabilities to improve discoverability.
-\end{itemize}
-
-\subsubsection{Architectural Design: The Repository Pattern}
-To maintain code maintainability and separation of concerns, the implementation follows the \textbf{Repository Pattern}. This architecture decouples the business logic from data access, ensuring the application remains agnostic to changes in the underlying database.
-
-As illustrated in the UML Diagram (Figure \ref{uml}), the system is divided into three distinct layers:
-
-\begin{itemize}
-    \item \textbf{Data Models (Structure):} Located in the \texttt{Models} package, these are objects that represent the database schema. They define the properties and relationships of the entities, such as \texttt{Tag}, \texttt{EntityTag}, \texttt{Macro}, and \texttt{InboxMacro}. These models serve as the data transfer objects between layers.
-    
-    \item \textbf{Repository Layer (Data Access):} Defined in the \texttt{Repositories} package (e.g., \texttt{ITagRepo}, \texttt{IMacroRepo}), this layer is responsible for all direct database interactions. It encapsulates the SQL queries and commands required to CRUD (Create, Read, Update, Delete) data. By abstracting the data layer, we ensure that raw SQL or ORM logic is isolated from the business rules.
-    
-    \item \textbf{Business Layer (Logic):} The \texttt{Business\_Layer} (e.g., \texttt{TagService}, \texttt{MacroService}) contains the core application logic. This layer consumes the Repositories to retrieve data, processes it according to business rules (such as validating permissions or formatting data), and passes the results to the API controllers. For example, \texttt{TagService} depends on \texttt{ITagRepo} to fetch data, but performs the logic of filtering or validation before returning it.
-\end{itemize}
-
-\subsubsection{API Specifications}
-The following RESTful API endpoints have been defined to expose the functionality of the new modules to the client side.
-\\\\
-\textbf{Tag Management}
-
-\begin{itemize}
-    \item \texttt{GET /api/tags/modules/\{clientId\}/\{moduleId\}} \\ Retrieves a list of all tags available for a specific module and client.
-    \item \texttt{GET /api/tags/\{id\}} \\ Fetches the details of a single tag by its unique ID.
-    \item \texttt{POST /api/tags} \\ Creates a new tag definition within a module.
-    \item \texttt{PUT /api/tags/\{id\}} \\ Updates the properties (e.g., name, color) of an existing tag.
-    \item \texttt{DELETE /api/tags/\{id\}} \\ Permanently removes a tag definition from the system.
-    \item \texttt{POST /api/tags/entity} \\ Assigns an existing tag to a specific entity record (utilizing the \texttt{EntityTag} association).
-    \item \texttt{DELETE /api/tags/entity} \\ Dissociates (removes) a tag from a specific entity.
-\end{itemize}
-
-\textbf{Macro Management}
-\\\\
-\textit{Note: The Macro management system utilizes "Snippet" nomenclature in the API routes to maintain consistency with the frontend implementation.}
-
-\begin{itemize}
-    \item \texttt{GET /api/snippets?clientId=\{\}} \\ Lists all available macros/snippets for a given client context.
-    \item \texttt{GET /api/snippets/\{id\}} \\ Retrieves the full body and details of a specific macro.
-    \item \texttt{POST /api/snippets} \\ Creates a new macro template.
-    \item \texttt{PUT /api/snippets/\{id\}} \\ Updates an existing macro's content or title.
-    \item \texttt{DELETE /api/snippets/\{id\}} \\ Deletes a macro from the library.
-    \item \texttt{POST /api/snippets/\{id\}/inboxes} \\ Assigns a specific macro to one or more inboxes, controlling availability scope.
-    \item \texttt{DELETE /api/snippets/\{id\}/inboxes/\{inboxId\}} \\ Removes the assignment of a macro from a specific inbox.
 \end{itemize}
 
 % This chapter provides important artifacts related to design of our project.

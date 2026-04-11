@@ -1,9 +1,19 @@
 \section{Problem Statement}
-% This section explains the problem we are solving and our motivation to do so.
-One of the biggest challenges in product development today is the disconnect between design and implementation. Designers create visually appealing and user-friendly interfaces in Figma, the design tool of choice for UI/UX professionals, but translating these designs into production-ready code requires significant time, effort, and communication between design and engineering teams. Design systems are the backbone of scalable SaaS products, bringing together reusable components, design guidelines, and patterns that speed up development and enhance the user experience. Existing B2B SaaS platforms struggle to maintain a unified design system and visual consistency that would allow them to scale rapidly while integrating intelligent automation. 
+
+\subsection{The Design-Implementation Gap}
+One of the biggest challenges in product development today is the disconnect between design and implementation. Designers create visually appealing and user-friendly interfaces in Figma, the design tool of choice for UI/UX professionals, but translating these designs into production-ready code requires significant manual effort. Frontend developers must interpret design specifications like colors, spacing, typography, component states, and interactions and re-implement them in code, a process that is time-consuming, error-prone, and heavily dependent on communication between design and engineering teams. Even minor misinterpretations can result in visual inconsistencies that accumulate across an application, degrading user experience and requiring costly rework.
+
+\subsection{Design System Scalability}
+Design systems are the backbone of scalable SaaS products, bringing together reusable components, design guidelines, and patterns that speed up development and enhance the user experience. However, maintaining a unified design system across a growing codebase is a persistent challenge. As components evolve in Figma, their code counterparts often fall out of sync, designers update a component's spacing or color tokens, but the corresponding Angular code retains the old values. Existing B2B SaaS platforms, including SpurSol's Knoccs, struggle to maintain this synchronization at scale. Without an automated mechanism to detect and propagate design changes to code, teams rely on manual audits that are both incomplete and unsustainable as the component library grows.
+
+\subsection{Lack of Intelligent Knowledge Retrieval}
+Beyond the design-to-code challenge, modern CRM platforms like Knoccs handle vast amounts of client-specific data: emails, conversations, internal notes, tasks, attachments, and organizational documents. This knowledge is scattered across databases, storage systems, and individual team members, making it difficult for support agents to quickly retrieve accurate, contextual answers to client queries. Without an intelligent retrieval system, agents must manually search through documents and communication histories, leading to slower response times, inconsistent answers, and an overall decline in service quality. There is a clear need for a system that can consolidate this fragmented knowledge and provide grounded, evidence-backed responses in real time.
+
+\subsection{The Knoccs Context}
+SpurSol's Knoccs platform exemplifies all three of these challenges. Its development workflow follows a conventional pattern: designers create mockups in Figma, frontend developers manually translate these into Angular code, and backend developers implement server-side functionality independently. There is no automated pipeline connecting design to code, no mechanism for keeping components in sync with evolving designs, and no AI-powered system for intelligent client support. This project, therefore, targets a real production environment where these problems directly impact development velocity, code quality, and customer service efficiency.
+
 \section{Proposed Solution}
-% This section gives a summary of our proposed solution, i.e. how does it solve the problem? An overview of the system is provided. A detailed description of each module of the system is presented later in Chapter ~\ref{chap:intro}.
-This project, Design-to-Code with Knoccs by SpurSol, seeks to solve these challenges by creating a scalable design-to-code pipeline that allows design components to automatically translate into production-ready code. This project specifically aims to revamp the Knoccs design system and develop a multi-agent AI layer capable of autonomously generating various components of the codebase, including the front-end, back-end, and database. In addition, we aim to leverage this pipeline to implement new functionalities and AI use cases within Knoccs itself, thereby validating the system's scalability, performance, and real-world applicability.
+This project, Design-to-Code with Knoccs by SpurSol, seeks to solve these challenges by creating a scalable design-to-code pipeline that allows design components to automatically translate into production-ready code. This project specifically aims to revamp the Knoccs design system and develop a multi-agent AI layer capable of autonomously generating various components of the codebase. In addition, we aim to leverage this pipeline to implement new functionalities and AI use cases within Knoccs itself, thereby validating the system's scalability, performance, and real-world applicability.
 
 \section{Project Plan}
 
@@ -16,7 +26,7 @@ This project, Design-to-Code with Knoccs by SpurSol, seeks to solve these challe
     \item \textbf{System Integration and Validation:}
     Convert Figma designs into Angular code components that can be integrated into the existing Knoccs codebase. The generated components will be validated through the implementation of two small features, Tag and Macro Management, to ensure functional accuracy and integration feasibility.
 
-    \item \textbf{Knowledge Base (RAG Feature) Development:}
+    \item \textbf{Knowledge Base (RAG) Development:}
     Using the developed component library, implement a larger feature, a Retrieval-Augmented Generation (RAG) system, to build a knowledge base that supports intelligent information retrieval.
 \end{enumerate}
 

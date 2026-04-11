@@ -1,20 +1,92 @@
-% EITHER dump your code here. No one except HEC likes this.
-% Here is our code.
+This appendix provides references to the key code artifacts produced in this project.
 
-% inspired by https://xkcd.com/221/
-% \begin{lstlisting}[language=python, showstringspaces=false,frame=single]
-%   print('Hello World!')
-%   print('Computing true random number.')
-%   print('Capturing interstellar radiation.')
-%   print('This will take time!')
-%   import random
-%   import time
-%   time.sleep(3600*random.randint(1,10))
-%   print(4)
-% \end{lstlisting}
+\section{Repository Links}
 
-% OR, link to your GitHub repository. Everyone but HEC will like this.
-Our code can be found at \url{https://github.com/habib-university/Kaavish-Template}.
+\begin{itemize}
+    \item \textbf{RAG-Client-Knoccs:} The main repository containing the Frontend for the RAG system. \url{https://github.com/ibad23/RAG-Client-Knoccs} 
+    \item \textbf{RAG-Server-Knoccs:} The main repository containing the RAG server, retrieval pipeline, and evaluation scripts. \url{https://github.com/fakehafaisal/RAG-Server-Knoccs}
+    \item The actual Knoccs codebase is private and cannot be shared as it is owned by SpurSol.
+\end{itemize}
+
+\section{Sync Pipeline Trigger Script}
+
+The sync pipeline is initiated by the following command, which reads the component mapping and generates a prompt for Claude Code:
+
+\begin{lstlisting}[showstringspaces=false, frame=single, basicstyle=\ttfamily\scriptsize, caption={Sync Usage}, label={lst:sync}]
+# Sync a specific component
+npm run sync:figma toggle
+
+# Generated files:
+#   design-to-code/scripts/outputs/.figma-sync/sync-task.json
+#   design-to-code/scripts/outputs/.figma-sync/prompt.txt
+
+# Then run Claude with the generated prompt
+claude "Read design-to-code/scripts/outputs/.figma-sync/prompt.txt
+        and follow the instructions"
+\end{lstlisting}
+
+\section{RAG Retrieval Pipeline}
+
+The following is a simplified representation of the hybrid retrieval logic from \texttt{search.py}:
+
+\begin{lstlisting}[language=python, showstringspaces=false, frame=single, basicstyle=\ttfamily\scriptsize, caption={Hybrid Retrieval Pipeline (simplified)}, label={lst:rag_search}]
+def search_and_summarize(self, query, top_k=15, initial_k=50,
+                         conversation_history=None):
+    # Step 1: Identify target company
+    company_id = self._extract_company(query, conversation_history)
+    if not company_id:
+        return "Please specify which company you are asking about."
+
+    # Step 2: Dual retrieval (BM25 + Dense)
+    bm25_results = self.vectorstore.search_bm25(
+        query, company_id, top_k=initial_k // 2)
+    dense_results = self.vectorstore.search_dense(
+        query, company_id, top_k=initial_k // 2)
+
+    # Step 3: Merge and deduplicate
+    combined = self._merge_and_deduplicate(bm25_results, dense_results)
+
+    # Step 4: Cross-encoder re-ranking
+    pairs = [(query, r["text"]) for r in combined]
+    scores = self.reranker.predict(pairs)
+    for r, s in zip(combined, scores):
+        r["rerank_score"] = float(s)
+    ranked = sorted(combined, key=lambda x: x["rerank_score"],
+                    reverse=True)[:top_k]
+
+    # Step 5: Assemble context and generate response
+    context = "\n\n".join([r["text"] for r in ranked])
+    prompt = self._build_prompt(query, context, conversation_history)
+    response = self.llm.invoke(prompt)
+    return response.content
+\end{lstlisting}
+
+\section{DeepEval Evaluation Configuration}
+
+\begin{lstlisting}[language=python, showstringspaces=false, frame=single, basicstyle=\ttfamily\scriptsize, caption={DeepEval Metric Configuration (simplified)}, label={lst:deepeval}]
+from deepeval.metrics import (
+    AnswerRelevancyMetric, FaithfulnessMetric,
+    ContextualPrecisionMetric
+)
+from deepeval.test_case import LLMTestCase
+from deepeval import evaluate
+
+threshold = 0.7
+metrics = [
+    AnswerRelevancyMetric(threshold=threshold, model="gpt-4o-mini"),
+    FaithfulnessMetric(threshold=threshold, model="gpt-4o-mini"),
+    ContextualPrecisionMetric(threshold=threshold, model="gpt-4o-mini"),
+]
+
+test_case = LLMTestCase(
+    input=query,
+    actual_output=rag_answer,
+    retrieval_context=[chunk["text"] for chunk in retrieved_chunks],
+    expected_output=ground_truth_answer
+)
+
+results = evaluate(test_cases=[test_case], metrics=metrics)
+\end{lstlisting}
 
 %%% Local Variables:
 %%% mode: latex

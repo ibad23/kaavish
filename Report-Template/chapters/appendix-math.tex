@@ -1,1 +1,71 @@
-Here, we describe the background math for the techniques used in the text.
+This appendix describes the mathematical foundations of the key techniques used in this project.
+
+\section{CLIP Visual Similarity}
+
+CLIP (Contrastive Language Image Pre-training) encodes images into high-dimensional embedding vectors. The visual similarity between a Figma screenshot $\mathbf{f}$ and a Storybook screenshot $\mathbf{s}$ is computed as the cosine similarity of their CLIP embeddings:
+
+\begin{equation}
+\text{CLIP\_Similarity}(\mathbf{f}, \mathbf{s}) = \frac{\mathbf{f} \cdot \mathbf{s}}{\|\mathbf{f}\| \cdot \|\mathbf{s}\|} = \frac{\sum_{i=1}^{d} f_i \cdot s_i}{\sqrt{\sum_{i=1}^{d} f_i^2} \cdot \sqrt{\sum_{i=1}^{d} s_i^2}}
+\end{equation}
+
+where $d$ is the embedding dimension. A score of 1.0 indicates identical visual representations, while lower scores indicate greater visual divergence.
+
+\section{BM25 Scoring}
+
+BM25 (Best Matching 25) is used in the RAG pipeline for keyword-based retrieval. Given a query $Q$ containing terms $q_1, q_2, \ldots, q_n$, the BM25 score for a document $D$ is:
+
+\begin{equation}
+\text{BM25}(D, Q) = \sum_{i=1}^{n} \text{IDF}(q_i) \cdot \frac{f(q_i, D) \cdot (k_1 + 1)}{f(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{\text{avgdl}}\right)}
+\end{equation}
+
+where $f(q_i, D)$ is the term frequency of $q_i$ in $D$, $|D|$ is the document length, $\text{avgdl}$ is the average document length across the corpus, $k_1$ controls term frequency saturation (typically 1.2--2.0), and $b$ controls length normalization (typically 0.75). The inverse document frequency is:
+
+\begin{equation}
+\text{IDF}(q_i) = \ln\left(\frac{N - n(q_i) + 0.5}{n(q_i) + 0.5} + 1\right)
+\end{equation}
+
+where $N$ is the total number of documents and $n(q_i)$ is the number of documents containing $q_i$.
+
+\section{Cosine Distance for Vector Search}
+
+Dense vector retrieval in pgvector uses cosine distance as the similarity metric between the query embedding $\mathbf{q}$ and stored chunk embeddings $\mathbf{c}$:
+
+\begin{equation}
+\text{cosine\_distance}(\mathbf{q}, \mathbf{c}) = 1 - \frac{\mathbf{q} \cdot \mathbf{c}}{\|\mathbf{q}\| \cdot \|\mathbf{c}\|}
+\end{equation}
+
+Lower cosine distance indicates higher semantic similarity. The pgvector \texttt{<=>} operator computes this distance, and the IVFFlat index accelerates approximate nearest-neighbor search by partitioning vectors into 100 Voronoi cells.
+
+\section{Cross-Encoder Re-ranking}
+
+The cross-encoder model (\texttt{ms-marco-MiniLM-L-6-v2}) scores each (query, passage) pair jointly by encoding both as a single input sequence:
+
+\begin{equation}
+\text{score}(q, p) = \sigma\left(W \cdot \text{BERT}([\texttt{CLS}]\ q\ [\texttt{SEP}]\ p\ [\texttt{SEP}])\right)
+\end{equation}
+
+where $\sigma$ is a sigmoid or linear head and $W$ is a learned projection. Unlike bi-encoders (which encode query and passage independently), the cross-encoder attends to the full interaction between query and passage tokens, producing more accurate relevance scores at the cost of higher computational expense. This is why it is used as a re-ranker on a reduced candidate set rather than for initial retrieval.
+
+\section{DeepEval Metrics}
+
+The three DeepEval metrics used for RAG evaluation are defined as follows:
+
+\begin{itemize}
+    \item \textbf{Answer Relevancy:} Measures whether the generated answer addresses the input query. An LLM judge generates $n$ synthetic questions from the answer, and the metric is the proportion whose meaning aligns with the original query:
+    \begin{equation}
+    \text{Answer Relevancy} = \frac{|\{q'_i : \text{sim}(q'_i, q) > \tau\}|}{n}
+    \end{equation}
+    
+    \item \textbf{Faithfulness:} Measures factual consistency between the answer and the retrieved context. Claims are extracted from the answer, and each is verified against the retrieval context:
+    \begin{equation}
+    \text{Faithfulness} = \frac{|\{\text{claim}_i : \text{claim}_i \text{ is supported by context}\}|}{|\text{total claims}|}
+    \end{equation}
+    
+    \item \textbf{Contextual Precision:} Measures whether relevant chunks are ranked higher than irrelevant ones in the retrieval results. It is computed as a weighted precision at each rank position $k$:
+    \begin{equation}
+    \text{Contextual Precision} = \frac{\sum_{k=1}^{K} \left(\text{Precision}@k \times r_k\right)}{|\text{total relevant chunks}|}
+    \end{equation}
+    where $r_k = 1$ if the chunk at rank $k$ is relevant, and 0 otherwise.
+\end{itemize}
+
+All metrics are scored from 0 to 1, with a pass/fail threshold of 0.7 used in this project.

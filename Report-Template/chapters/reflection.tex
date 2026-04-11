@@ -1,4 +1,113 @@
-Learning Reflection: Learning experience, skills gained, and challenges overcome.
-Team Reflection (if applicable): Collaboration experience, role distribution, communication, and teamwork challenges.
-Project Reflection: Also a reflection on what was proposed vs what was achieved? Were any proposed features removed/were any features added that were not proposed initially? What are the reasons for these choices? What are opportunities and challenges led to these design decisions?
-Process Reflection: What worked well? What could be improved in the approach?
+% Learning Reflection: Learning experience, skills gained, and challenges overcome.
+% Team Reflection (if applicable): Collaboration experience, role distribution, communication, and teamwork challenges.
+% Project Reflection: Also a reflection on what was proposed vs what was achieved? Were any proposed features removed/were any features added that were not proposed initially? What are the reasons for these choices? What are opportunities and challenges led to these design decisions?
+% Process Reflection: What worked well? What could be improved in the approach?
+
+\section{Individual Reflections}
+
+\subsection{Eman Fatima}
+% Topics to cover:
+% - Experience with Angular frontend development and design consistency
+% - Working on RAG frontend integration into Knoccs
+% - Challenges with maintaining design consistency across the RAG interface
+% - Skills gained: Angular, working within an existing large codebase
+[To be written by Eman]
+
+\subsection{Fakeha Faisal}
+% Topics to cover:
+% - Experience building the RAG pipeline from scratch (LangChain, pgvector, FastAPI)
+% - Challenges with chunking strategy, embedding quality, DeepEval issues
+% - Working with Supabase, making DeepEval run in parallel
+% - Skills gained: RAG architecture, vector databases, LLM evaluation
+[To be written by Fakeha]
+
+\subsection{Muhammad Ibad Nadeem}
+% Topics to cover:
+% - Working with MCP servers (Figma, Chrome DevTools)
+% - Working with Ammar on PR reviews, component feedback cycles
+% - Skills gained: prompt engineering, Claude Code, MCP, Angular component architecture
+[To be written by Ibad]
+
+\section{Team Reflection}
+
+The team consisted of three members with the following role distribution:
+\begin{itemize}
+    \item \textbf{Eman Fatima (Design \& Frontend Lead):} Responsible for the RAG frontend interface, design consistency, and UI integration into Knoccs.
+    \item \textbf{Fakeha Faisal (AI \& RAG Pipeline Lead):} Responsible for the RAG backend, embedding pipeline, hybrid retrieval, DeepEval evaluation, and server architecture.
+    \item \textbf{Muhammad Ibad Nadeem (Automation \& Integration Engineer):} Responsible for the Design-to-Code pipeline, prompt engineering, component generation, sync pipeline, MCP integration, and feature validation (Tag/Macro).
+\end{itemize}
+
+Communication was maintained through regular meetings, with the internal supervisor (Dr.\ Qasim Pasta) approximately weekly, and with the external supervisor (Uzair Ahmed) and SpurSol team on a similar cadence. Meeting minutes were documented for every session from October 2025 through April 2026.
+
+% need to add:
+% - How did you coordinate between the Design-to-Code and RAG workstreams?
+% - Any communication challenges?
+% - How did working with SpurSol (Ammar's PR reviews, Sheema's design feedback) affect the team dynamic?
+
+\section{Process Reflection}
+
+\subsection{What Worked Well}
+
+\begin{itemize}
+    \item \textbf{Iterative prompt engineering:} The approach of versioning the CLAUDE.md files and treating each failure mode as a prompt improvement opportunity worked very well. Each iteration directly addressed a real problem encountered during generation, resulting in a progressively more robust pipeline.
+    
+    \item \textbf{Multiple evaluation methods:} Using three complementary evaluation approaches (CLIP similarity, unit testing, Storybook visual verification) provided confidence from different angles rather than relying on a single metric.
+    
+    \item \textbf{Industry collaboration:} Working directly with SpurSol's codebase and receiving PR reviews from their developers (Ammar) and design feedback from their team (Sheema) grounded the project in real-world standards rather than academic exercises.
+    
+    \item \textbf{Documenting everything:} The detailed meeting minutes, remaining task lists, and code explanation documents made it possible to track progress and maintain context across the two-semester project.
+\end{itemize}
+
+\subsection{What Could Be Improved}
+
+\begin{itemize}
+    \item \textbf{Claude not following instructions consistently:} A recurring challenge was Claude treating the CLAUDE.md instructions as suggestions rather than strict rules, particularly around spacing detection during sync and skipping mandatory stop points. The instructions were updated multiple times to address this, but it remained an issue throughout.
+    % FROM: Remaining (Sync).txt — "Asked Claude directly: 'Is it clear now?' — Claude confirmed and said it had noted everything down. Then proceeded to ignore the instructions anyway."
+    
+    \item \textbf{DeepEval dashboard issues:} The DeepEval dashboard did not work across multiple environments, requiring results to be captured from terminal output instead. This made evaluation less streamlined than intended.
+    % FROM: Remaining (RAG).txt — "deepeval dashboard does not work", "check if all stash have the same deepeval dashboard problem"
+    
+    \item \textbf{Session token limits:} Claude Code sessions needed to be reset after generating a few components, as accumulated context consumed too many tokens, reducing quality. This made batch generation less efficient.
+    % FROM: Remaining (Des to Code).txt — "Claude Sessions should be reset after a few components, else it takes a lot of usage."
+    
+    \item \textbf{RAG retrieval for small records:} Document retrieval worked well for PDFs and DOCX files, but retrieval quality was lower for emails, conversations, notes, and tasks despite the company-grouping strategy.
+    % FROM: Remaining (RAG).txt — "document retrieving was great, but not so much with the emails, conversations, notes and tasks."
+\end{itemize}
+
+\section{Plans vs.\ Achievements}
+
+\subsection{What Was Proposed}
+
+The original project proposal (October 2025) outlined three objectives:
+\begin{enumerate}
+    \item Develop a comprehensive component library in Figma to automate front-end development.
+    \item Convert Figma designs into Angular components and validate through two features (Tag and Macro Management).
+    \item Implement a RAG-based knowledge base for intelligent information retrieval.
+\end{enumerate}
+
+\subsection{What Was Achieved}
+
+\begin{itemize}
+    \item\textbf{Component Library:} 20 components generated, all with Storybook stories, achieving 82.6\% average CLIP similarity. Exceeded the original scope by also developing the sync pipeline and a dedicated interface.
+    
+    \item\textbf{Feature Validation:} Tag Management and Macro Management were implemented using the generated component library, including backend code following the Repository Pattern.
+    
+    \item\textbf{RAG Knowledge Base:} Full pipeline implemented with hybrid retrieval, cross-encoder re-ranking, DeepEval evaluation (52 queries), and integration into the Knoccs sidebar.
+    
+    \item\textbf{Prompt Engineering Methodology:} Not originally proposed as a deliverable, but the iterative prompt engineering process (9 + 7 iterations) emerged as a significant contribution, essentially the ``algorithm'' of the Design-to-Code pipeline.
+\end{itemize}
+
+\subsection{Deviations from the Original Plan}
+
+\begin{itemize}
+    \item \textbf{Added: Sync Pipeline:} The Figma-to-Code sync system was not in the original proposal but was developed in response to the practical need for keeping components updated as designs evolve. Research was conducted across multiple approaches (Code Connect, third-party MCPs, custom solutions) before settling on the MCP-based approach.
+    
+    \item \textbf{Added: Sync Interface:} An interface for the sync pipeline was added to make it usable by designers, not just developers.
+    
+    \item \textbf{Added: Multiple Evaluation Methods:} CLIP evaluation, behavioral unit testing, and Chrome MCP visual verification were developed as evaluation approaches, going beyond the originally proposed ``validation through feature implementation.''
+    
+    \item \textbf{Scope adjusted: RAG data pipeline:} The original plan included connecting to live Knoccs production data. Due to the complexity of the existing microservices architecture and data sensitivity, the RAG system was built and evaluated with curated sample data instead. A live data pipeline remains as future work.
+    
+    \item \textbf{Scope adjusted: gRPC communication:} The planned gRPC communication between the RAG microservice and Knoccs backend was replaced with HTTP REST calls for simplicity during development. Migration to gRPC remains as future work.
+    
+\end{itemize}

@@ -1,1 +1,49 @@
-Here is a dump of our 2TB data set. Enjoy!
+% This appendix presents supplementary data referenced in the main text.
+
+\section{Ground Truth Dataset Sample}
+
+Table \ref{tab:ground_truth_sample} presents a representative sample from the 52-query ground truth dataset used for DeepEval evaluation.
+
+\begin{table}[H]
+\centering
+\caption{Sample Ground Truth Queries for RAG Evaluation}
+\label{tab:ground_truth_sample}
+\begin{tabular}{|p{7cm}|p{2.5cm}|c|}
+\hline
+\textbf{Query} & \textbf{Category} & \textbf{Difficulty} \\ \hline
+What is Pulse Unity's main business focus? & company info & easy \\ \hline
+What are the leave policies at Beacon Pioneer? & leave policy & easy \\ \hline
+Summarize the service agreement between Knoccs and Atlas Unity & agreement analysis & medium \\ \hline
+Who is the Account Manager for Vantage Nexus? & people lookup & easy \\ \hline
+What security incidents were reported by Keystone Echo? & security incidents & medium \\ \hline
+What are the HR policies regarding remote work at Iron Harbor? & hr policies & medium \\ \hline
+What billing issues has Summit Atlas reported? & billing issue & medium \\ \hline
+What data security policies does Nexus Crescent follow? & data security policy & medium \\ \hline
+What employee recognition programs exist at Peak Iron? & employee recognition & easy \\ \hline
+What are the emergency procedures outlined for Unity Pioneer? & emergency procedures & medium \\ \hline
+\end{tabular}
+\end{table}
+
+The full ground truth dataset covers 40+ categories across 10 companies: Beacon Pioneer, Atlas Unity, Peak Iron, Iron Harbor, Unity Pioneer, Pulse Unity, Vantage Nexus, Keystone Echo, Summit Atlas, and Nexus Crescent.
+
+\section{RAG Knowledge Base Composition}
+
+Table \ref{tab:kb_composition} summarizes the data sources indexed in the RAG knowledge base.
+
+\begin{table}[H]
+\centering
+\caption{Knowledge Base Data Sources}
+\label{tab:kb_composition}
+\begin{tabular}{|l|c|p{7cm}|}
+\hline
+\textbf{Data Type} & \textbf{Count} & \textbf{Description} \\ \hline
+Company Profiles & 10 & Company metadata (name, domain) \\ \hline
+PDF/DOCX Documents & $\sim$40 & Service agreements, HR policies, NDAs, memos, annual reports, leave policies, sustainability reports \\ \hline
+Emails (JSON) & $\sim$10 MB & Client email communications \\ \hline
+Conversations (JSON) & $\sim$10 MB & Support conversations \\ \hline
+Notes (JSON) & $\sim$50 KB & Internal notes \\ \hline
+Tasks (JSON) & $\sim$177 KB & Task records \\ \hline
+Internal Employees & 20 & Knoccs staff (Account Managers, Support Agents, etc.) \\ \hline
+External Employees & varies & Client-side contacts per company \\ \hline
+\end{tabular}
+\end{table}

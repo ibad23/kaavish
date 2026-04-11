@@ -59,25 +59,6 @@ This section mentions the specific functional requirements of our design system,
     Before final export, validate all components against the design system to ensure consistent typography, color tokens, and spacing are applied across the project.
 \end{itemize}
 
-\subsection{Knowledge Base (RAG)}
-
-\begin{itemize}
-    \item \textbf{Description:} Centralized, searchable repository of Knoccs documents and product data
-    \item The system must allow uploading, KNOCCS documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
-    \item The system must support various file formats.
-    \item The system must store all content in a structured repository with version control and metadata.
-    \item The system must automatically extract text from documents and segment it into manageable content chunks for embedding.
-    \item The system must clean and normalize text before processing.
-    \item The system must generate vector embeddings for each content chunk using a selected embedding model.
-    \item The embedding process must capture semantic meaning to enable similarity-based retrieval.
-    \item The system must allow users to submit natural-language queries.
-    \item The system must feed retrieved document content into an AI model.
-    \item The system must generate an answer that references the retrieved content.
-    \item The generated responses must include citations or links to the original documents.
-    \item The system must authenticate users before granting access to the knowledge base.
-    \item The system must enforce role-based access control (RBAC) for sensitive documents.
-\end{itemize}
-
 \subsection{Knoccs Feature Modules}
 
 \subsubsection{Tag Management}
@@ -100,6 +81,24 @@ This section mentions the specific functional requirements of our design system,
     \item The system must restrict macro creation and editing based on user roles and permissions.
 \end{itemize}
 
+\subsection{Knowledge Base (RAG)}
+
+\begin{itemize}
+    \item \textbf{Description:} Centralized, searchable repository of Knoccs documents and product data
+    \item The system must allow uploading, KNOCCS documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
+    \item The system must support various file formats.
+    \item The system must store all content in a structured repository with version control and metadata.
+    \item The system must automatically extract text from documents and segment it into manageable content chunks for embedding.
+    \item The system must clean and normalize text before processing.
+    \item The system must generate vector embeddings for each content chunk using a selected embedding model.
+    \item The embedding process must capture semantic meaning to enable similarity-based retrieval.
+    \item The system must allow users to submit natural-language queries.
+    \item The system must feed retrieved document content into an AI model.
+    \item The system must generate an answer that references the retrieved content.
+    \item The generated responses must include citations or links to the original documents.
+    \item The system must authenticate users before granting access to the knowledge base.
+    \item The system must enforce role-based access control (RBAC) for sensitive documents.
+\end{itemize}
 
 \section{Non-functional Requirements}
 
@@ -179,15 +178,6 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Version Control \& Backup (Design):} The Figma design file itself must utilize Figma's built-in version history, with major milestones explicitly saved and named.
 \end{itemize}
 
-\subsection{Knowledge Base (RAG)}
-
-\begin{itemize}
-    \item \textbf{Performance:} A search query must return a fully generated answer in under 5 seconds.
-    \item \textbf{Accuracy:} The relevance of retrieved documents must be $>$ 90\%. The generated answer must be factually consistent with the source documents.
-    \item \textbf{Usability:} The search interface must be as simple to use as a standard search bar.
-    \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
-\end{itemize}
-
 \subsection{Knoccs Feature Modules}
 
 \subsubsection{Tag Management}
@@ -206,26 +196,25 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Security:} Users must only be able to execute macros they have permission for, and the macro's actions must respect the user's underlying permissions.
 \end{itemize}
 
+\subsection{Knowledge Base (RAG)}
+
+\begin{itemize}
+    \item \textbf{Performance:} A search query must return a fully generated answer in under 5 seconds.
+    \item \textbf{Accuracy:} The relevance of retrieved documents must be $>$ 90\%. The generated answer must be factually consistent with the source documents.
+    \item \textbf{Usability:} The search interface must be as simple to use as a standard search bar.
+    \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
+\end{itemize}
+
 \section{External Interfaces}
 
 \subsection{User Interfaces}
 This section includes our mockup screens and briefly explains them.
 
-\textbf{AI usecase: RAG chatbot}
-\\\\
-Need to write description here.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{figures/srs/chatbot.png}
-    \caption{RAG chatbot}
-    \label{fig:rag}
-\end{figure}
+\vspace{1cm}
 
 \textbf{Tag Management}
 \\\\
-Need to write description here.
-
+Figure \ref{fig:tag_srs} shows the Tag Management interface. The top section provides a search bar for filtering tags, alongside a ``Create Tag'' button for administrators. Tags are displayed as cards in a grid layout, each showing the tag name, a color-coded chip preview, the number of entities using the tag, and action icons for editing, duplicating, and deleting. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{figures/srs/tag.png}
@@ -235,25 +224,49 @@ Need to write description here.
 
 \textbf{Macro Management}
 \\\\
-Need to write description here.
+Figure \ref{fig:macro} presents the Macro Management interface in two parts. Part (a) shows the macro list view with a search bar, filter tabs (``All Triggers'' and ``Most Used''), and a ``Create Macro'' button. Part (b) shows the lower section of the same view, featuring a ``Visual Macro Composer'' section that provides a form-based interface for building custom macros with predefined actions and conditions. 
 
 \begin{figure}[H]
     \centering
     \begin{tabular}{cc}
         \includegraphics[width=0.5\textwidth]{figures/srs/macro1.png} &
-        \includegraphics[width=0.5\textwidth]{figures/srs/macro2.png} \\
-        (a) Interface - Part 1 \& (b) Interface - Part 2
+        \includegraphics[width=0.5\textwidth]{figures/srs/macro2.png} 
     \end{tabular}
-    \caption{Feature: Drag-and-drop and Configuration Views}
+    \caption{Macro management - (a) Interface - Part 1 \& (b) Interface - Part 2}
     \label{fig:macro}
 \end{figure}
 
+\textbf{AI usecase: RAG chatbot}
+\\\\
+Figure \ref{fig:rag} shows the RAG Document Assistant interface integrated within the Knoccs sidebar. Users interact through a conversational chat interface where they can submit natural-language queries and receive AI-generated responses grounded in the knowledge base. Responses are rendered in Markdown format with structured information such as numbered feature lists, and users can ask follow-up questions within the same conversation context.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/chatbot.png}
+    \caption{RAG chatbot}
+    \label{fig:rag}
+\end{figure}
+
 \section{Use Cases}
-This section presents detailed use cases of our system.
-Need to defines/describes all our Actors after their respective first use in the use-case diagrams.
+
+This section presents detailed use cases of our system. The following actors are involved across the use case diagrams:
+
+\begin{itemize}
+    \item \textbf{Designer:} A UI/UX professional responsible for creating and maintaining the component design system in Figma, annotating components for code generation, and reviewing generated code for visual fidelity.
+    \item \textbf{Developer:} A software engineer who reviews the AI-generated Angular code, approves final implementations, and integrates them into the Knoccs codebase.
+    \item \textbf{Figma:} The external design tool that serves as the source of truth for design specifications, accessed programmatically via its MCP Server.
+    \item \textbf{AI Agent:} The Claude Code agent that fetches design metadata, generates Angular components (TypeScript, HTML, SCSS), and orchestrates the code generation pipeline.
+    \item \textbf{User:} An end user of the Knoccs platform who interacts with the Knowledge Base, assigns tags, and executes macros.
+    \item \textbf{Admin:} An administrator with elevated permissions for creating, editing, and deleting tags, macros, and managing platform configurations.
+    \item \textbf{AI Model:} The LLM that generates answers from retrieved context in the RAG pipeline.
+    \item \textbf{Data Synchronization Agent:} The backend agent responsible for triggering document embedding, managing metadata, and keeping the vector store updated.
+    % \item \textbf{Triggered Event:} An automated system event that initiates macro auto-execution based on predefined conditions.
+\end{itemize}
+
+\newpage
 
 \subsection{Design System}
-Need to write description here.
+Figure \ref{fig:design_usecase} illustrates the Design-to-Code System use cases. The \textbf{Designer} annotates components in Figma with mapping hints and triggers code generation. The \textbf{AI Agent} fetches Figma files via the MCP Server, maps design elements to Angular components, and generates the corresponding TypeScript, HTML, and SCSS files. The \textbf{Developer} reviews the generated code and approves the final implementation before it is merged into the codebase. \textbf{Figma} acts as an external actor providing design metadata through the MCP protocol.
 
 \begin{figure}[H]
     \centering
@@ -262,20 +275,12 @@ Need to write description here.
     \label{fig:design_usecase}
 \end{figure}
 
-\subsection{Knowledge Base (RAG)}
-Need to write description here.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{figures/srs/RAG Use-Case Diagram.jpg}
-    \caption{RAG Use-Case Diagram}
-    \label{fig:rag_usecase}
-\end{figure}
+\newpage
 
 \subsection{Knoccs Feature Modules}
 
 \subsubsection{Tag Management}
-Need to write description here.
+Figure \ref{fig:tag_usecase} illustrates the Tag Management use cases. The \textbf{User} can search tags, filter entities by tags, and assign or unassign tags to entities such as conversations and contacts. The \textbf{Admin} has elevated permissions to create new tags with color tokens, edit existing tag properties (name, color), and delete tags from the system. 
 
 \begin{figure}[H]
     \centering
@@ -284,14 +289,28 @@ Need to write description here.
     \label{fig:tag_usecase}
 \end{figure}
 
+\newpage
+
 \subsubsection{Macro Management}
-Need to write description here.
+Figure \ref{fig:macro_usecase} illustrates the Macro Management use cases. The \textbf{User} can execute macros manually and view macro execution results. The \textbf{Admin} can create new macros through the Visual Macro Composer, edit existing macros, and delete macros from the system. The \textbf{Triggered Event} actor represents automated system events that initiate macro auto-execution based on predefined schedules or conditions, enabling workflow automation without manual intervention.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{figures/srs/Macro Use-Case Diagram.jpg}
     \caption{Macro management Use-Case Diagram}
     \label{fig:macro_usecase}
+\end{figure}
+
+\newpage
+
+\subsection{Knowledge Base (RAG)}
+Figure \ref{fig:rag_usecase} illustrates the Knowledge Base use cases. The \textbf{Data Synchronization Agent} triggers the embedding generation process, converting documents into vector representations stored in the database. The \textbf{User} submits natural-language queries and views the results along with source citations. The \textbf{AI Model} retrieves similar chunks from the vector store and generates grounded answers based on the retrieved context.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/srs/RAG Use-Case Diagram.jpg}
+    \caption{RAG Use-Case Diagram}
+    \label{fig:rag_usecase}
 \end{figure}
 
 \section{System Diagram}
