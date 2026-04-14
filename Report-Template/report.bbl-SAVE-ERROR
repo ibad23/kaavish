@@ -1,0 +1,887 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{Afzal}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=a56cbbb075c6461a4479c2702b8a92e9}{%
+           family={Afzal},
+           familyi={A\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=a58757c627b6b56cf56686d28c06bd24}{%
+           family={Kowsik},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8299f16943da3ddfdf6af04a0d1c7628}{%
+           family={Fani},
+           familyi={F\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=9c714e23cfd26dec3ce604df276b9a63}{%
+           family={Matthes},
+           familyi={M\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{e8b08287c8f2bac9a6db74f6efc89056}
+      \strng{fullhash}{1d3a793a3a3e1638900ac7a82c3cde03}
+      \strng{fullhashraw}{1d3a793a3a3e1638900ac7a82c3cde03}
+      \strng{bibnamehash}{e8b08287c8f2bac9a6db74f6efc89056}
+      \strng{authorbibnamehash}{e8b08287c8f2bac9a6db74f6efc89056}
+      \strng{authornamehash}{e8b08287c8f2bac9a6db74f6efc89056}
+      \strng{authorfullhash}{1d3a793a3a3e1638900ac7a82c3cde03}
+      \strng{authorfullhashraw}{1d3a793a3a3e1638900ac7a82c3cde03}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{Towards Optimizing and Evaluating a Retrieval Augmented QA Chatbot using LLMs with Human in the Loop}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2407.05925
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2407.05925
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2407.05925
+      \endverb
+    \endentry
+    \entry{arslan2024surveyRAG}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=d7929bb077d528cc45c0e337f4fa5a70}{%
+           family={Arslan},
+           familyi={A\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{fullhash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{fullhashraw}{c2b5556f19960364c2d8676c06c60429}
+      \strng{bibnamehash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{authorbibnamehash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{authornamehash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{authorfullhash}{c2b5556f19960364c2d8676c06c60429}
+      \strng{authorfullhashraw}{c2b5556f19960364c2d8676c06c60429}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Procedia Computer Science}
+      \field{title}{A Survey on RAG with LLMs}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1016/j.procs.2024.1208804
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S1877050924021860
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S1877050924021860
+      \endverb
+    \endentry
+    \entry{Brehme}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=eaef1894cb922f7f235621b519c9033e}{%
+           family={Brehme},
+           familyi={B\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+        {{hash=97d809a35ddfb3ef4e48fda100bb9abd}{%
+           family={Dornauer},
+           familyi={D\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=01ab2685efa5fb771acfbbd069fbf60c}{%
+           family={Ströhle},
+           familyi={S\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=4525924380190e07c3a49ac9fce113ea}{%
+           family={Ehrhart},
+           familyi={E\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=a13160d1a03f5cc82622736e171d11df}{%
+           family={Breu},
+           familyi={B\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e8a95c0d16138230a51b08aba2132ac}
+      \strng{fullhash}{d6947d2a72473e462e0a64efc254f157}
+      \strng{fullhashraw}{d6947d2a72473e462e0a64efc254f157}
+      \strng{bibnamehash}{4e8a95c0d16138230a51b08aba2132ac}
+      \strng{authorbibnamehash}{4e8a95c0d16138230a51b08aba2132ac}
+      \strng{authornamehash}{4e8a95c0d16138230a51b08aba2132ac}
+      \strng{authorfullhash}{d6947d2a72473e462e0a64efc254f157}
+      \strng{authorfullhashraw}{d6947d2a72473e462e0a64efc254f157}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Joint Conference on Knowledge Discovery, Knowledge Engineering and Knowledge Management}
+      \field{title}{Retrieval-Augmented Generation in Industry: An Interview Study on Use Cases, Requirements, Challenges, and Evaluation}
+      \field{year}{2025}
+      \field{pages}{110\bibrangedash 122}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.5220/0013739500004000
+      \endverb
+    \endentry
+    \entry{deepeval}{online}{}{}
+      \field{sortinit}{c}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeltitlesource}{title}
+      \field{month}{4}
+      \field{title}{confident-ai/deepeval}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://github.com/confident-ai/deepeval
+      \endverb
+      \verb{url}
+      \verb https://github.com/confident-ai/deepeval
+      \endverb
+    \endentry
+    \entry{James}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=281add2e12425119a37ec48d35d2f514}{%
+           family={Es},
+           familyi={E\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=4398ec8b558b501024a062ff5df0e830}{%
+           family={James},
+           familyi={J\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b6bf4c03a13cefe1fb693464ea14e5a1}{%
+           family={Espinosa-Anke},
+           familyi={E\bibinithyphendelim A\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+        {{hash=e6fed4f7310ad20d6d3b16b1b4689fcc}{%
+           family={Schockaert},
+           familyi={S\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{fea6ade255b05e79a66f7d3579c97f74}
+      \strng{fullhash}{bf7c84be8d543bc2b715046a38bb7777}
+      \strng{fullhashraw}{bf7c84be8d543bc2b715046a38bb7777}
+      \strng{bibnamehash}{fea6ade255b05e79a66f7d3579c97f74}
+      \strng{authorbibnamehash}{fea6ade255b05e79a66f7d3579c97f74}
+      \strng{authornamehash}{fea6ade255b05e79a66f7d3579c97f74}
+      \strng{authorfullhash}{bf7c84be8d543bc2b715046a38bb7777}
+      \strng{authorfullhashraw}{bf7c84be8d543bc2b715046a38bb7777}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{RAGAS: Automated Evaluation of Retrieval Augmented Generation}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.48550/arXiv.2309.15217
+      \endverb
+      \verb{eprint}
+      \verb 2309.15217
+      \endverb
+    \endentry
+    \entry{frick2022design2code}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=4d0028727746b73a862d57d38b219f6f}{%
+           family={Frick},
+           familyi={F\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Ume{å} University}%
+      }
+      \list{location}{1}{%
+        {Ume{å}, Sweden}%
+      }
+      \strng{namehash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{fullhash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{fullhashraw}{4d0028727746b73a862d57d38b219f6f}
+      \strng{bibnamehash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{authorbibnamehash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{authornamehash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{authorfullhash}{4d0028727746b73a862d57d38b219f6f}
+      \strng{authorfullhashraw}{4d0028727746b73a862d57d38b219f6f}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{From Design to Code: A Study on Generating Production Code From User Interface Design Software}
+      \field{type}{Master's thesis}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://www.diva-portal.org/smash/record.jsf?pid=diva2:1680045
+      \endverb
+      \verb{url}
+      \verb https://www.diva-portal.org/smash/record.jsf?pid=diva2:1680045
+      \endverb
+    \endentry
+    \entry{Gao}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=4531bc045c08b9165192fd733acf2bd5}{%
+           family={Gao},
+           familyi={G\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{fullhash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{fullhashraw}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{bibnamehash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{authorbibnamehash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{authornamehash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{authorfullhash}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \strng{authorfullhashraw}{eff5c0acbfcff31f941869f34a8fcc5d}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{month}{12}
+      \field{title}{Retrieval-Augmented Generation for Large Language Models: A Survey}
+      \field{year}{2023}
+      \verb{eprint}
+      \verb 2312.10997
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2312.10997
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2312.10997
+      \endverb
+    \endentry
+    \entry{latcoder2025}{article}{}{}
+      \name{author}{13}{}{%
+        {{hash=699aee892249ca0ac4a22c0495578280}{%
+           family={Gui},
+           familyi={G\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=ae6f64f7b429f6425fbe070323390f1b}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=5ee5d3d5470ac29a2e7c8df70ed54725}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=394d641a0626e0504be74152c455899d}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=8cc1cb1b9eb0b5623c6d27f0f208f68e}{%
+           family={Lv},
+           familyi={L\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ffd9d1c4582575b42debf847307078ff}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=ce084360cc68e7db4fe6cae1287b3adf}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=80489b75bcde120c9f335f4995d789c2}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=61be167962c63c0b3d47021a71b77efe}{%
+           family={Wan},
+           familyi={W\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=32e563370422457790db030ab2c13183}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=21ed5a9593993a3465bdd461e809951d}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=05f7e0c820360d2ead95928afd606a67}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={X.},
+           giveni={X\bibinitperiod}}}%
+        {{hash=167bd3b45cf0cec1a1b8ba4efb6f7ce5}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{845e033b1ac10bdcd1f1585c0c4c2d4d}
+      \strng{fullhash}{5ae1c20ea23223bd4463b4f2187cadc6}
+      \strng{fullhashraw}{5ae1c20ea23223bd4463b4f2187cadc6}
+      \strng{bibnamehash}{845e033b1ac10bdcd1f1585c0c4c2d4d}
+      \strng{authorbibnamehash}{845e033b1ac10bdcd1f1585c0c4c2d4d}
+      \strng{authornamehash}{845e033b1ac10bdcd1f1585c0c4c2d4d}
+      \strng{authorfullhash}{5ae1c20ea23223bd4463b4f2187cadc6}
+      \strng{authorfullhashraw}{5ae1c20ea23223bd4463b4f2187cadc6}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{month}{8}
+      \field{title}{LaTCoder: Converting Webpage Design to Code with Layout-as-Thought}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2508.03560
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2508.03560
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2508.03560
+      \endverb
+    \endentry
+    \entry{hilel2025graphRAG}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=a10be3174479c3e2bbe809bb1a11d854}{%
+           family={Hilel},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{fullhash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{fullhashraw}{6beace444a47827e7b229240fbdd20b3}
+      \strng{bibnamehash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{authorbibnamehash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{authornamehash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{authorfullhash}{6beace444a47827e7b229240fbdd20b3}
+      \strng{authorfullhashraw}{6beace444a47827e7b229240fbdd20b3}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{Building Specialized Software-Assistant ChatBot with Graph RAG}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2511.05297
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2511.05297
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2511.05297
+      \endverb
+    \endentry
+    \entry{Huang}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=b9d54ba5b34fe309610d55baf9ec58a8}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={K.-H.},
+           giveni={K\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{fullhash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{fullhashraw}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{bibnamehash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{authorbibnamehash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{authornamehash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{authorfullhash}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \strng{authorfullhashraw}{90c8b1fc0104be04a4e5ab52b21731ec}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{CRMArena: Understanding the Capacity of LLM Agents to Perform Professional CRM Tasks in Realistic Environments}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.48550/arXiv.2411.02305
+      \endverb
+      \verb{eprint}
+      \verb 2411.02305
+      \endverb
+    \endentry
+    \entry{Kukreja}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=c5cdcf8bb38487592fddf9a2145d859d}{%
+           family={Kukreja},
+           familyi={K\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=24c5ad1fd87405708bd68c7dc1b0088b}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ecaccf27cd7843bbe4aca52fe8a441db}{%
+           family={Bharate},
+           familyi={B\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=03deb8eddc51dca4b6a732eeea38a619}{%
+           family={Purohit},
+           familyi={P\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8dca092d06243199177c7cdf4d13aab1}{%
+           family={Dasgupta},
+           familyi={D\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=b419faac5d0b10a24a9a3c6060bd9ace}{%
+           family={Guha},
+           familyi={G\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{341de652e54ec4b84a56246ba4a39d50}
+      \strng{fullhash}{2d863f4d6e23840834872e1fea449d1c}
+      \strng{fullhashraw}{2d863f4d6e23840834872e1fea449d1c}
+      \strng{bibnamehash}{341de652e54ec4b84a56246ba4a39d50}
+      \strng{authorbibnamehash}{341de652e54ec4b84a56246ba4a39d50}
+      \strng{authornamehash}{341de652e54ec4b84a56246ba4a39d50}
+      \strng{authorfullhash}{2d863f4d6e23840834872e1fea449d1c}
+      \strng{authorfullhashraw}{2d863f4d6e23840834872e1fea449d1c}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Computer and Communication Systems (ICCCS)}
+      \field{title}{Performance Evaluation of Vector Embeddings with Retrieval-Augmented Generation}
+      \field{year}{2024}
+      \field{pages}{333\bibrangedash 340}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/ICCCS61882.2024.10603291
+      \endverb
+    \endentry
+    \entry{Lewis}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=d2aa4ca344a7388fb2bbb725e0757875}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{fullhash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{fullhashraw}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{bibnamehash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{authorbibnamehash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{authornamehash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{authorfullhash}{e41213d2f7762b77fb6bccc5e658702e}
+      \strng{authorfullhashraw}{e41213d2f7762b77fb6bccc5e658702e}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{month}{4}
+      \field{title}{Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks}
+      \field{year}{2021}
+      \verb{eprint}
+      \verb 2005.11401
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2005.11401
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2005.11401
+      \endverb
+    \endentry
+    \entry{Li}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=66d548e0e670e107fc4a80dc0c3825b3}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{fullhash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{fullhashraw}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{bibnamehash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{authorbibnamehash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{authornamehash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{authorfullhash}{2f060ecac11058276f5d0b5a813eee70}
+      \strng{authorfullhashraw}{2f060ecac11058276f5d0b5a813eee70}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{Benchmarking Multimodal Retrieval Augmented Generation with Dynamic VQA Dataset and Self-Adaptive Planning Agent}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2411.02937
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2411.02937
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2411.02937
+      \endverb
+    \endentry
+    \entry{manninen2024harnessing}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=1ab3ac8babb73a39bcc7cc624ba9f061}{%
+           family={Manninen},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {LUT University}%
+      }
+      \list{location}{1}{%
+        {Lappeenranta, Finland}%
+      }
+      \strng{namehash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{fullhash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{fullhashraw}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{bibnamehash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{authorbibnamehash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{authornamehash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{authorfullhash}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \strng{authorfullhashraw}{1ab3ac8babb73a39bcc7cc624ba9f061}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Harnessing AI for Front-End Development: An Evaluation of Design-to-Code Tools}
+      \field{type}{Bachelor's thesis}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://lutpub.lut.fi/handle/10024/167161
+      \endverb
+      \verb{url}
+      \verb https://lutpub.lut.fi/handle/10024/167161
+      \endverb
+    \endentry
+    \entry{Nikiforova}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=ea990e1dfcab4e957b684fce71383b66}{%
+           family={Nikiforova},
+           familyi={N\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=f4a859930ab1ea09c4d1c6af1c81375a}{%
+           family={Babris},
+           familyi={B\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+        {{hash=73e6fd0a079aa165f1a762b6b34b25c6}{%
+           family={Mahmoudifar},
+           familyi={M\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Dijon, France}%
+      }
+      \list{publisher}{1}{%
+        {SCITEPRESS}%
+      }
+      \strng{namehash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{fullhash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{fullhashraw}{ea66211061269a4fec39773a4173ebc3}
+      \strng{bibnamehash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{authorbibnamehash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{authornamehash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{authorfullhash}{ea66211061269a4fec39773a4173ebc3}
+      \strng{authorfullhashraw}{ea66211061269a4fec39773a4173ebc3}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Software Technologies}
+      \field{title}{Automated Generation of Web Application Front-end Components from User Interface Mockups}
+      \field{year}{2024}
+      \field{pages}{100\bibrangedash 111}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.5220/0012759500003753
+      \endverb
+    \endentry
+    \entry{patel2025graphRAG}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=ea43cec50aa5abc055e6a7a2ac8404d3}{%
+           family={Patel},
+           familyi={P\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{fullhash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{fullhashraw}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{bibnamehash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{authorbibnamehash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{authornamehash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{authorfullhash}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \strng{authorfullhashraw}{ea43cec50aa5abc055e6a7a2ac8404d3}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{Graph-Enhanced Retrieval-Augmented Question Answering for E-Commerce Customer Support}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2509.14267
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2509.14267
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2509.14267
+      \endverb
+    \endentry
+    \entry{Pipitone}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=be390a6077de2605d1bbd997f36204a1}{%
+           family={Pipitone},
+           familyi={P\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=d5ad5e816cae4671bcbe438a9287b52e}{%
+           family={Alami},
+           familyi={A\bibinitperiod},
+           given={G.\bibnamedelimi H.},
+           giveni={G\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{80552e64a0a281d34355dec36deb232e}
+      \strng{fullhash}{80552e64a0a281d34355dec36deb232e}
+      \strng{fullhashraw}{80552e64a0a281d34355dec36deb232e}
+      \strng{bibnamehash}{80552e64a0a281d34355dec36deb232e}
+      \strng{authorbibnamehash}{80552e64a0a281d34355dec36deb232e}
+      \strng{authornamehash}{80552e64a0a281d34355dec36deb232e}
+      \strng{authorfullhash}{80552e64a0a281d34355dec36deb232e}
+      \strng{authorfullhashraw}{80552e64a0a281d34355dec36deb232e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2408.10343
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2408.10343
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2408.10343
+      \endverb
+    \endentry
+    \entry{Rivera}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=39377caccbb87c2ee53b17b03fac97d3}{%
+           family={Rivera},
+           familyi={R\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=8792fadb88f9e81ae9b785d7fa134717}{%
+           family={Zapata},
+           familyi={Z\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=343c310c6ba523a374070ae2c4ea8735}{%
+           family={Pizarro},
+           familyi={P\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=cf56a0bf5be1d5a8367365ec5f071561}{%
+           family={Keith},
+           familyi={K\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{f34bacc26d3a3ad2fbc74a8965c93601}
+      \strng{fullhash}{481b345bebf102bf6f775c8b0c6cf484}
+      \strng{fullhashraw}{481b345bebf102bf6f775c8b0c6cf484}
+      \strng{bibnamehash}{f34bacc26d3a3ad2fbc74a8965c93601}
+      \strng{authorbibnamehash}{f34bacc26d3a3ad2fbc74a8965c93601}
+      \strng{authornamehash}{f34bacc26d3a3ad2fbc74a8965c93601}
+      \strng{authorfullhash}{481b345bebf102bf6f775c8b0c6cf484}
+      \strng{authorfullhashraw}{481b345bebf102bf6f775c8b0c6cf484}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Knowledge}
+      \field{month}{12}
+      \field{number}{4}
+      \field{title}{Enhancing Chatbot Performance in a SaaS Platform Through Retrieval-Augmented Generation and Prompt Engineering}
+      \field{volume}{5}
+      \field{year}{2025}
+      \field{pages}{25}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/knowledge5040025
+      \endverb
+    \endentry
+    \entry{Tang}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=89e4262752ea86e42aa98156908299ab}{%
+           family={Tang},
+           familyi={T\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=865de0ad624b442a018417bf6b85083e}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{fullhash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{fullhashraw}{4b85f75d02dffc28b134e136501675a1}
+      \strng{bibnamehash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{authorbibnamehash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{authornamehash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{authorfullhash}{4b85f75d02dffc28b134e136501675a1}
+      \strng{authorfullhashraw}{4b85f75d02dffc28b134e136501675a1}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2401.15391
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2401.15391
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2401.15391
+      \endverb
+    \endentry
+    \entry{xiao2024prototype2code}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=c7b58210831fa88301c51dfd130baeb2}{%
+           family={Xiao},
+           familyi={X\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Washington, DC}%
+      }
+      \strng{namehash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{fullhash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{fullhashraw}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{bibnamehash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{authorbibnamehash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{authornamehash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{authorfullhash}{c7b58210831fa88301c51dfd130baeb2}
+      \strng{authorfullhashraw}{c7b58210831fa88301c51dfd130baeb2}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Design Engineering Technical Conferences and Computers and Information in Engineering Conference (IDETC-CIE 2024)}
+      \field{month}{8}
+      \field{title}{Prototype2Code: End-to-End Front-End Code Generation}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1115/IDETC-CIE2024-1208804
+      \endverb
+      \verb{urlraw}
+      \verb https://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstract/IDETC-CIE2024/88353/1208804
+      \endverb
+      \verb{url}
+      \verb https://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstract/IDETC-CIE2024/88353/1208804
+      \endverb
+    \endentry
+    \entry{Xu}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=342a32403260d64342a93e524a35e306}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{fullhash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{fullhashraw}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{bibnamehash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{authorbibnamehash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{authornamehash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{authorfullhash}{7c454b720d7841f5b1c7c6293d839294}
+      \strng{authorfullhashraw}{7c454b720d7841f5b1c7c6293d839294}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Retrieval-Augmented Generation with Knowledge Graphs for Customer Service Question Answering}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1145/3626772.3661370
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

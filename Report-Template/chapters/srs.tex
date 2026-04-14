@@ -328,16 +328,17 @@ This diagram represents an integrated workflow combining design, component-based
     \item \textbf{Figma Design System} contains centralized UI/UX components and design tokens for Knoccs. It provides consistent styles, spacing, and components which forms the visual source of truth.
     \item \textbf{Knoccs Codebase} houses the main engineering implementation of the product.
     \item \textbf{Angular Component Library} contains reusable UI elements built for Knoccs. It offers shared, styled components that remain in sync with the design system, ensuring design consistency and reducing duplication across the codebase.
-    \item \textbf{Storybook Documentation} provides a visual reference for all components in the system. It auto-syncs with the Component Library and displays component states.
-    \item \textbf{RAG + LLM Layer} adds an intelligence engine on top of Knoccs data. It retrieves relevant documents and data through embeddings and vector search, enabling advanced AI assistance.
-    \item \textbf{Knoccs Data Sources} contain the system’s entire database including metadata, documents, and other essential information.
     \item \textbf{Claude AI Agents} serve as the automated front-end code generation component. They retrieve all context directly from the Figma MCP Server, understand component structures and constraints, and generate front-end code that matches Knoccs development patterns.
+    \item \textbf{Storybook Documentation} provides a visual reference for all components in the system. It auto-syncs with the Component Library and displays component states.
+    \item \textbf{Figma-to-Code Sync Pipeline} monitors for design changes in Figma and propagates targeted updates to the corresponding Angular component code. It operates through an 8-phase workflow triggered via a CLI script and executed by Claude Code, keeping the component library aligned with evolving designs at 80-90\% automation.
+    \item \textbf{RAG + LLM Layer} adds an intelligence engine on top of Knoccs data. It retrieves relevant documents and data through embeddings and vector search, enabling advanced AI assistance.
+    \item \textbf{Knoccs Data Sources} contain the system's entire database including metadata, documents, and other essential information.
 \end{itemize}
 
 \subsection{Interactions}
 \begin{itemize}
     \item \textbf{Figma MCP Server} exposes all design artifacts from Figma in a structured machine-readable form. It converts raw design data into a consistent protocol format, enabling tools to fetch live component, layout, and token updates directly from Figma.
-    \item \textbf{Figma Code Connect} maps Figma components to framework-ready code definitions and generates code metadata, props, and constraints to provide richer code context for LLMs.
+    \item \textbf{Figma-to-Code Sync Pipeline} reads the component mapping configuration, detects differences between Figma designs and existing code, and applies targeted updates through Claude Code. The sync is initiated via a CLI command and follows an 8-phase workflow with human approval at each gate
 \end{itemize}
 
 % \section{Other Requirements}

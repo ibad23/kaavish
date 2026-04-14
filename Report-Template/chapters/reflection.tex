@@ -5,13 +5,21 @@
 
 \section{Individual Reflections}
 
+This section includes reflections on our Final Year Project journey, capturing what the team learned both collectively and individually. It highlights our growth in the domains we each worked in and how we pushed each other to do our best work over the course of two semesters.
+
 \subsection{Eman Fatima}
-% Topics to cover:
-% - Experience with Angular frontend development and design consistency
-% - Working on RAG frontend integration into Knoccs
-% - Challenges with maintaining design consistency across the RAG interface
-% - Skills gained: Angular, working within an existing large codebase
-[To be written by Eman]
+This project is particularly close to my heart. As a Computer Science student with a minor in Design, I wanted my Final Year Project to meaningfully integrate both my technical and creative skill sets. I believe this project successfully achieved that balance by combining design thinking with practical software development.
+\\\\
+My primary contribution focused on developing a design-to-code pipeline that automates the conversion of UI components created in Figma into Angular code. This involved bridging the gap between design and development by translating visual components into structured, reusable code. After successfully generating these components, I worked on validating and testing them through implementation in real applications, specifically the tag and macro management functionalities.
+\\\\
+Alongside the technical work, I was consistently involved in the design process, working closely with design systems and component libraries in Figma. I explored ways to improve component structure, optimize the use of design tokens, and ensure consistency across designs. This included identifying discrepancies in designs and reporting gaps to improve overall design quality. This continuous interaction with the design system helped ensure that the pipeline we built was not only functional but also aligned with strong design principles.
+\\\\
+In addition to the core pipeline, I also contributed to building a user-friendly interface that abstracts the underlying complexity of the system, making it more accessible and efficient for designers and developers to use.
+\\\\
+Working on this project under the guidance of Sir Qasim and in collaboration with our industry partner, Spursol, has been an incredibly valuable experience. It provided hands-on exposure to real-world development practices and the opportunity to work with modern tools and technologies in a practical setting.
+\\\\
+I am also grateful for my teammates, Fakeha and Ibad, whose support and collaboration played an important role throughout this journey.
+Overall, I am very satisfied with how this project turned out and feel proud of what we have accomplished together.
 
 \subsection{Fakeha Faisal}
 % Topics to cover:
@@ -88,26 +96,19 @@ The original project proposal (October 2025) outlined three objectives:
 \subsection{What Was Achieved}
 
 \begin{itemize}
-    \item\textbf{Component Library:} 20 components generated, all with Storybook stories, achieving 82.6\% average CLIP similarity. Exceeded the original scope by also developing the sync pipeline and a dedicated interface.
-    
-    \item\textbf{Feature Validation:} Tag Management and Macro Management were implemented using the generated component library, including backend code following the Repository Pattern.
-    
-    \item\textbf{RAG Knowledge Base:} Full pipeline implemented with hybrid retrieval, cross-encoder re-ranking, DeepEval evaluation (52 queries), and integration into the Knoccs sidebar.
-    
-    \item\textbf{Prompt Engineering Methodology:} Not originally proposed as a deliverable, but the iterative prompt engineering process (9 + 7 iterations) emerged as a significant contribution, essentially the ``algorithm'' of the Design-to-Code pipeline.
+    \item \textbf{Component Library:} 20 components were generated, all with Storybook stories, achieving an average CLIP visual similarity of 82.6\%. The project exceeded the original scope by also developing the sync pipeline and a dedicated sync interface.
+    \item \textbf{Feature Validation:} Tag Management and Macro Management were implemented using the generated component library, including backend code following the Repository Pattern. Frontend implementation used the generated components to build real screens within the Knoccs application.
+    \item \textbf{RAG Knowledge Base:} The full pipeline was implemented with hybrid retrieval, cross-encoder re-ranking, DeepEval evaluation (52 queries), and integration into the Knoccs sidebar.
+    \item \textbf{Prompt Engineering Methodology:} Though not originally proposed as a deliverable, the iterative prompt engineering process (9 + 7 iterations of instruction files) emerged as a significant contribution, it is, in effect, the algorithm at the core of the Design-to-Code pipeline.
+    \item \textbf{Sync Pipeline:} The Figma-to-Code sync system was not in the original proposal but was developed in response to the practical need for keeping components updated as designs evolve, achieving 80--90\% automation.
 \end{itemize}
 
 \subsection{Deviations from the Original Plan}
 
 \begin{itemize}
-    \item \textbf{Added: Sync Pipeline:} The Figma-to-Code sync system was not in the original proposal but was developed in response to the practical need for keeping components updated as designs evolve. Research was conducted across multiple approaches (Code Connect, third-party MCPs, custom solutions) before settling on the MCP-based approach.
-    
+    \item \textbf{Added: Sync Pipeline:} The Figma-to-Code sync system was not in the original proposal but was developed in response to the practical need for keeping components updated as designs evolve. Research was conducted across multiple approaches (Code Connect, third-party MCPs, custom solutions) before settling on the MCP-based approach.    
     \item \textbf{Added: Sync Interface:} An interface for the sync pipeline was added to make it usable by designers, not just developers.
-    
-    \item \textbf{Added: Multiple Evaluation Methods:} CLIP evaluation, behavioral unit testing, and Chrome MCP visual verification were developed as evaluation approaches, going beyond the originally proposed ``validation through feature implementation.''
-    
+    \item \textbf{Added: Multiple Evaluation Methods:} CLIP evaluation, behavioral unit testing, and Chrome MCP visual verification were developed as evaluation approaches, going beyond the originally proposed ``validation through feature implementation.''    
     \item \textbf{Scope adjusted: RAG data pipeline:} The original plan included connecting to live Knoccs production data. Due to the complexity of the existing microservices architecture and data sensitivity, the RAG system was built and evaluated with curated sample data instead. A live data pipeline remains as future work.
-    
     \item \textbf{Scope adjusted: gRPC communication:} The planned gRPC communication between the RAG microservice and Knoccs backend was replaced with HTTP REST calls for simplicity during development. Migration to gRPC remains as future work.
-    
 \end{itemize}
