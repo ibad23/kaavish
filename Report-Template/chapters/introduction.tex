@@ -42,13 +42,13 @@ In addition, the project leveraged this pipeline to implement new functionalitie
 \begin{itemize}
     \item Analyzed and understood the Knoccs design system and repository architecture.
 
-    \item Revamped the Knoccs design system so that it provides rich, structured context suitable for use as an effective prompt for an LLM.
+    \item Studied and documented the Knoccs design system so that its tokens, components, and conventions could be consumed as structured context by an LLM-driven generation pipeline.
 
     \item Conducted a literature review on efficient methods to extract designs from Figma, research on different design systems that have implemented automated code generation, and comparative performance of LLMs for design-to-code generation.
 
     \item Integrated the design system with a Claude Code agent using the Figma MCP server, enabling real-time access to design metadata.
 
-    \item Configured the Claude agent to accurately understand the context and generate the frontend in accordance with Knoccs, applying iterative prompt engineering across multiple instruction file versions.
+    \item Configured the Claude agent to accurately understand the context and generate the frontend in accordance with Knoccs, applying iterative instruction refinement across multiple instruction file versions.
 
     \item Generated missing components through Claude and validated them, completing the component library of 20 Angular components.
 
@@ -100,32 +100,33 @@ In addition, the project leveraged this pipeline to implement new functionalitie
 \subsubsection{Kaavish I}
 
 \begin{itemize}
-    \item Analyzed and understood the Knoccs design system and repository architecture.
-    \item Completed a comprehensive literature review on RAG and design-to-code methods, including UML diagrams, block diagrams, use case analyses, and research on automated code generation and LLM performance.
-    \item Implemented a preliminary RAG model with integrated ChatGPT functionality.
-    \item Connected the codebase and Claude agent with the Design System via the Figma MCP server.
+    \item Studied and documented the Knoccs design system and repository architecture so that they could be consumed as structured context by Claude.
+    \item Completed a comprehensive literature review covering RAG, design-to-code methods, design-system synchronization approaches, and use of LLMs for component generation.
+    \item Implemented a preliminary RAG prototype with ChatGPT integration as a feasibility test.
+    \item Connected the codebase and Claude agent to the Knoccs design system through the Figma MCP server.
 \end{itemize}
 
 \subsubsection{Kaavish II}
 
 \begin{itemize}
-    \item Consolidated all Figma-derived components into a reusable Angular component library integrated with the Knoccs codebase, generating and validating missing components via Claude.
-    \item Built the Figma-to-Code sync pipeline to detect design changes and propagate targeted updates to component code, and developed an accompanying interface for designer access.
-    \item Finalized and optimized the RAG pipeline by indexing and embedding all customer documentation (manuals, FAQs, guides) for semantic search and retrieval.
-    \item Enabled effective user query handling through the RAG pipeline and validated output accuracy and relevance.
-    \item Conducted feature-level validation by implementing Tag Management and Macro Management using the generated component library, demonstrating the pipeline's applicability for building production features.
-    \item Performed end-to-end testing to ensure integration between the RAG backend, component library, and Knoccs's existing workflows, verifying accuracy, relevance, and consistency.
+    \item Generated and validated 20 Angular components from Figma into the Knoccs codebase using the iteratively refined instruction set and multi-agent pipeline.
+    \item Built the Figma-to-Code sync pipeline, a mapping file, a CLI driver, and an 8-phase governed workflow, and developed a designer-facing sync interface on top of it.
+    \item Finalized the RAG ingestion pipeline, indexing customer documentation (manuals, FAQs, agreements, HR policies) into a pgvector-backed knowledge store with company-scoped retrieval.
+    \item Implemented the inference pipeline with hybrid retrieval (BM25 + dense) and cross-encoder re-ranking, and integrated it into the Knoccs sidebar through the .NET proxy.
+    % \item Implemented Tag Management and Macro Management using the generated component library to demonstrate the pipeline's applicability to real Knoccs feature development.
+    \item Evaluated both pipelines, CLIP visual similarity for components and DeepEval metrics across 52 ground-truth queries for the RAG system, and incorporated the results into the final report.
 \end{itemize}
 
 \section{Risks}
+\label{sec:risks}
 
-The following risks were identified during the project and influenced design decisions throughout development. These differ from the shortcomings and future work discussed in Chapter~6: risks are potential problems that could have disrupted the development process itself, whereas shortcomings are known limitations of the delivered system that remain to be addressed.
+The following risks were identified during the project and shaped the design decisions taken during execution. They differ from the shortcomings and future work discussed in Chapter~\ref{chap:outro}: risks were potential blockers to the development process itself, and each was addressed during the project rather than left for later.
 
 \begin{itemize}
-    \item \textbf{Integration Challenges:} The generated Angular components risked not aligning with the existing Knoccs codebase structure. To mitigate this, the CLAUDE.md instruction file included detailed repository conventions and reference components, and all generated code underwent PR review by the SpurSol team.
-    \item \textbf{Code Generation Inconsistency:} Claude could produce inconsistent or non-optimized Angular code across different generation sessions. This was addressed through iterative prompt engineering (nine versions of the instruction file) and strict human-in-the-loop governance at every phase gate.
-    \item \textbf{RAG Retrieval Accuracy:} The Retrieval-Augmented Generation pipeline risked retrieving irrelevant or outdated information from customer documentation. Hybrid retrieval (BM25 + dense embeddings) combined with cross-encoder re-ranking was implemented to improve retrieval precision, and the system was evaluated against 52 ground truth queries using DeepEval.
-    \item \textbf{Performance Bottlenecks:} Integration of Claude and RAG features risked increasing response time or server load during retrieval or generation. The RAG system was designed with efficient indexing (IVFFlat with pgvector) and company-scoped queries to keep retrieval fast, while the design-to-code pipeline operated as an offline process rather than a real-time service.
+    \item \textbf{Integration with the Knoccs codebase:} Generated Angular components risked diverging from the existing Knoccs architecture and conventions. To address this, the \texttt{CLAUDE.md} instruction file encoded repository conventions and reference components, and every generated component went through PR review by the SpurSol team before being merged.
+    \item \textbf{Code generation inconsistency:} Claude's output varied across sessions on identical inputs. This was addressed through nine iterations of the instruction file and through strict human-in-the-loop gates at every phase of the generation pipeline. By the final iteration, repeat runs produced functionally equivalent components.
+    \item \textbf{RAG retrieval accuracy:} The retrieval stage risked surfacing irrelevant or outdated content from customer documentation. Hybrid retrieval (BM25 combined with dense embeddings) and cross-encoder re-ranking were introduced to improve precision, and the pipeline was evaluated against a 52-query ground-truth dataset using DeepEval.
+    \item \textbf{Performance:} Both pipelines risked introducing latency or load on the Knoccs platform. The RAG inference path was scoped per company and indexed with IVFFlat under pgvector, while the design-to-code pipeline was kept offline (developer-triggered) rather than running at request time.
 \end{itemize}
 
 % \section{Intended User}

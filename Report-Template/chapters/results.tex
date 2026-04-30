@@ -18,8 +18,9 @@ The Design-to-Code pipeline was built around Claude Code (Anthropic's AI coding 
 
 The development environment consisted of the Angular 16 frontend of the Knoccs application, with components generated into \texttt{src/app/shared/components/}. Storybook served as the visual documentation and validation layer, running on \texttt{localhost:9009}. Each generated component produced four to five files: \texttt{.component.ts}, \texttt{.component.html}, \texttt{.component.scss}, \texttt{.types.ts}, and optionally \texttt{.interfaces.ts}.
 
+For the sync workflow, three additional artifacts were configured: \texttt{design\_system\_mapping.json} (which records every Figma node ID alongside its Angular component path and last-synced timestamp), \texttt{sync-figma.js} (a Node.js driver invoked through \texttt{npm run sync:figma <component>}), and \texttt{SYNC\_DESIGN\_SYSTEM\_COMPONENT\_PLAN.md} (the 8-phase rulebook Claude follows during a sync run). These artifacts make the sync pipeline reproducible across the team and remove the need to hand-author prompts for individual sync runs. The sync interface, described in Section~\ref{sec:sync}, sits on top of these artifacts and exposes them through a designer-facing UI.
 
-\subsection{Iterative Prompt Engineering}
+\subsection{Iterative Instruction Refinement}
 \label{sec:prompt-engineering}
 
 The core algorithmic contribution of the Design-to-Code pipeline is the iterative development of a comprehensive instruction file (\texttt{CLAUDE.md}) that governs how Claude generates Angular components from Figma designs. This file evolved through \textbf{nine iterations} (v0 through v8), each addressing failure modes discovered during actual component generation. A parallel set of instructions for Storybook story generation evolved through \textbf{seven iterations}.
@@ -272,7 +273,7 @@ The sync system achieves approximately \textbf{80--90\% automation}, with the re
 
 \subsubsection{Sync Interface}
 
-To make the sync pipeline accessible to designers (who are the primary users of the design system), an interface was designed to automate the prompt generation and execution process. The interface retrieves all component IDs from the mapping file, presents them in a dropdown, and automatically generates the sync prompt with the correct Figma links. The results, including CLIP scores and sync status, are displayed within the interface, providing a complete pipeline from component selection to validated sync and pull request creation.
+To make the sync pipeline accessible to designers (the primary maintainers of the design system), an interface was built on top of the sync artifacts described in Section~\ref{sec:sync}. The interface reads \texttt{design\_system\_mapping.json}, presents all registered components in a dropdown, and assembles the corresponding sync prompt automatically so that designers do not need to construct prompts manually. Sync status and last-synced timestamps are surfaced in the UI, and the underlying CLIP evaluation script can be triggered from the same interface to verify the resulting Storybook output against the updated Figma frame. The end-to-end flow, component selection, sync execution, validation, and pull-request creation, is therefore reachable without leaving the interface.
 
 \begin{figure}[H]
     \centering
@@ -300,7 +301,7 @@ For each feature:
 
 \subsubsection{Results}
 
-Both Tag Management and Macro Management were successfully implemented using the generated component library, demonstrating that the Design-to-Code pipeline produces components that are functionally suitable for integration into a production application. The sub-agents designed for backend generation followed the existing codebase patterns and produced code consistent with the Knoccs architecture.
+Tag Management and Macro Management were implemented end-to-end using the generated component library and the Repository Pattern backend, demonstrating that the Design-to-Code pipeline produces components that are functionally suitable for production feature development. Both modules pass functional validation in the development environment; final integration and rollout into the live Knoccs deployment remain in progress with the SpurSol team. The backend agents followed the existing Knoccs architecture, producing C\# models, repositories, controllers, and services consistent with the codebase conventions.
 
 %% ============================================================
 %%  PART B: RAG PIPELINE

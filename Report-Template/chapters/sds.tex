@@ -59,14 +59,15 @@ A data design component is not necessary for this phase of the project, as it do
 \textbf{Inputs}: MCP tool outputs, mapping config, LLM prompts. 
 \textbf{Outputs}: TS/HTML/SCSS files, Storybook stories, component metadata.
 
-\subsubsection{Code Connect (Mapping layer between Figma and Knoccs codebase)}
+\subsubsection{Component Mapping Layer (\texttt{design\_system\_mapping.json})}
 
-\textbf{Purpose}: Ensure generated code is integrated into the Knoccs codebase correctly and that each generated artifact has a link back to its Figma source.
+\textbf{Purpose}: Provide a single source of truth that links every Figma component frame to its Angular implementation and Storybook story, anchoring both the initial generation and the ongoing sync pipeline.
 \\\\
 \textbf{Responsibilities}
 \begin{itemize}
-    \item Map component IDs $\leftrightarrow$ file paths $\leftrightarrow$ Storybook stories.
-    \item Validate style token usage and CSS variable mapping.
+    \item Map Figma component nodes $\leftrightarrow$ Angular component paths $\leftrightarrow$ Storybook stories.
+    \item Track the last-synced timestamp per component to surface staleness.
+    \item Serve as the input artifact consumed by \texttt{sync-figma.js} during sync runs.
 \end{itemize}
 
 \subsubsection{Component Library \& Storybook: @knoccs/ui}
@@ -284,7 +285,7 @@ This stage details the synchronous, real-time workflow triggered when a user int
 
     \item \textbf{Semantic Retrieval:} The system queries the Vector DB using the user's input vector. It performs a similarity search (e.g., Cosine Similarity) to retrieve the "Best Search Results"—the most relevant data chunks ingested during the first stage.
     
-    \item \textbf{Context Assembly (Prompt Engineering):} The system constructs a composite prompt in the "Preparing the Model Input" step. This package includes:
+    \item \textbf{Context Assembly:} The system constructs a composite prompt in the "Preparing the Model Input" step. This package includes:
     
     \begin{itemize}
         

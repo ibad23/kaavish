@@ -22,19 +22,25 @@ I am also grateful for my teammates, Fakeha and Ibad, whose support and collabor
 Overall, I am very satisfied with how this project turned out and feel proud of what we have accomplished together.
 
 \subsection{Fakeha Faisal}
-% Topics to cover:
-% - Experience building the RAG pipeline from scratch (LangChain, pgvector, FastAPI)
-% - Challenges with chunking strategy, embedding quality, DeepEval issues
-% - Working with Supabase, making DeepEval run in parallel
-% - Skills gained: RAG architecture, vector databases, LLM evaluation
-[To be written by Fakeha]
+This project holds a special place in my heart because, for the first time, I was not working on a hypothetical problem, I was working on a real product, for a real company, with real stakeholders who had real expectations. That distinction made every challenge feel meaningful and every success feel earned.
+\\\\
+The breadth of this work taught me that real systems are messy, interconnected, and always more complex than they first appear. Building, breaking, and rebuilding gave me a depth of understanding that no classroom assignment ever could.
+\\\\
+Working within a professional environment was something I could not have prepared for in a classroom. Interacting with the SpurSol team, receiving feedback, attending meetings with our supervisors, and operating as part of a team that extended beyond our university cohort taught me how to communicate, how to take criticism constructively, and how to grow both personally and professionally. The connections I made and the exposure I gained through this collaboration are things I will carry long after the project is over.
+\\\\
+This project took far more time and effort than I anticipated, and there were moments of genuine doubt along the way. But knowing that what we built has the potential to make a real difference, for the platform, for its users, and for the people it serves, which makes every late night completely worth it. I hope this work leaves a positive impact on whoever uses it.
+\\\\
+I am proud of what this team achieved, and proud of who I became through the process of achieving it.
 
 \subsection{Muhammad Ibad Nadeem}
-% Topics to cover:
-% - Working with MCP servers (Figma, Chrome DevTools)
-% - Working with Ammar on PR reviews, component feedback cycles
-% - Skills gained: prompt engineering, Claude Code, MCP, Angular component architecture
-[To be written by Ibad]
+
+A lot of what I learned this year was less about the project and more about myself. I came in expecting the hard part to be the building. The hard part was actually the patience: getting comfortable with weeks where progress looked invisible, sitting with problems long enough for them to make sense, and not mistaking effort for outcome. I learned what I look like when a project is not going well, and I learned that the way out of those weeks is almost always to slow down rather than speed up.
+\\\\
+Working with Ammar at SpurSol on PR reviews was where the academic side of this project ended and the production engineering side began. The discipline of writing every change as if someone whose judgment I respected was about to disagree with me, changed how I read my own work. I now find myself reviewing things, code, writing, decisions, with that same imagined audience in mind, and it has made me sharper in a way that no individual lesson could have.
+\\\\
+This project also changed what collaboration looks like for me. Working with Eman and Fakeha for two semesters meant learning when to push back, when to hand something off, and when to just let a teammate's instinct win because they had thought about it longer than I had. The team trusted each other in a way I had not experienced on group projects before, and that trust was what carried us through the parts of the project that were not glamorous, the late nights of debugging, the meetings where nothing was decided, the stretches where the deliverable kept moving.
+\\\\
+I am also grateful for the people around the work itself, our supervisors who gave us room to find our own answers but reeled us in whenever we drifted, the SpurSol team who treated us like teammates rather than interns, and our friends and families who absorbed an unfair share of the stress on our behalf. None of the technical takeaways from this project would feel earned without them.
 
 \section{Team Reflection}
 
@@ -42,7 +48,7 @@ The team consisted of three members with the following role distribution:
 \begin{itemize}
     \item \textbf{Eman Fatima (Design \& Frontend Lead):} Responsible for the RAG frontend interface, design consistency, and UI integration into Knoccs.
     \item \textbf{Fakeha Faisal (AI \& RAG Pipeline Lead):} Responsible for the RAG backend, embedding pipeline, hybrid retrieval, DeepEval evaluation, and server architecture.
-    \item \textbf{Muhammad Ibad Nadeem (Automation \& Integration Engineer):} Responsible for the Design-to-Code pipeline, prompt engineering, component generation, sync pipeline, MCP integration, and feature validation (Tag/Macro).
+    \item \textbf{Muhammad Ibad Nadeem (Automation \& Integration Engineer):} Responsible for the Design-to-Code pipeline, iterative instruction refinement, component generation, sync pipeline, MCP integration, and feature validation (Tag/Macro).
 \end{itemize}
 
 Communication was maintained through regular meetings, with the internal supervisor (Dr.\ Qasim Pasta) approximately weekly, and with the external supervisor (Uzair Ahmed) and SpurSol team on a similar cadence. Meeting minutes were documented for every session from October 2025 through April 2026.
@@ -57,7 +63,7 @@ Communication was maintained through regular meetings, with the internal supervi
 \subsection{What Worked Well}
 
 \begin{itemize}
-    \item \textbf{Iterative prompt engineering:} The approach of versioning the CLAUDE.md files and treating each failure mode as a prompt improvement opportunity worked very well. Each iteration directly addressed a real problem encountered during generation, resulting in a progressively more robust pipeline.
+    \item \textbf{Iterative Instruction Refinement:} The approach of versioning the CLAUDE.md files and treating each failure mode as a instruction improvement opportunity worked very well. Each iteration directly addressed a real problem encountered during generation, resulting in a progressively more robust pipeline.
     
     \item \textbf{Multiple evaluation methods:} Using three complementary evaluation approaches (CLIP similarity, unit testing, Storybook visual verification) provided confidence from different angles rather than relying on a single metric.
     
@@ -99,7 +105,7 @@ The original project proposal (October 2025) outlined three objectives:
     \item \textbf{Component Library:} 20 components were generated, all with Storybook stories, achieving an average CLIP visual similarity of 82.6\%. The project exceeded the original scope by also developing the sync pipeline and a dedicated sync interface.
     \item \textbf{Feature Validation:} Tag Management and Macro Management were implemented using the generated component library, including backend code following the Repository Pattern. Frontend implementation used the generated components to build real screens within the Knoccs application.
     \item \textbf{RAG Knowledge Base:} The full pipeline was implemented with hybrid retrieval, cross-encoder re-ranking, DeepEval evaluation (52 queries), and integration into the Knoccs sidebar.
-    \item \textbf{Prompt Engineering Methodology:} Though not originally proposed as a deliverable, the iterative prompt engineering process (9 + 7 iterations of instruction files) emerged as a significant contribution, it is, in effect, the algorithm at the core of the Design-to-Code pipeline.
+    \item \textbf{Instruction Refinement Methodology:} Though not originally proposed as a deliverable, the iterative instruction refinement process (9 + 7 iterations of instruction files) emerged as a significant contribution, it is, in effect, the algorithm at the core of the Design-to-Code pipeline.
     \item \textbf{Sync Pipeline:} The Figma-to-Code sync system was not in the original proposal but was developed in response to the practical need for keeping components updated as designs evolve, achieving 80--90\% automation.
 \end{itemize}
 

@@ -142,7 +142,7 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Architectural Extensibility:} Adding a new component to the Figma design system and its corresponding generation template must be a documented process that does not require re-architecting the pipeline.
     \item \textbf{AI Modularity:} The system's "AI Agents Layer" (e.g., LangGraph) must be modular, allowing for individual prompts or agents to be updated without breaking the entire generation chain.
     \item \textbf{Testability:} All generated components must be compatible with a Test-Driven Development (TDD) approach.
-    \item \textbf{Governance:} The system must include an approval workflow for all Code Connect mappings to ensure quality.
+    \item \textbf{Governance:} The system must include an approval workflow for all design-to-code component mappings to ensure quality, traceability, and consistency before merging into the main branch.
     \item \textbf{Change Management:} A breaking change detection script must run automatically in the CI pipeline to flag any changes to component props or mappings that could break existing implementations.
 \end{itemize}
 

@@ -22,6 +22,22 @@ LLM-driven design-to-code systems allow developers to generate and transform UI 
 \\\\
 Industry tools that embed LLMs in Figma workflows report similar issues, including hallucinated styles and inconsistent naming conventions \cite{manninen2024harnessing}. Because of these limitations, recent work favours hybrid approaches that combine LLM reasoning with structured metadata and deterministic rules. Our system follows this pattern by grounding LLM generation with Figma MCP Server and validation logic to maintain round-trip fidelity in a two-way Figma to Code pipeline.
 
+\section{Design System Synchronization Approaches}
+
+While design-to-code generation focuses on the initial translation of designs into code, a separate but equally important problem is keeping generated components synchronized with evolving designs. Several approaches were surveyed during this project before settling on the chosen pipeline.
+
+\subsection{Third-Party Bidirectional Sync Plugins}
+Several third-party Figma plugins advertise bidirectional sync between design files and source repositories. These plugins are predominantly indie projects with paid tiers, intermittent maintenance, and no formal SLAs, raising concerns about reliability for production-grade workflows. Their reliance on proprietary cloud services also introduces vendor lock-in.
+
+\subsection{Open-Source Sync Repositories}
+Earlier open-source attempts such as \texttt{happy-ui-sync} and \texttt{figma-sync}~\cite{happyUiSync} explored syncing Figma artifacts to component code. These projects are largely unmaintained and predate the current Figma plugin API, the design-tokens specification, and modern Angular tooling, making them unsuitable for adoption in a contemporary production codebase.
+
+\subsection{Deprecated Design System Platforms}
+Platforms such as Backlight~\cite{backlight} and Specify~\cite{specify} previously offered structured synchronization between design systems and code repositories. Backlight has since been discontinued, and Specify's product focus has shifted toward token distribution rather than full sync, limiting their applicability for component-level synchronization.
+
+\subsection{Figma MCP with Structured Workflow (Selected Approach)}
+The chosen approach combines Figma's Model Context Protocol (MCP)~\cite{mcp} server with a structured, governed sync workflow. The MCP server exposes Figma metadata in real time to a Claude-based agent, while a project-specific mapping file (\texttt{design\_system\_mapping.json}), a CLI driver script, and an explicit phase plan provide automation, approval gates, design-token enforcement, Storybook visual validation, and pull-request creation. This combination matches the Knoccs roadmap requirements at a fraction of the cost of Code Connect and avoids the maintenance risks associated with third-party plugins or unmaintained repositories. The full design and evaluation of this pipeline are presented in Chapter~\ref{chap:results}.
+
 \section{RAG and Knowledge-Graph Approaches}
 While design-to-code literature primarily focuses on UI automation, the Knoccs project also requires a knowledge base that supports domain-aware reasoning within the Customer Relationship Management (CRM) environment. For this purpose, Retrieval-Augmented Generation (RAG) has emerged as a leading approach, allowing language models to answer knowledge-intensive queries by grounding their outputs in real, external documents. Industrial deployments of RAG in troubleshooting and support contexts demonstrate clear benefits: retrieving manuals, past incident reports, and logs significantly improves answer correctness and reduces hallucinations compared with plain LLM prompting.
 \\\\
