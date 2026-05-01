@@ -2,13 +2,13 @@ This chapter provides an overview of the project, starting with the core problem
 
 \section{Problem Statement}
 
-The following subsections describe the specific problems this project addresses.
+The following subsections describe the specific problems this project addresses:
 
 \subsection{The Design-Implementation Gap}
-One of the biggest challenges in product development today is the disconnect between design and implementation. Designers create visually appealing and user-friendly interfaces in Figma, the design tool of choice for UI/UX professionals, but translating these designs into production-ready code requires significant manual effort. Frontend developers must interpret design specifications like colors, spacing, typography, component states, and interactions and re-implement them in code, a process that is time-consuming, error-prone, and heavily dependent on communication between design and engineering teams. Even minor misinterpretations can result in visual inconsistencies that accumulate across an application, degrading user experience and requiring costly rework.
+One of the biggest challenges in product development today is the disconnect between design and implementation. Designers create visually appealing and user-friendly interfaces in Figma, the design tool of choice for UI/UX professionals, but translating these designs into production-ready code requires significant manual effort. Frontend developers must interpret design specifications like colors, spacing, typography, component states, and interactions and implement them in code, a process that is time-consuming, error-prone, and heavily dependent on communication between design and engineering teams. Even minor misinterpretations can result in visual inconsistencies that accumulate across an application, degrading user experience and requiring costly rework.
 
 \subsection{Design System Scalability}
-Design systems are the backbone of scalable SaaS products, bringing together reusable components, design guidelines, and patterns that speed up development and enhance the user experience. However, maintaining a unified design system across a growing codebase is a persistent challenge. As components evolve in Figma, their code counterparts often fall out of sync, designers update a component's spacing or color tokens, but the corresponding Angular code retains the old values. Existing B2B SaaS platforms, including SpurSol's Knoccs, struggle to maintain this synchronization at scale. Without an automated mechanism to detect and propagate design changes to code, teams rely on manual audits that are both incomplete and unsustainable as the component library grows.
+Design systems are the backbone of scalable Software-as-a-Service (SaaS) products, bringing together reusable components, design guidelines, and patterns that speed up development and enhance the user experience. However, maintaining a unified design system across a growing codebase is a persistent challenge. As components evolve in Figma, their code counterparts often fall out of sync, designers update a component's spacing or color tokens, but the corresponding Angular code retains the old values. Existing Business-to-Business (B2B) SaaS platforms, including SpurSol's Knoccs, struggle to maintain this synchronization at scale. Without an automated mechanism to detect and propagate design changes to code, teams rely on manual audits that are both inefficient and unsustainable as the component library grows.
 
 \subsection{Lack of Intelligent Knowledge Retrieval}
 Beyond the design-to-code challenge, modern CRM platforms like Knoccs handle vast amounts of client-specific data: emails, conversations, internal notes, tasks, attachments, and organizational documents. This knowledge is scattered across databases, storage systems, and individual team members, making it difficult for support agents to quickly retrieve accurate, contextual answers to client queries. Without an intelligent retrieval system, agents must manually search through documents and communication histories, leading to slower response times, inconsistent answers, and an overall decline in service quality. There is a clear need for a system that can consolidate this fragmented knowledge and provide grounded, evidence-backed responses in real time.
@@ -17,80 +17,75 @@ Beyond the design-to-code challenge, modern CRM platforms like Knoccs handle vas
 SpurSol's Knoccs platform exemplifies all three of these challenges. Its development workflow follows a conventional pattern: designers create mockups in Figma, frontend developers manually translate these into Angular code, and backend developers implement server-side functionality independently. There is no automated pipeline connecting design to code, no mechanism for keeping components in sync with evolving designs, and no AI-powered system for intelligent client support. This project, therefore, targets a real production environment where these problems directly impact development velocity, code quality, and customer service efficiency.
 
 \section{Proposed Solution}
-This project, \textit{Design-to-Code with Knoccs} by SpurSol, addressed these challenges by creating a scalable design-to-code pipeline that translates design components into production-ready Angular code. The pipeline revamped the Knoccs design system and introduced a multi-agent AI layer capable of autonomously generating components of the codebase, along with a sync mechanism to keep generated code aligned with evolving Figma designs.
+This project, \textit{Design-to-Code with Knoccs} by SpurSol, addresses these challenges by creating a scalable design-to-code pipeline that translates design components into production-ready Angular code. The pipeline revamps the Knoccs design system and introduces a multi-agent AI layer capable of autonomously generating components of the codebase, along with a sync mechanism to keep generated code aligned with evolving Figma designs.
 \\\\
-In addition, the project leveraged this pipeline to implement new functionalities within Knoccs, specifically Tag and Macro Management features, and developed a RAG-based knowledge base for intelligent information retrieval. Together, these validated the system's scalability, performance, and real-world applicability within a production CRM environment.
+In addition, the project leverages this pipeline to implement new functionalities within Knoccs, specifically Tag and Macro Management features, and develops a RAG-based knowledge base for intelligent information retrieval. Together, this validates the system's scalability, performance, and real-world applicability within a production CRM environment.
 
 \section{Project Plan}
+
+The following sections outline the project objectives, tasks, team roles, and timeline for the project.
 
 \subsection{Project Objectives}
 
 \begin{enumerate}
     \item \textbf{Component Library Development:} Develop a comprehensive component library in Figma to automate front-end development. This library allows developers to reuse pre-built Angular components instead of manually writing HTML and CSS, enabling faster and more consistent UI implementation.
 
-    \item \textbf{Figma-to-Code Synchronization:} Build a sync pipeline that detects changes in Figma designs and propagates targeted updates to the corresponding Angular code, keeping the component library aligned with the evolving design system without requiring full regeneration.
+    \item \textbf{Design-to-Code Synchronization:} Build a sync pipeline that detects changes in Figma designs and propagates targeted updates to the corresponding Angular code, keeping the component library aligned with the evolving design system without requiring full regeneration.
 
-    \item \textbf{System Integration and Feature Validation:} Convert Figma designs into Angular code components that integrate into the existing Knoccs codebase. Validate the generated components through the implementation of two features, Tag Management and Macro Management, to confirm functional accuracy and integration feasibility.
+    \item \textbf{Design-to-Code Pipeline Validation:} Convert Figma designs into Angular code components that integrate into the existing Knoccs codebase. Validate the generated components through the implementation of two features, Tag Management and Macro Management, to confirm functional accuracy and integration feasibility.
 
-    \item \textbf{Knowledge Base (RAG) Development:} Using the developed component library, implement a Retrieval-Augmented Generation (RAG) system that builds a knowledge base supporting intelligent information retrieval within the Knoccs platform.
+    \item \textbf{Knowledge Base (RAG) Development:} Implement a Retrieval-Augmented Generation (RAG) system that builds a knowledge base supporting intelligent information retrieval within the Knoccs platform.
 \end{enumerate}
 
 \subsection{Project Tasks}
 
-\subsubsection{Design-to-Code Pipeline}
+\subsubsection{Component Library Development}
 
 \begin{itemize}
-    \item Analyzed and understood the Knoccs design system and repository architecture.
+    \item Analyze and understand the Knoccs design system and repository architecture.
 
-    \item Studied and documented the Knoccs design system so that its tokens, components, and conventions could be consumed as structured context by an LLM-driven generation pipeline.
+    \item Study and document the Knoccs design system so that its tokens, components, and conventions could be consumed as structured context by an LLM-driven generation pipeline.
 
-    \item Conducted a literature review on efficient methods to extract designs from Figma, research on different design systems that have implemented automated code generation, and comparative performance of LLMs for design-to-code generation.
+    \item Conduct literature review on efficient methods to extract designs from Figma, research on different design systems that have implemented automated code generation, comparative performance of LLMs for design-to-code generation and evaluation metrics for assessing visual similarity between generated components and designs in Figma.
 
-    \item Integrated the design system with a Claude Code agent using the Figma MCP server, enabling real-time access to design metadata.
+    \item Integrate the design system with a Claude Code agent using the Figma MCP server, enabling real-time access to design metadata.
 
-    \item Configured the Claude agent to accurately understand the context and generate the frontend in accordance with Knoccs, applying iterative instruction refinement across multiple instruction file versions.
+    \item Configure the Claude agent to accurately understand the context and generate the components in accordance with Knoccs, applying iterative instruction refinement across multiple instruction file versions.
 
-    \item Generated missing components through Claude and validated them, completing the component library of 20 Angular components.
+    \item Generate missing components and stories through Claude and validate them, completing the component library.
 
-    \item Mapped all components in Storybook with all available states of those components.
+    \item Map all components in Storybook with all available states of those components.
 
-    \item Built a Figma-to-Code sync pipeline that detects design changes and applies targeted updates to existing component code, achieving approximately 80-90\% automation.
-
-    \item Developed a sync interface to make the pipeline accessible to designers, automating prompt generation and execution.
 \end{itemize}
 
-\subsubsection{Knoccs Features}
+\subsubsection{Design-to-Code Synchronization}
 
 \begin{itemize}
-    \item \textbf{Tag Management:} Frontend components were generated through the component library with the help of Claude, and all functionality was validated. Tag and Macro Management also served to demonstrate the applicability of the sync pipeline in a real feature context.
+    \item Build a Design-to-Code sync pipeline that detects design changes and applies targeted updates to existing component code.
 
-    \item \textbf{Macro Management:} The component library, assisted by Claude, generated the frontend, with comprehensive validation of all components.
+    \item Develop a sync interface to make the pipeline accessible to designers, automating prompt generation and execution.
 \end{itemize}
 
-\subsubsection{RAG Integration}
+\subsubsection{Design-to-Code Pipeline Validation}
 
 \begin{itemize}
-\item Developed the frontend for RAG (Retrieval-Augmented Generation) and implemented the RAG pipeline integrated with GPT.
-
-\item Prepared and indexed all customer data (manuals, FAQs, guides) to enable semantic search and retrieval.
-
-\item Implemented the RAG pipeline to retrieve relevant content and integrated it with the frontend interface.
-
-\item Allowed users to query and view retrieved content effectively.
-
-\item Implemented contextual summarization of long documents or website sections, and validated outputs for accuracy and relevance.
+    \item \textbf{Tag and Macro Management:} Generate frontend components through the component library with the help of Claude. This serves to demonstrate the applicability of the constructed design-to-code pipeline in a real-world context.
 \end{itemize}
 
-\subsection{Team Roles}
+\subsubsection{Knowledge Base (RAG) Development}
 
 \begin{itemize}
-    \item \textbf{Eman Fatima (Design \& Frontend Lead):} Responsible for developing and maintaining the frontend interface for RAG, ensuring a seamless user experience, and integrating retrieved content and summarized insights into the Knoccs UI.
+\item Conduct literature review on evaluation metrics for RAG systems to establish a framework for assessing the performance of the implemented RAG pipeline.
 
-    \item \textbf{Fakeha Faisal (AI \& RAG Pipeline Lead):} Responsible for implementing and optimizing the RAG pipeline, indexing and embedding customer documentation, enabling semantic search, and integrating contextual summarization capabilities.
+\item Develop the frontend for RAG (Retrieval-Augmented Generation) and implement the RAG pipeline integrated with GPT.
 
-    \item \textbf{Muhammad Ibad Nadeem (Automation \& Integration Engineer):} Responsible for automating the extraction and mapping of Figma components, generating missing components via Claude, building the Figma-to-Code sync pipeline, integrating the component library with Knoccs' codebase, and validating both feature-level functionality and RAG outputs for accuracy and consistency.
+\item Prepare and index all customer data (manuals, FAQs, guides) to enable semantic search and retrieval.
 
-    \item \textbf{All Members:} Jointly contributed to literature review, testing, validation, and documentation across both pipelines.
+\item Implement the RAG pipeline to retrieve relevant content and integrate it with the frontend interface.
+
+\item Allow users to query and view retriev content effectively.
+
+\item Validate outputs for accuracy and relevance through Deep-eval.
 \end{itemize}
 
 \newpage
@@ -100,21 +95,21 @@ In addition, the project leveraged this pipeline to implement new functionalitie
 \subsubsection{Kaavish I}
 
 \begin{itemize}
-    \item Studied and documented the Knoccs design system and repository architecture so that they could be consumed as structured context by Claude.
-    \item Completed a comprehensive literature review covering RAG, design-to-code methods, design-system synchronization approaches, and use of LLMs for component generation.
-    \item Implemented a preliminary RAG prototype with ChatGPT integration as a feasibility test.
-    \item Connected the codebase and Claude agent to the Knoccs design system through the Figma MCP server.
+    \item Study and document the Knoccs design system and repository architecture so that they could be used as structured context by Claude.
+    \item Conduct a comprehensive literature review covering RAG, design-to-code methods, design-system synchronization approaches, and use of LLMs for component generation.
+    \item Implement a preliminary RAG prototype with ChatGPT integration as a feasibility test.
+    \item Connect the codebase and Claude agent to the Knoccs design system through the Figma MCP server.
 \end{itemize}
 
 \subsubsection{Kaavish II}
 
 \begin{itemize}
-    \item Generated and validated 20 Angular components from Figma into the Knoccs codebase using the iteratively refined instruction set and multi-agent pipeline.
-    \item Built the Figma-to-Code sync pipeline, a mapping file, a CLI driver, and an 8-phase governed workflow, and developed a designer-facing sync interface on top of it.
-    \item Finalized the RAG ingestion pipeline, indexing customer documentation (manuals, FAQs, agreements, HR policies) into a pgvector-backed knowledge store with company-scoped retrieval.
-    \item Implemented the inference pipeline with hybrid retrieval (BM25 + dense) and cross-encoder re-ranking, and integrated it into the Knoccs sidebar through the .NET proxy.
+    \item Generate and validate Angular components from Figma into the Knoccs codebase using the iteratively refined instruction set and multi-agent pipeline.
+    \item Build the Design-to-Code sync pipeline, a mapping file, a CLI driver, and an 8-phase governed workflow, and develop a designer-facing sync interface on top of it.
+    \item Finalize the RAG ingestion pipeline, indexing customer documentation (manuals, FAQs, agreements, HR policies) into a pgvector-backed knowledge store with company-scoped retrieval.
+    \item Implement the inference pipeline with hybrid retrieval (BM25 + dense) and cross-encoder re-ranking, and integrate it into the Knoccs sidebar through the .NET proxy.
     % \item Implemented Tag Management and Macro Management using the generated component library to demonstrate the pipeline's applicability to real Knoccs feature development.
-    \item Evaluated both pipelines, CLIP visual similarity for components and DeepEval metrics across 52 ground-truth queries for the RAG system, and incorporated the results into the final report.
+    \item Evaluate both pipelines, CLIP visual similarity for components and DeepEval metrics across ground-truth queries for the RAG system, and incorporate the results into the final report.
 \end{itemize}
 
 \section{Risks}
@@ -124,8 +119,8 @@ The following risks were identified during the project and shaped the design dec
 
 \begin{itemize}
     \item \textbf{Integration with the Knoccs codebase:} Generated Angular components risked diverging from the existing Knoccs architecture and conventions. To address this, the \texttt{CLAUDE.md} instruction file encoded repository conventions and reference components, and every generated component went through PR review by the SpurSol team before being merged.
-    \item \textbf{Code generation inconsistency:} Claude's output varied across sessions on identical inputs. This was addressed through nine iterations of the instruction file and through strict human-in-the-loop gates at every phase of the generation pipeline. By the final iteration, repeat runs produced functionally equivalent components.
-    \item \textbf{RAG retrieval accuracy:} The retrieval stage risked surfacing irrelevant or outdated content from customer documentation. Hybrid retrieval (BM25 combined with dense embeddings) and cross-encoder re-ranking were introduced to improve precision, and the pipeline was evaluated against a 52-query ground-truth dataset using DeepEval.
+    \item \textbf{Code generation inconsistency:} Claude's output varied across sessions on identical inputs. This was addressed through iterations of the instruction file and through strict human-in-the-loop checkpoints at every phase of the generation pipeline. By the final iteration, repeat runs produced functionally equivalent components.
+    \item \textbf{RAG retrieval accuracy:} The retrieval stage risked surfacing irrelevant or outdated content from customer documentation. Hybrid retrieval (BM25 combined with dense embeddings) and cross-encoder re-ranking were introduced to improve precision, and the pipeline was evaluated against a ground-truth dataset using DeepEval.
     \item \textbf{Performance:} Both pipelines risked introducing latency or load on the Knoccs platform. The RAG inference path was scoped per company and indexed with IVFFlat under pgvector, while the design-to-code pipeline was kept offline (developer-triggered) rather than running at request time.
 \end{itemize}
 
