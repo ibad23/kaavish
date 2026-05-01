@@ -395,7 +395,7 @@ Retrieval operates in three stages, all scoped to the identified \texttt{company
 
 \textbf{Stage 1: Dual Retrieval:}
 \begin{itemize}
-    \item \textbf{BM25 Keyword Search:} All chunks for the target company are loaded from PostgreSQL, tokenized in memory, and scored using BM25Okapi (from the \texttt{rank\_bm25} library). The top $k/2$ results are returned with scores normalized relative to the maximum.
+    \item \textbf{BM25 Keyword Search:} All chunks for the target company are loaded from PostgreSQL, tokenized in memory, and scored using Okapi BM25 (from the \texttt{rank\_bm25} library). The top $k/2$ results are returned with scores normalized relative to the maximum.
     \item \textbf{Dense Vector Search:} The query is encoded using the same embedding model, and a cosine distance query (\texttt{<=>} operator) is executed against the \texttt{embeddings} table filtered by \texttt{company\_id}, returning the top $k/2$ results.
 \end{itemize}
 
