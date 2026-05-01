@@ -233,7 +233,7 @@ The following RESTful API endpoints have been defined to expose the functionalit
     \item Ingest documents (PDF/HTML/MD), chunk them, and preprocess text.
     \item Generate embeddings and store them (pgvector).
     \item Serve similarity search queries and assemble prompt context.
-    \item Call LLM with retrieved context and return answer with citations.
+    \item Call the LLM with retrieved context and return answer with citations.
 \end{itemize}
 
 \subsubsection{Storage \& VectorDB (Postgres, Azure Storage, Pgvector)}
@@ -242,9 +242,9 @@ The following RESTful API endpoints have been defined to expose the functionalit
 \\\\
 \textbf{Responsibilities}
 \begin{itemize}
-    \item Persist relational data (users, tags, macros).
+    \item Persist relational data (companies, external\_employees, internal\_employees).
     \item Persist embeddings in vector columns with indexes.
-    \item Main tables: users, tags, resources, macros, documents, embeddings (vector)
+    \item Main tables: companies, external\_employees, internal\_employees, chunks, documents, embeddings (vector)
 \end{itemize}
 
 \newpage
@@ -283,7 +283,7 @@ This stage details the synchronous, real-time workflow triggered when a user int
 
     \item \textbf{Query Vectorization:} The process initiates in the User swimlane with a "Request Input." The system passes this query to the Embedding Model (the same model used in the ingestion phase) to create a vector representation of the user's intent.
 
-    \item \textbf{Semantic Retrieval:} The system queries the Vector DB using the user's input vector. It performs a similarity search (e.g., Cosine Similarity) to retrieve the "Best Search Results"—the most relevant data chunks ingested during the first stage.
+    \item \textbf{Semantic Retrieval:} The system queries the Vector DB using the user's input vector. It performs a similarity search (e.g., Cosine Similarity) and uses techniques like BM-25 and Reranker to retrieve the "Best Search Results"—the most relevant data chunks ingested during the first stage.
     
     \item \textbf{Context Assembly:} The system constructs a composite prompt in the "Preparing the Model Input" step. This package includes:
     

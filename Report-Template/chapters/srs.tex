@@ -259,7 +259,7 @@ This section presents detailed use cases of our system. The following actors are
     \item \textbf{User:} An end user of the Knoccs platform who interacts with the Knowledge Base, assigns tags, and executes macros.
     \item \textbf{Admin:} An administrator with elevated permissions for creating, editing, and deleting tags, macros, and managing platform configurations.
     \item \textbf{AI Model:} The LLM that generates answers from retrieved context in the RAG pipeline.
-    \item \textbf{Data Synchronization Agent:} The backend agent responsible for triggering document embedding, managing metadata, and keeping the vector store updated.
+    %\item \textbf{Data Synchronization Agent:} The backend agent responsible for triggering document embedding, managing metadata, and keeping the vector store updated.
     % \item \textbf{Triggered Event:} An automated system event that initiates macro auto-execution based on predefined conditions.
 \end{itemize}
 
@@ -304,7 +304,7 @@ Figure \ref{fig:macro_usecase} illustrates the Macro Management use cases. The \
 \newpage
 
 \subsection{Knowledge Base (RAG)}
-Figure \ref{fig:rag_usecase} illustrates the Knowledge Base use cases. The \textbf{Data Synchronization Agent} triggers the embedding generation process, converting documents into vector representations stored in the database. The \textbf{User} submits natural-language queries and views the results along with source citations. The \textbf{AI Model} retrieves similar chunks from the vector store and generates grounded answers based on the retrieved context.
+Figure \ref{fig:rag_usecase} illustrates the Knowledge Base use cases. The \textbf{Data Synchronization Pipeline} triggers the embedding generation process, converting documents into vector representations stored in the database. The \textbf{User} submits natural-language queries and views the results along with source citations. The \textbf{AI Model} retrieves similar chunks from the vector store and generates grounded answers based on the retrieved context.
 
 \begin{figure}[H]
     \centering
