@@ -16,9 +16,9 @@ The Design-to-Code pipeline was built around Claude Code (Anthropic's AI coding 
     \item \textbf{Chrome DevTools MCP Server:} Provides browser automation capabilities, allowing Claude to navigate to Storybook pages, take screenshots, inspect computed styles, click interactive elements, and compare the rendered component against the Figma design.
 \end{itemize}
 
-The development environment consisted of the Angular 16 frontend of the Knoccs application, with components generated into \texttt{src/app/shared/components/}. Storybook served as the visual documentation and validation layer, running on \texttt{localhost:9009}. Each generated component produced four to five files: \texttt{.component.ts}, \texttt{.component.html}, \texttt{.component.scss}, \texttt{.types.ts}, and optionally \texttt{.interfaces.ts}.
+The development environment consisted of the Angular 16 frontend of the Knoccs application, with components generated into \texttt{src/app/shared/components/}. Storybook served as the visual documentation and validation layer. Each generated component produced four to five files: \texttt{.component.ts}, \texttt{.component.html}, \texttt{.component.scss}, \texttt{.types.ts}, and optionally \texttt{.interfaces.ts}.
 
-For the sync workflow, three additional artifacts were configured: \texttt{design\_system\_mapping.json} (which records every Figma node ID alongside its Angular component path and last-synced timestamp), \texttt{sync-figma.js} (a Node.js driver invoked through \texttt{npm run sync:figma <component>}), and \texttt{SYNC\_DESIGN\_SYSTEM\_COMPONENT\_PLAN.md} (the 8-phase rulebook Claude follows during a sync run). These artifacts make the sync pipeline reproducible across the team and remove the need to hand-author prompts for individual sync runs. The sync interface, described in Section~\ref{sec:sync}, sits on top of these artifacts and exposes them through a designer-facing UI.
+For the sync workflow, three additional artifacts were configured, \texttt{sync-figma.js} (a Node.js driver invoked through \texttt{npm run sync:figma <component>}), and an 8-phase pipeline Claude follows during a sync run. These artifacts make the sync pipeline reproducible across the team and remove the need to hand-author prompts for individual sync runs. The sync interface, described in Section~\ref{sec:sync}, sits on top of these artifacts and exposes them through a designer-facing interface.
 
 \subsection{Iterative Instruction Refinement}
 \label{sec:prompt-engineering}
@@ -44,7 +44,8 @@ The evolution of the main \texttt{CLAUDE.md} file followed a clear trajectory fr
     \item \texttt{claude-md-compliance-checker}: Ensures instruction compliance
 \end{enumerate}
 
-A mandatory agent chain was defined: \texttt{figma-extractor} $\rightarrow$ \texttt{component-generator} $\rightarrow$ \texttt{storybook-generator} $\rightarrow$ \texttt{unit-test-generator} $\rightarrow$ \texttt{claude-md-compliance-checker}. This version also introduced the complete design token system (color scales from \texttt{\$color-0} through \texttt{\$color-100} across 8 palettes), the \texttt{toRem()} function for responsive pixel-to-rem conversion, BEM-like CSS naming conventions, icon system documentation, and typography specifications.
+% A mandatory agent chain was defined: \\ \texttt{figma-extractor} $\rightarrow$ \texttt{component-generator} $\rightarrow$ \texttt{storybook-generator} $\rightarrow$ \texttt{unit-test-generator} $\rightarrow$ \texttt{claude-md-compliance-checker}. 
+This version also introduced the complete design token system (color scales from \texttt{\$color-0} through \texttt{\$color-100} across 8 palettes), the \texttt{toRem()} function for responsive pixel-to-rem conversion, BEM-like CSS naming conventions, icon system documentation, and typography specifications.
 
 \textbf{Version 2: Phased Pipeline with Human-in-the-Loop:} A rewrite ($\sim$800+ lines) that introduced a seven-phase workflow with strict enforcement rules:
 
@@ -61,9 +62,9 @@ A mandatory agent chain was defined: \texttt{figma-extractor} $\rightarrow$ \tex
 Four strict enforcement rules were placed at the top of the document:
 \begin{enumerate}
     \item Stop and confirm at every phase gate. Missing response is NOT confirmation.
-    \item NEVER fix discrepancies without user approval. If same fix fails twice, escalate.
-    \item NEVER use variant values not present in Figma. Flag discrepancies in both directions.
-    \item NEVER skip mandatory interaction points.
+    \item Never fix discrepancies without user approval. If same fix fails twice, escalate.
+    \item Never use variant values not present in Figma. Flag discrepancies in both directions.
+    \item Never skip mandatory interaction points.
 \end{enumerate}
 
 Nine mandatory stop points were defined where Claude must pause and wait for user input, preventing autonomous decisions that could introduce errors.
@@ -72,7 +73,7 @@ Nine mandatory stop points were defined where Claude must pause and wait for use
 
 \begin{itemize}
     \item \textbf{v3:} Introduced an icon fallback system, if a custom SVG icon fails to render during Chrome MCP verification, fall back to the equivalent Angular Material icon and document the substitution.
-    \item \textbf{v4:} Added a sixth rule, NEVER run unit tests (\texttt{ng test}) without explicit user permission. This was added after Claude autonomously triggered test runs that disrupted the development workflow.
+    \item \textbf{v4:} Added a sixth rule, Never run unit tests (\texttt{ng test}) without explicit user permission. This was added after Claude autonomously triggered test runs that disrupted the development workflow.
     \item \textbf{v7:} Added a component reuse rule, before implementing any UI element inline (e.g., avatar circles, badges), check if a reusable component already exists in \texttt{shared/components/} and use it instead. This addressed Claude re-implementing existing components.
     \item \textbf{v8:} Simplified SCSS import paths from relative (\texttt{../../../../styles/colors}) to short-form (\texttt{@import `colors'}) after configuring \texttt{angular.json} include paths. Deprecated the \texttt{isIconSvg()} pattern in favor of globally registered SVG icons. Added a pitfall warning for Figma documentation pages vs.\ actual component nodes.
 \end{itemize}

@@ -8,9 +8,9 @@ This section mentions the specific functional requirements of our design system,
 
 \begin{itemize}
     \item \textbf{Figma Integration:}
-    The system must connect to Figma via API or MCP to fetch design files, layers, and tokens automatically. This integration ensures real-time design synchronization and eliminates manual file handling.
+    The system must connect to Figma via MCP to fetch design files, layers, and tokens automatically. This integration ensures real-time design synchronization and eliminates manual file handling.
     \item \textbf{Design Token Extraction:}
-    The system should extract and standardize color, typography, spacing, and other design tokens into a standardized \texttt{tokens.json} or \texttt{SCSS} file for consistent design implementation.
+    The system should extract and standardize color, typography, spacing, and other design tokens into a standardized \texttt{SCSS} file for consistent design implementation.
     \item \textbf{Design System Enforcement:}
     All generated UI components must strictly follow the organization’s approved design system. Any deviations should be automatically flagged for review.
 \end{itemize}
@@ -37,13 +37,13 @@ This section mentions the specific functional requirements of our design system,
     Automatically create SQL scripts or Entity Framework Core migrations from the inferred data models to maintain backend consistency with frontend components.
 \end{itemize}
 
-\subsubsection{Project Management and Developer Review}
+\subsubsection{Project Management}
 
 \begin{itemize}
     \item \textbf{Project Scaffolding:}
     The system should automatically create complete Angular, C\#, and Database projects following standard folder structures and naming conventions.
-    \item \textbf{Manual Override \& Review:}
-    Provide an interface for developers to review, edit, and approve the generated code before it is finalized, saved, or committed to the repository.
+    % \item \textbf{Manual Override \& Review:}
+    % Provide an interface for developers to review, edit, and approve the generated code before it is finalized, saved, or committed to the repository.
     \item \textbf{Version Control Integration:}
     Integrate with Git version control to track generated files, maintain commit history, and push approved code directly to repositories.
 \end{itemize}
@@ -51,10 +51,10 @@ This section mentions the specific functional requirements of our design system,
 \subsubsection{Quality Assurance and Continuous Improvement}
 
 \begin{itemize}
-    \item \textbf{Error Handling \& Logging:}
-    The system must log all errors during parsing and generation with full context and provide automatic retry options for transient issues.
-    \item \textbf{Feedback Loop for AI Improvement:}
-    Collect developer feedback on generated outputs and use it to improve future AI model predictions for higher accuracy and consistency.
+    % \item \textbf{Error Handling \& Logging:}
+    % The system must log all errors during parsing and generation with full context and provide automatic retry options for transient issues.
+    % \item \textbf{Feedback Loop for AI Improvement:}
+    % Collect developer feedback on generated outputs and use it to improve future AI model predictions for higher accuracy and consistency.
     \item \textbf{Design System Compliance Validation:}
     Before final export, validate all components against the design system to ensure consistent typography, color tokens, and spacing are applied across the project.
 \end{itemize}
@@ -85,9 +85,8 @@ This section mentions the specific functional requirements of our design system,
 
 \begin{itemize}
     \item \textbf{Description:} Centralized, searchable repository of Knoccs documents and product data
-    \item The system must allow uploading, KNOCCS documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
+    \item The system must allow documentation and product data from different sources (e.g., SharePoint, databases, local files, etc.)
     \item The system must support various file formats.
-    \item The system must store all content in a structured repository with version control and metadata.
     \item The system must automatically extract text from documents and segment it into manageable content chunks for embedding.
     \item The system must clean and normalize text before processing.
     \item The system must generate vector embeddings for each content chunk using a selected embedding model.
@@ -124,38 +123,32 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Code Readability:} The generated code must be human-readable, well-commented, and follow a logical structure.
     \item \textbf{Automated Documentation:} The pipeline must auto-generate or update a Storybook entry for each new or modified component, pulling descriptions and properties from the Figma component's documentation.
     \item \textbf{Designer Workflow:} The process of "marking" a component for generation must be streamlined using custom Figma annotation widgets to prevent manual errors.
-    \item \textbf{Proactive Validation:} The system must include an annotation validation plugin to prevent errors before the pipeline is even run.
-    \item \textbf{Developer Onboarding:} The process of consuming the generated code must be clearly documented and require minimal setup.
+    % \item \textbf{Proactive Validation:} The system must include an annotation validation plugin to prevent errors before the pipeline is even run.
+    % \item \textbf{Developer Onboarding:} The process of consuming the generated code must be clearly documented and require minimal setup.
 \end{itemize}
 
 \subsubsection{Performance}
 \begin{itemize}
-    \item \textbf{Pipeline Performance (Single Component):} The end-to-end translation of a single component (from Figma publish to committed Angular code) should complete in under 90 seconds.
-    \item \textbf{Pipeline Performance (Batch Update):} A full "batch" update of the entire design system (e.g., 50 components) should complete in under 30 minutes.
+    \item \textbf{Pipeline Performance (Single Component):} The end-to-end translation of a single component (from Figma publish to committed Angular code) should complete in under 300 seconds.
     \item \textbf{Generated Code Performance (Theming):} The runtime theme switching (light/dark mode) must apply theme changes near-instantaneously (e.g., < 100ms) with no flash of unstyled content.
-    \item \textbf{Monitoring:} The system must include a performance monitoring dashboard to track generation times and identify bottlenecks.
 \end{itemize}
 
 \subsubsection{Scalability and Maintainability}
 \begin{itemize}
-    \item \textbf{Component Scalability:} The pipeline must be able to support a design system growing to 500+ unique components and variants.
+    \item \textbf{Component Scalability:} The pipeline must be able to support a design system growing to 50+ unique components and variants.
     \item \textbf{Architectural Extensibility:} Adding a new component to the Figma design system and its corresponding generation template must be a documented process that does not require re-architecting the pipeline.
-    \item \textbf{AI Modularity:} The system's "AI Agents Layer" (e.g., LangGraph) must be modular, allowing for individual prompts or agents to be updated without breaking the entire generation chain.
     \item \textbf{Testability:} All generated components must be compatible with a Test-Driven Development (TDD) approach.
     \item \textbf{Governance:} The system must include an approval workflow for all design-to-code component mappings to ensure quality, traceability, and consistency before merging into the main branch.
-    \item \textbf{Change Management:} A breaking change detection script must run automatically in the CI pipeline to flag any changes to component props or mappings that could break existing implementations.
 \end{itemize}
 
 \subsubsection{Security}
 \begin{itemize}
     \item \textbf{Access Control (Tokens):} All access to the Figma API and Azure DevOps must use securely stored, read-only (where applicable) authentication tokens.
     \item \textbf{Access Control (Services):} Access to the AI model APIs (Azure OpenAI) must be restricted to authorized team members and services.
-    \item \textbf{Code Security:} All generated code must pass a Static Analysis Security Testing (SAST) scan for common vulnerabilities like Cross-Site Scripting (XSS) before being merged.
 \end{itemize}
 
 \subsubsection{Compliance}
 \begin{itemize}
-    \item \textbf{Accessibility Standards:} All generated components must meet WCAG 2.1 AA compliance.
     \item \textbf{ARIA Implementation:} The AI must correctly generate appropriate ARIA (Accessible Rich Internet Applications) roles, states, and properties for complex components (e.g., modals, dropdowns, tabs).
     \item \textbf{Keyboard Navigation:} Keyboard navigation, such as tabbing and arrow keys, must be fully implemented for all interactive components.
     \item \textbf{Linting:} All generated code must pass automated linting checks based on the established Knoccs Angular style guide.
@@ -163,15 +156,12 @@ This section mentions the specific non-functional requirements of our design sys
 
 \subsubsection{Reliability and Availability}
 \begin{itemize}
-    \item \textbf{Pipeline Uptime:} The core CI/CD pipeline (Azure DevOps) responsible for token syncing and code generation must have a 99.9\% uptime during working hours.
     \item \textbf{Graceful Failure (AI):} If the AI model fails to translate a component, it must fail gracefully (i.e., not crash the entire pipeline) and provide clear, actionable error logs.
     \item \textbf{Graceful Failure (Sync):} The GitHub Actions workflow for token syncing must have automatic retry logic and a clear notification process in case of repeated failure.
-    \item \textbf{AI Performance Monitoring:} The AI Metrics Dashboard must have triggers to alert the team if accuracy drops below the defined targets (e.g., <80\% visual similarity), signaling a need for retraining or prompt adjustment.
 \end{itemize}
 
 \subsubsection{Data Integrity and Backup}
 \begin{itemize}
-    \item \textbf{Single Source of Truth:} The W3C Design Tokens (in JSON format) are the single source of truth. The bidirectional synchronization between Figma and the code repository via GitHub Actions must ensure this integrity.
     \item \textbf{Atomic Transactions:} The design token translation (Style Dictionary) must be atomic. A failure during translation must not result in a partially updated or corrupted set of CSS variables.
     \item \textbf{Data Consistency:} Data integrity is also ensured through consistency by making sure that the translation is deterministic (i.e., the same input always produces the same output).
     \item \textbf{Version Control \& Backup (Code):} All generated code, pipeline configurations, and token definitions must be stored in the project's Git repository, providing full version history and backup.
@@ -202,7 +192,7 @@ This section mentions the specific non-functional requirements of our design sys
     \item \textbf{Performance:} A search query must return a fully generated answer in under 5 seconds.
     \item \textbf{Accuracy:} The relevance of retrieved documents must be $>$ 90\%. The generated answer must be factually consistent with the source documents.
     \item \textbf{Usability:} The search interface must be as simple to use as a standard search bar.
-    \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
+    % \item \textbf{Maintainability:} The system must provide a way to update or delete documents from the vector store when they become outdated.
 \end{itemize}
 
 \section{External Interfaces}

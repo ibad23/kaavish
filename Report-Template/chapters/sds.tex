@@ -45,7 +45,7 @@ A data design component is not necessary for this phase of the project, as it do
     \item Serve as the “tool” layer LLMs call to inspect the UI structure, request design snippets, or request code templates.
 \end{itemize}
 
-\subsubsection{LLM Code Generation Agents (Claude / GPT)}
+\subsubsection{LLM Code Generation Agents (Claude)}
 
 \textbf{Purpose}: Read design metadata via MCP tools and generate code artifacts, Angular components, CSS tokens, and Storybook stories.
 \\\\
@@ -57,6 +57,7 @@ A data design component is not necessary for this phase of the project, as it do
 \end{itemize}
 
 \textbf{Inputs}: MCP tool outputs, mapping config, LLM prompts. 
+\\
 \textbf{Outputs}: TS/HTML/SCSS files, Storybook stories, component metadata.
 
 \subsubsection{Component Mapping Layer (\texttt{design\_system\_mapping.json})}
