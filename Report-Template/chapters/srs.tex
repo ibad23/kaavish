@@ -63,12 +63,10 @@ This section mentions the specific functional requirements of our design system,
 
 \subsubsection{Tag Management}
 \begin{itemize}
-    \item \textbf{Description:} Create, edit, and assign tags across modules with color tokens.
-    \item The system must allow users to create, rename, and delete tags.
-    \item The system must allow assigning and unassigning tags to entities across different modules.
+    \item \textbf{Description:} Create, and assign tags across modules with color tokens.
+    \item The system must allow users to create tags.
     \item When creating or editing a tag, the system must support color tokens for each tag, defined according to the design system.
-    \item The system must ensure tags are searchable and filterable within each module.
-    \item The system must restrict tag creation or editing based on user roles and permissions.
+    \item The system must ensure tags are searchable within each module.
 \end{itemize}
 
 \subsubsection{Macro Management}
@@ -172,10 +170,8 @@ This section mentions the specific non-functional requirements of our design sys
 
 \subsubsection{Tag Management}
 \begin{itemize}
-    \item \textbf{Performance:} Applying or removing a tag must be reflected in the UI in under 500ms. Searching by tag must return results in under 2 seconds.
+    \item \textbf{Performance:} Applying a tag must be reflected in the UI in under 500ms. Searching by tag must return results in under 2 seconds.
     \item \textbf{Usability:} The tag selection interface must be an accessible, type-ahead autocomplete component.
-    \item \textbf{Data Integrity:} Deleting a tag must not delete the objects it was applied to. The system should confirm if the tag should be removed from all objects.
-    \item \textbf{Security:} Tag creation/deletion must be restricted to administrator roles.
 \end{itemize}
 
 \subsubsection{Macro Management}

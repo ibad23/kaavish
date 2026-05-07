@@ -137,9 +137,8 @@ The technical specifications detailed below represent functional extensions to t
 \textbf{Responsibilities}
 
 \begin{itemize}
-    \item CRUD for tags, color/token mapping, and preview chips.
-    \item Assign/unassign tags to emails/conversations.
-    \item Provide usage statistics and filters used by UIs and RAG search.
+    \item Create Tags, color/token mapping, and preview chips.
+    \item Assign tags to emails/conversations.
 \end{itemize}
 
 \subsubsection{Macro Management System}
@@ -173,13 +172,10 @@ The following RESTful API endpoints have been defined to expose the functionalit
 \textbf{Tag Management}
 
 \begin{itemize}
-    \item \texttt{GET /api/tags/modules/\{clientId\}/\{moduleId\}} \\ Retrieves a list of all tags available for a specific module and client.
-    \item \texttt{GET /api/tags/\{id\}} \\ Fetches the details of a single tag by its unique ID.
+    \item \texttt{GET /api/tags/modules/\{clientId\}/\{moduleId\}} \\ Retrieves all tags for a given client; the \texttt{moduleId} dimension was not implemented as tags are scoped only at the client level.
     \item \texttt{POST /api/tags} \\ Creates a new tag definition within a module.
     \item \texttt{PUT /api/tags/\{id\}} \\ Updates the properties (e.g., name, color) of an existing tag.
     \item \texttt{DELETE /api/tags/\{id\}} \\ Permanently removes a tag definition from the system.
-    \item \texttt{POST /api/tags/entity} \\ Assigns an existing tag to a specific entity record (utilizing the \texttt{EntityTag} association).
-    \item \texttt{DELETE /api/tags/entity} \\ Dissociates (removes) a tag from a specific entity.
 \end{itemize}
 
 \textbf{Macro Management}
