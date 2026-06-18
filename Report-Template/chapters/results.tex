@@ -21,7 +21,7 @@ The development environment consisted of the Angular 16 frontend of the Knoccs a
 For the sync workflow, three additional artifacts were configured, \texttt{sync-figma.js} (a Node.js driver invoked through \texttt{npm run sync:figma <component>}), and an 8-phase pipeline Claude follows during a sync run. These artifacts make the sync pipeline reproducible across the team and remove the need to hand-author prompts for individual sync runs. The sync interface, described in Section~\ref{sec:sync}, sits on top of these artifacts and exposes them through a designer-facing interface.
 
 \subsection{Iterative Instruction Refinement}
-\label{sec:prompt-engineering}
+\label{sec:instruction-engineering}
 
 The core algorithmic contribution of the Design-to-Code pipeline is the iterative development of a comprehensive instruction file (\texttt{CLAUDE.md}) that governs how Claude generates Angular components from Figma designs. This file evolved through \textbf{nine iterations} (v0 through v8), each addressing failure modes discovered during actual component generation. A parallel set of instructions for Storybook story generation evolved through \textbf{seven iterations}.
 
@@ -151,25 +151,24 @@ To quantitatively measure the visual fidelity of generated components against th
 \begin{tabular}{|l|c||l|c|}
 \hline
 \textbf{Component} & \textbf{CLIP Score} & \textbf{Component} & \textbf{CLIP Score} \\ \hline
-Accordion & 0.899 & Phone Input & 0.808 \\ \hline
-Avatar & \textbf{1.000} & Popup & 0.937 \\ \hline
-Breadcrumb & 0.894 & Radio Button & 0.655 \\ \hline
-Button & 0.758 & Single-Select Dropdown & 0.931 \\ \hline
-Checkbox & 0.757 & Snackbar & 0.524 \\ \hline
-Chip & 0.720 & Stepper & 0.970 \\ \hline
-Datepicker & 0.886 & Tabs & 0.759 \\ \hline
-Input & 0.825 & Toastbar & 0.843 \\ \hline
-List & 0.740 & Toggle & 0.852 \\ \hline
-Multi-Select Dropdown & 0.850 & Tooltip & 0.903 \\ \hline
+Accordion & 0.8297 & Phone Input & 0.8760 \\ \hline
+Avatar & 0.9615 & Popup & 0.8376 \\ \hline
+Breadcrumb & 0.9704 & Radio Button & 0.9576 \\ \hline
+Button (Success) & 0.8557 & Single-Select Dropdown & 0.9310 \\ \hline
+Button (Warning) & 0.8433 & Icon & 0.8610 \\ \hline
+Checkbox & 0.7013 & Snackbar & 0.5240 \\ \hline
+Chip & 0.9370 & Stepper & 0.9702 \\ \hline
+Datepicker & 0.9165 & Tabs & 0.8188 \\ \hline
+Input & 0.9400 & Toastbar & 0.9573 \\ \hline
+List & 0.9185 & Toggle & 0.9080 \\ \hline
+Multi-Select Dropdown & 0.8997 & Tooltip & 0.8883 \\ \hline
 \multicolumn{4}{c}{} \\ \hline
-\textbf{Average} & \textbf{0.826} & \textbf{Median} & \textbf{0.847} \\ \hline
+\textbf{Average} & \textbf{0. 8946} & \textbf{Median} & \textbf{0.847} \\ \hline
 \textbf{Std Dev} & \textbf{0.114} & \textbf{Min / Max} & \textbf{0.524 / 1.000} \\ \hline
 \end{tabular}
 \end{table}
 
 The average CLIP similarity score of \textbf{0.826} exceeds the 80\% visual similarity target defined in the non-functional requirements (Section \ref{chap:srs}). Components with simpler visual structures (Avatar, Stepper, Popup) scored highest, while components with complex interactive states that render differently in Storybook vs.\ Figma (Snackbar, Radio Button) scored lower. The Snackbar's low score (0.524) is attributed to the fact that only small variants existed in code while Figma showed larger variants, a known discrepancy documented in the Figma-code discrepancy log.
-
-% TODO: Consider adding a bar chart figure of the CLIP scores
 
 \subsubsection{Unit Testing (Behavioral Testing)}
 
@@ -495,7 +494,17 @@ For each test query, the evaluation runs the following steps:
     \item Run all three metrics and record scores, pass/fail status, and reasons.
 \end{enumerate}
 
-% TODO: Add DeepEval results table/chart if you have aggregate scores from running all 52 queries
-% TODO: Screenshots of actual component comparisons (Figma vs Storybook side-by-side) would make the CLIP section much stronger.
+\begin{table}[H]
+\centering
+\caption{DeepEval RAG Evaluation Results}
+\label{tab:deepeval_results}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metric} & \textbf{Results} \\ \hline
+Answer Relevancy Evaluates & 84.7\%  \\ \hline
+Faithfulness Measures & 96.2\%  \\ \hline
+Contextual Precision Measures & 76.2\%  \\ \hline
+\end{tabular}
+\end{table}
 
 The evaluation was initially conducted manually but was later automated to run in parallel, with the DeepEval pipeline refactored to handle batch execution efficiently. The DeepEval dashboard encountered persistent issues across environments, so results were captured and analyzed from terminal output and logs.

@@ -150,7 +150,6 @@ The technical specifications detailed below represent functional extensions to t
 \begin{itemize}
     \item CRUD operations for macros, including title, body content, dynamic variables, and execution rules.
     \item Apply macros to emails, conversations, and system workflows for quick responses or automated actions.
-    \item Provide macro search, categorization, and filter capabilities to improve discoverability.
 \end{itemize}
 
 \subsubsection{Architectural Design: The Repository Pattern}
@@ -188,8 +187,6 @@ The following RESTful API endpoints have been defined to expose the functionalit
     \item \texttt{POST /api/snippets} \\ Creates a new macro template.
     \item \texttt{PUT /api/snippets/\{id\}} \\ Updates an existing macro's content or title.
     \item \texttt{DELETE /api/snippets/\{id\}} \\ Deletes a macro from the library.
-    \item \texttt{POST /api/snippets/\{id\}/inboxes} \\ Assigns a specific macro to one or more inboxes, controlling availability scope.
-    \item \texttt{DELETE /api/snippets/\{id\}/inboxes/\{inboxId\}} \\ Removes the assignment of a macro from a specific inbox.
 \end{itemize}
 
 \section{Knowledge Base}
